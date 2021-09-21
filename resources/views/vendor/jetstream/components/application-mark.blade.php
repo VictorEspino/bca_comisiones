@@ -1,0 +1,1 @@
+<image src="{{url('images/bca.jpg') }}" class="w-12 rounded-lg shadow-2xl"></image>
