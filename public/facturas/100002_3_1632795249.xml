@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?><cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd https://www.farmaciasanpablo.com.mx/FSPAddendaEmisor https://www.farmaciasanpablo.com.mx/FSPAddendaEmisor/FSPAddendaEmisor.xsd http://www.pegasotecnologia.com/secfd/Schemas/AddendaDomicilioEmisor http://www.pegasotecnologia.com/secfd/schemas/AddendaDomicilioEmisor.xsd http://www.pegasotecnologia.com/secfd/Schemas/AddendaDomicilioExpedidoEn http://www.pegasotecnologia.com/secfd/schemas/AddendaDomicilioExpedidoEn.xsd" Version="3.3" Fecha="2021-09-10T20:17:24" Moneda="MXN" TipoCambio="1" SubTotal="248.00" Total="248.00" FormaPago="01" TipoDeComprobante="E" MetodoPago="PUE" LugarExpedicion="07300" NoCertificado="00001000000507899098" Serie="NCK" Folio="41018" Certificado="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" Sello="G6HlrOdY1wi8ok84q6awubVigXVWCteCXxeDsUO1tlRPx/4zxV820IPcYg5EWmbVnkHdTuj5Sf02qxp/Ve6Wb69KinUL3IN0LIAFLObqFIo+hOMNxLSZpnJNBS0HgL/N9nTb2WKiDBQ54yprpixy96bx639P2SpRkoCa+4skJaYguwRk0B8dezq8UohUP89IBrOrUb1OXkURSJOUjxvAljc3h9UbSITWJdKMFrBI9bs6TzxTqFCJ2UbwsLTKIqTNtC04P+kTwWI0cMORJWwgiBW33nYA79DGRnuB8aiJ0hsotCXKFdIt/Z5CD/DkazqBixtm1PvnjQIffeVV2qU05g==" xmlns:FSP="https://www.farmaciasanpablo.com.mx/FSPAddendaEmisor" xmlns:adddomemi="http://www.pegasotecnologia.com/secfd/Schemas/AddendaDomicilioEmisor" xmlns:adddomexp="http://www.pegasotecnologia.com/secfd/Schemas/AddendaDomicilioExpedidoEn">
+  <cfdi:CfdiRelacionados TipoRelacion="01">
+    <cfdi:CfdiRelacionado UUID="36A85C14-132B-46C6-AA7C-20A43DF56A7D" />
+  </cfdi:CfdiRelacionados>
+  <cfdi:Emisor Rfc="PPL961114GZ1" Nombre="PHARMA PLUS SA DE CV" RegimenFiscal="601" />
+  <cfdi:Receptor Rfc="XAXX010101000" Nombre="Público en General" UsoCFDI="G03" />
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="51101572" NoIdentificacion="000000000060160002" Cantidad="1" ClaveUnidad="H87" Unidad="Caja" Descripcion="AZITROMICINA TAB 500MG C/3 GENVITA" ValorUnitario="124.00" Importe="124.00">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="124.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="0" />
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="51101572" NoIdentificacion="000000000060160002" Cantidad="1" ClaveUnidad="H87" Unidad="Caja" Descripcion="AZITROMICINA TAB 500MG C/3 GENVITA" ValorUnitario="124.00" Importe="124.00">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="124.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="0" />
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosTrasladados="0.00">
+    <cfdi:Traslados>
+      <cfdi:Traslado Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="0.00" />
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+  <cfdi:Complemento>
+    <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="0C9B056B-600A-4831-BEED-9B2154904B84" FechaTimbrado="2021-09-10T20:17:24" RfcProvCertif="SST060807KU0" SelloCFD="G6HlrOdY1wi8ok84q6awubVigXVWCteCXxeDsUO1tlRPx/4zxV820IPcYg5EWmbVnkHdTuj5Sf02qxp/Ve6Wb69KinUL3IN0LIAFLObqFIo+hOMNxLSZpnJNBS0HgL/N9nTb2WKiDBQ54yprpixy96bx639P2SpRkoCa+4skJaYguwRk0B8dezq8UohUP89IBrOrUb1OXkURSJOUjxvAljc3h9UbSITWJdKMFrBI9bs6TzxTqFCJ2UbwsLTKIqTNtC04P+kTwWI0cMORJWwgiBW33nYA79DGRnuB8aiJ0hsotCXKFdIt/Z5CD/DkazqBixtm1PvnjQIffeVV2qU05g==" NoCertificadoSAT="00001000000506202789" SelloSAT="FtfysZGPokPn8CLrxFkbfdWy+0a8jjnh5qf46mjlhJ8VjW722vefqY247u5eO0UPSLH9pcpL/wM5ZwxKCorbAF06Ejni/Z1lQfZn0j10xlbWfhuXoUDExqDMfkM8IjU8aGHuYVVJUyq2NU79snlE77e8yXxUqoz2aVWA44NlMCz0KPD4U9JCu0wqdR1cYaiQnMVBRZDvKKjORXOnROqhLnEExTROzFl59rnZKmPPtPlEh+YL/7reYjseyqlEGt2Gyxh4E+g46HYwv9Ry2NrdZNKfmX8XX5f62+aST0S5SizGL2YYgkc2KdsKa0ufqrVnmLetzjzC+DSXr0jNAXpXIA==" />
+  </cfdi:Complemento>
+  <cfdi:Addenda>
+    <FSP:AddendaEmisor>
+      <FSP:SPFADDENDAEMISOR>
+        <FSP:DATOSFT FTSucursal="0011" FTIdTransaccion="001111202109020108001" />
+        <FSP:DATOSOPCIONALES OPCampo70="G_46_22__3.3__1.000000_02092021000000" OPCampo71="9/3/2021 12:03:23 AM" OPCampo72="36a85c14-132b-46c6-aa7c-20a43df56a7d" OPCampo73="FGIK-2543" OPCampo74="Este comprobante justifica al al comprobante con No. Transaccion: G_46_22__3.3__1.000000_02092021000000, con serie: FGIK y folio: 2543 emitida con fecha: 9/3/2021 12:03:23 AM" />
+        <FSP:DATOSGSPFACTURAGLOBAL FGSubtotal="248.000000" FGDescuento="0.000000" FGImpuestos="0.000000" FGTotal="248.000000">
+          <FSP:FGTraslado FGTipoFactor="Tasa" FGImpuesto="002" FGTasaOCuota="0" FGImporte="0.000000" FGBase="248.000000" />
+        </FSP:DATOSGSPFACTURAGLOBAL>
+        <FSP:DATOSCONCEPTOS DCSubtotal="248.00" DCTotalImpuestosTrasladados="0">
+          <FSP:DATOSCONCEPTO DCIdentificador="1" DCImpuestoIVATasa="0" DCImpuestoIVAMonto="0.00" DCImpuestoIEPSTasa="0" DCImpuestoIEPSMonto="0" DCComentarios="" DCValorUnitario="124.000000" DCImporte="124.00" />
+          <FSP:DATOSCONCEPTO DCIdentificador="2" DCImpuestoIVATasa="0" DCImpuestoIVAMonto="0.00" DCImpuestoIEPSTasa="0" DCImpuestoIEPSMonto="0" DCComentarios="" DCValorUnitario="124.000000" DCImporte="124.00" />
+        </FSP:DATOSCONCEPTOS>
+        <FSP:DATOSLEYENDAS>
+          <FSP:DATOSLEYENDA DLCampo1="\\n A partir de hoy, tiene 5 días para hacer\\n cualquier devolución presentando esta\\n nota\\n \\n GARANTÍA SAN PABLO GENÉRICOS: SI NO 0  &#xD;&#xA;3 1 0 2 QUEDA SATISFECHO LE DEVOLVEMOS SU 0  &#xD;&#xA;4 1 0 3 DINERO.\\n QUEDA SATISFECHO LE DEVOLVEMOS SU\\n DINERO.&quot;\\n \\n - En medicamentos antibióticos\\n controlados y/o refrigerados\\n no hay devoluciones\\n \\n Si Usted requiere factura, solicítela a \\n su vendedor, o en el tel. 53 54 90 00 \\n o en www.farmaciasanpablo.com.mx\\n \\n Consulte el Aviso de Privacidad en:\\n www.farmaciasanpablo.com.mx\\n Ley de protección de datos\\n \\n " DLCampo2="" DLCampo3="" DLCampo4="" DLCampo5="" />
+        </FSP:DATOSLEYENDAS>
+      </FSP:SPFADDENDAEMISOR>
+    </FSP:AddendaEmisor>
+    <adddomemi:AddendaDomicilioEmisor calle="AV. RÍO MIXCOAC" noExterior="140" colonia="ACACIAS" municipio="BENITO JUAREZ" estado="CIUDAD DE MEXICO" pais="MEXICO" codigoPostal="03240" />
+    <adddomexp:AddendaDomicilioExpedidoEn calle="AV. MONTEVIDEO, EJE 5 NORTE" noExterior="415" colonia="LINDAVISTA" municipio="GUSTAVO A MADERO" estado="CIUDAD DE MEXICO" pais="MEXICO" codigoPostal="07300" />
+  </cfdi:Addenda>
+</cfdi:Comprobante>

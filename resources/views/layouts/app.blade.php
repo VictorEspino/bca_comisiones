@@ -130,6 +130,26 @@
                                     <span><i class="fa fa-angle-right float-right"></i></span>
                                 </a>
                             </li>
+                            @endif
+                            @if(Auth::user()->tipo=="administrativo" || Auth::user()->tipo=="admin" )
+                        <li class="w-full h-full py-3 px-2 border-b border-light-border {{request()->routeIs('calculos_semanales')?'bg-gray-500 text-yellow-300':'br-gray-800'}}">
+                            <a href="{{ route('calculos_semanales_admin',['tipo'=>'1']) }}"
+                                class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                <i class="fas fa-database float-left mx-2"></i>
+                                    Adelantos Semanales
+                                <span><i class="fa fa-angle-right float-right"></i></span>
+                            </a>
+                        </li>
+                        <li class="w-full h-full py-3 px-2 border-b border-light-border {{request()->routeIs('calculos_mensuales')?'bg-gray-500 text-yellow-300':'br-gray-800'}}">
+                            <a href="{{ route('calculos_mensuales_admin',['tipo'=>'2']) }}"
+                                class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                <i class="fas fa-database float-left mx-2"></i>
+                                    Pagos Mensuales
+                                <span><i class="fa fa-angle-right float-right"></i></span>
+                            </a>
+                        </li>
+                        @endif 
+                            @if(Auth::user()->tipo=="admin" || Auth::user()->tipo=="credito" )
                             <li class="w-full h-full py-3 px-2 border-b border-light-border">
                                 <!--
                                 <a href="forms.html"
@@ -165,7 +185,8 @@
                                     <span><i class="fa fa-angle-right float-right"></i></span>
                                 </a>
                             </li>
-                        @else
+                        @endif
+                        @if(Auth::user()->tipo=="distribuidor" )
                             <li class="w-full h-full py-3 px-2 border-b border-light-border">
                                 Comisiones ({{Auth::user()->user}})
                             </li>
@@ -185,7 +206,8 @@
                                     <span><i class="fa fa-angle-right float-right"></i></span>
                                 </a>
                             </li>
-                        @endif                
+                        @endif  
+                                       
                         </ul>
             
                     </div>

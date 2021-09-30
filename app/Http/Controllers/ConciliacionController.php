@@ -38,6 +38,7 @@ class ConciliacionController extends Controller
 
     public function conciliacion_erp_att(Request $request)
     {
+        return(0);
         $respuesta=array(
             'success'=>'Archivo cargado con exito',
             'registros'=>0,
@@ -96,16 +97,17 @@ class ConciliacionController extends Controller
     }
     public function residual_45dias(Request $request)
     {
+        return(0);
         $respuesta=array(
             'success'=>'Archivo cargado con exito',
             'registros'=>0,
         );
         $x=0;
-        $periodo_anterior=$this->getPeriodo($request->periodo,-1);
+        $periodo_anterior=$this->getPeriodo($request->periodo,-2);
         $registros_no_encontrados=DB::select(DB::raw(
         "
         select a.contrato as erp,b.contrato as att,b.comision as comision from
-        (select DISTINCT contrato from transaccions where periodo='$periodo_anterior') a
+        (select DISTINCT contrato from transaccions where periodo='$periodo_anterior' and tipo_venta not like '%rotec%' and tipo_venta not like '%ADD%') a
         LEFT JOIN
         (select contrato,comision from residuals where periodo='$request->periodo') b
         ON a.contrato=b.contrato
@@ -166,7 +168,7 @@ class ConciliacionController extends Controller
         select c.contrato,c.contrato1,c.comision1,c.estatus1,d.contrato2,d.comision2,d.estatus2 from 
 	    (   
 	        select a.contrato,b.contrato as contrato1,b.comision as comision1,b.estatus as estatus1 from 
-		        (select DISTINCT contrato from transaccions where cb_att=0 and periodo='$periodo_menos_2') as a
+		        (select DISTINCT contrato from transaccions where cb_att=0 and periodo='$periodo_menos_2' and tipo_venta not like '%rotec%' and tipo_venta not like '%ADD%') as a
 			        LEFT JOIN
 		        (select contrato,comision,estatus from residuals where periodo='$periodo_menos_1') as b
 			        ON a.contrato=b.contrato
@@ -178,19 +180,29 @@ class ConciliacionController extends Controller
         ));
         $resultset=collect($transacciones_menos_2);
         $deletedRows = Alerta::where('conciliacion_id', $request->conciliacion_id)
-                ->where('tipo',1)
+                ->where('tipo','like','1%')
                 ->delete();
-        $alertas=$resultset->where('estatus1','SUSPENDIDO')->where('estatus2','SUSPENDIDO');
+        $alertas=$resultset->where('estatus2','SUSPENDIDO');
         foreach($alertas as $alerta)
         {
-            $transaccion=Transaccion::where('periodo',$periodo_menos_2)
+            
+            $tipo=0;
+            if($alerta->estatus1=="SUSPENDIDO")
+            {
+                $tipo=1;
+            }
+            if(is_null($alerta->comision1))
+            {
+                $tipo=12;
+            }
+            if($tipo!=0)
+            {
+                $transaccion=Transaccion::where('periodo',$periodo_menos_2)
                     ->where('contrato',$alerta->contrato)
                     ->where('tipo_venta','not like','%rotecc%')
                     ->where('tipo_venta','not like','%ADD%')
                     ->get()
                     ->first();
-            if(!is_null($alerta->comision1) && !is_null($alerta->comision2))
-            {
 
                 $registro_alerta=new Alerta();
                 $registro_alerta->contrato=$alerta->contrato;
@@ -202,7 +214,7 @@ class ConciliacionController extends Controller
                 $registro_alerta->empleado=$transaccion->empleado;
                 $registro_alerta->udn=$transaccion->udn;
                 $registro_alerta->pdv=$transaccion->pdv;
-                $registro_alerta->tipo=1;
+                $registro_alerta->tipo=$tipo;
                 $registro_alerta->periodo=$request->periodo;
                 $registro_alerta->conciliacion_id=$request->conciliacion_id;
                 $registro_alerta->save();
@@ -228,7 +240,7 @@ class ConciliacionController extends Controller
         select c.contrato,c.contrato1,c.comision1,c.estatus1,d.contrato2,d.comision2,d.estatus2 from 
             (   
                 select a.contrato,b.contrato as contrato1,b.comision as comision1,b.estatus as estatus1 from 
-                    (select DISTINCT contrato from transaccions where cb_att=0 and periodo='$periodo_menos_3') as a
+                    (select DISTINCT contrato from transaccions where cb_att=0 and periodo='$periodo_menos_3' and tipo_venta not like '%rotec%' and tipo_venta not like '%ADD%') as a
                         LEFT JOIN
                     (select contrato,comision,estatus from residuals where periodo='$periodo_menos_2') as b
                         ON a.contrato=b.contrato
@@ -244,19 +256,29 @@ class ConciliacionController extends Controller
         ));
         $resultset=collect($transacciones_menos_3);
         $deletedRows = Alerta::where('conciliacion_id', $request->conciliacion_id)
-                ->where('tipo',2)
+                ->where('tipo','like','2%')
                 ->delete();
-        $alertas=$resultset->where('estatus1','SUSPENDIDO')->where('estatus2','SUSPENDIDO')->where('estatus3','SUSPENDIDO');
+        $alertas=$resultset->where('estatus2','SUSPENDIDO')->where('estatus3','SUSPENDIDO');
         foreach($alertas as $alerta)
         {
-            $transaccion=Transaccion::where('periodo',$periodo_menos_3)
+            $tipo=0;
+            if($alerta->estatus1=="SUSPENDIDO")
+            {
+                $tipo=2;
+            }
+            if(is_null($alerta->comision1))
+            {
+                $tipo=22;
+            }
+            if($tipo!=0)
+            {
+                $transaccion=Transaccion::where('periodo',$periodo_menos_3)
                     ->where('contrato',$alerta->contrato)
                     ->where('tipo_venta','not like','%rotecc%')
                     ->where('tipo_venta','not like','%ADD%')
                     ->get()
                     ->first();
-            if(!is_null($alerta->comision1) && !is_null($alerta->comision2)&& !is_null($alerta->comision3))
-            {
+        
                 $registro_alerta=new Alerta();
                 $registro_alerta->contrato=$alerta->contrato;
                 $registro_alerta->tipo_venta=$transaccion->tipo_venta;
@@ -267,7 +289,7 @@ class ConciliacionController extends Controller
                 $registro_alerta->empleado=$transaccion->empleado;
                 $registro_alerta->udn=$transaccion->udn;
                 $registro_alerta->pdv=$transaccion->pdv;
-                $registro_alerta->tipo=2;
+                $registro_alerta->tipo=$tipo;
                 $registro_alerta->periodo=$request->periodo;
                 $registro_alerta->conciliacion_id=$request->conciliacion_id;
                 $registro_alerta->save();
@@ -296,7 +318,7 @@ class ConciliacionController extends Controller
         select c.contrato,c.contrato1,c.comision1,c.estatus1,d.contrato2,d.comision2,d.estatus2 from 
             (   
                 select a.contrato,b.contrato as contrato1,b.comision as comision1,b.estatus as estatus1 from 
-                    (select DISTINCT contrato from transaccions where cb_att=0 and periodo='$periodo_menos_4') as a
+                    (select DISTINCT contrato from transaccions where cb_att=0 and periodo='$periodo_menos_4' and tipo_venta not like '%rotec%' and tipo_venta not like '%ADD%') as a
                         LEFT JOIN
                     (select contrato,comision,estatus from residuals where periodo='$periodo_menos_3') as b
                         ON a.contrato=b.contrato
@@ -315,19 +337,30 @@ LEFT JOIN
         ));
         $resultset=collect($transacciones_menos_4);
         $deletedRows = Alerta::where('conciliacion_id', $request->conciliacion_id)
-                ->where('tipo',3)
+                ->where('tipo','like','3%')
                 ->delete();
-        $alertas=$resultset->where('estatus1','SUSPENDIDO')->where('estatus2','SUSPENDIDO')->where('estatus3','SUSPENDIDO')->where('estatus4','SUSPENDIDO');
+        $alertas=$resultset->where('estatus2','SUSPENDIDO')->where('estatus3','SUSPENDIDO')->where('estatus4','SUSPENDIDO');
         foreach($alertas as $alerta)
         {
+
+            $tipo=0;
+            if($alerta->estatus1=="SUSPENDIDO")
+            {
+                $tipo=3;
+            }
+            if(is_null($alerta->comision1))
+            {
+                $tipo=32;
+            }
+            if($tipo!=0)
+            {
             $transaccion=Transaccion::where('periodo',$periodo_menos_4)
                     ->where('contrato',$alerta->contrato)
                     ->where('tipo_venta','not like','%rotecc%')
                     ->where('tipo_venta','not like','%ADD%')
                     ->get()
                     ->first();
-            if(!is_null($alerta->comision1) && !is_null($alerta->comision2)&& !is_null($alerta->comision3)&& !is_null($alerta->comision4))
-            {
+
                 $registro_alerta=new Alerta();
                 $registro_alerta->contrato=$alerta->contrato;
                 $registro_alerta->tipo_venta=$transaccion->tipo_venta;
@@ -338,7 +371,7 @@ LEFT JOIN
                 $registro_alerta->empleado=$transaccion->empleado;
                 $registro_alerta->udn=$transaccion->udn;
                 $registro_alerta->pdv=$transaccion->pdv;
-                $registro_alerta->tipo=3;
+                $registro_alerta->tipo=$tipo;
                 $registro_alerta->periodo=$request->periodo;
                 $registro_alerta->conciliacion_id=$request->conciliacion_id;
                 $registro_alerta->save();
@@ -381,7 +414,7 @@ LEFT JOIN
         $alertas=DB::table('alertas')
             ->select(DB::raw('count(*) as fraude_aviso1'))
             ->where('conciliacion_id',$conciliacion_id)
-            ->where('tipo',1)
+            ->where('tipo','like','1%')
             ->get()
             ->first();
         $fraude_aviso1=$alertas->fraude_aviso1;
@@ -389,7 +422,7 @@ LEFT JOIN
         $alertas=DB::table('alertas')
             ->select(DB::raw('count(*) as fraude_aviso2'))
             ->where('conciliacion_id',$conciliacion_id)
-            ->where('tipo',2)
+            ->where('tipo','like','2%')
             ->get()
             ->first();
         $fraude_aviso2=$alertas->fraude_aviso2;
@@ -397,7 +430,7 @@ LEFT JOIN
         $alertas=DB::table('alertas')
             ->select(DB::raw('count(*) as alerta_cb'))
             ->where('conciliacion_id',$conciliacion_id)
-            ->where('tipo',3)
+            ->where('tipo','like','3%')
             ->get()
             ->first();
         $alerta_cb=$alertas->alerta_cb;

@@ -111,7 +111,7 @@ $vista_regional=false;
 $vista_director=false;
 if(strtoupper($empleado->puesto)=='EJECUTIVO'){$vista_ejecutivo=true;}
 if(strtoupper($empleado->puesto)=='DIRECTOR'){$vista_director=true;}
-if(strtoupper($empleado->puesto)=='REGIONAL'){$vista_regional=true;}
+if(strtoupper($empleado->puesto)=='REGIONAL' || strtoupper($empleado->puesto)=='GERENTE REGIONAL'){$vista_regional=true;}
 if(strtoupper($empleado->puesto)=='GERENTE SUCURSALES' || strtoupper($empleado->puesto)=='GERENTE ROTATIVO' || strtoupper($empleado->puesto)=='GERENTE IN TRAINING'){$vista_gerente=true;}
 
 $pagos=App\Models\Payment::where('calculo_id',$id_calculo)

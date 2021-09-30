@@ -14,7 +14,7 @@
                         <i class="fas fa-bars" style='font-size:20px;color:red'></i>
                     </a>
                 </div>
-                <div v-if="ultimo==id" class="w-1/12 font-bold text-green-600">
+                <div class="w-1/12 font-bold text-green-600">
                     <i class="fas fa-edit cursor-pointer" v-on:click="toogleEditMode()"></i>
                 </div>
                 <div v-if="edit_mode" class="flex flex-col w-10/12 space-y-3">

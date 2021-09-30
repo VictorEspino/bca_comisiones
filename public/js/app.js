@@ -2967,7 +2967,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -24516,44 +24515,38 @@ var render = function() {
                                 [
                                   _c(
                                     "option",
-                                    { attrs: { value: "2021-01" } },
-                                    [_vm._v("Enero 2021")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "2021-02" } },
-                                    [_vm._v("Febrero 2021")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "2021-03" } },
-                                    [_vm._v("Marzo 2021")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "2021-04" } },
-                                    [_vm._v("Abril 2021")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "2021-05" } },
-                                    [_vm._v("Mayo 2021")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "2021-06" } },
-                                    [_vm._v("Junio 2021")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
                                     { attrs: { value: "2021-07" } },
                                     [_vm._v("Julio 2021")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "2021-08" } },
+                                    [_vm._v("Agosto 2021")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "2021-09" } },
+                                    [_vm._v("Septiembre 2021")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "2021-10" } },
+                                    [_vm._v("Octubre 2021")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "2021-11" } },
+                                    [_vm._v("Noviembre 2021")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "2021-12" } },
+                                    [_vm._v("Diciembre 2021")]
                                   )
                                 ]
                               ),
@@ -27471,22 +27464,16 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm.ultimo == _vm.id
-                ? _c(
-                    "div",
-                    { staticClass: "w-1/12 font-bold text-green-600" },
-                    [
-                      _c("i", {
-                        staticClass: "fas fa-edit cursor-pointer",
-                        on: {
-                          click: function($event) {
-                            return _vm.toogleEditMode()
-                          }
-                        }
-                      })
-                    ]
-                  )
-                : _vm._e(),
+              _c("div", { staticClass: "w-1/12 font-bold text-green-600" }, [
+                _c("i", {
+                  staticClass: "fas fa-edit cursor-pointer",
+                  on: {
+                    click: function($event) {
+                      return _vm.toogleEditMode()
+                    }
+                  }
+                })
+              ]),
               _vm._v(" "),
               _vm.edit_mode
                 ? _c(

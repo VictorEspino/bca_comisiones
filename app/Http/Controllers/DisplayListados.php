@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Cuota;
 use App\Models\Transaccion;
 use App\Models\Calculo;
+use App\Models\User;
 use App\Models\CalculoDistribuidores;
 use App\Models\Empleado;
 use App\Models\BalanceComisionGerente;
@@ -419,23 +420,69 @@ class DisplayListados extends Controller
                                                'query'=>$query,
                                               ]));
     }
+    public function calculos_distribuidores_admin(Request $request)
+    {
+        $titulo='';
+        $query = DB::table('calculo_distribuidores')
+        ->where('calculo_distribuidores.tipo',$request->tipo)
+        ->select('calculo_distribuidores.id','calculo_distribuidores.descripcion','calculo_distribuidores.fecha_inicio','calculo_distribuidores.fecha_fin','calculo_distribuidores.pagado_en')
+        ->get();
+        if($request->tipo=='1')
+        {
+            $titulo="Adelantos Semanales";
+        }
+        else
+        {
+            $titulo="Cierres Mensuales";
+        }
+        return(view('calculos_distribuidores_admin',['titulo'=>$titulo,
+                                               'query'=>$query,
+                                              ]));
+    }
+    public function lista_pagos_calculo(Request $request)
+    {
+        $calculo=CalculoDistribuidores::find($request->id);
+        $titulo=$calculo->descripcion;
+        $query = DB::table('payment_distribuidors')
+        ->select('payment_distribuidors.distribuidor','payment_distribuidors.numero_distribuidor','payment_distribuidors.a_pagar','payment_distribuidors.pdf','payment_distribuidors.xml','payment_distribuidors.clabe','payment_distribuidors.titular')
+        ->orderBy('payment_distribuidors.distribuidor')
+        ->get();
+        return(view('lista_pagos_calculo',['titulo'=>$titulo,
+                                               'query'=>$query,
+                                               'fecha_inicio'=> $calculo->fecha_inicio,
+                                               'fecha_fin'=> $calculo->fecha_fin,
+                                               'id'=>$calculo->id,
+                                               'fecha_pago'=>$calculo->pagado_en,
+                                              ]));
+    }
     public function estado_cuenta_distribuidor(Request $request)
     {
+        if(isset($request->numero_distribuidor))
+            {
+                $usuario=$request->numero_distribuidor;
+            }
+        else{
+            $usuario=Auth::user()->user;
+        }
+
+
+        $calculo=CalculoDistribuidores::find($request->id);
+
         $pago=PaymentDistribuidor::where('calculo_id',$request->id)
-                            ->where('numero_distribuidor',Auth::user()->user)
+                            ->where('numero_distribuidor',$usuario)
                             ->get()
                             ->first();
 
         $masivos=TransaccionDistribuidor::select(DB::raw('tipo_venta,count(*) as lineas,sum(importe) as rentas,sum(comision) as comision'))
                                             ->where('calculo_id',$request->id)
-                                            ->where('numero_distribuidor',Auth::user()->user)
+                                            ->where('numero_distribuidor',$usuario)
                                             ->where('servicio','not like','%NEG%')
                                             ->groupBy('tipo_venta')
                                             ->get();
 
         $empresariales=TransaccionDistribuidor::select(DB::raw('tipo_venta,count(*) as lineas,sum(importe) as rentas,sum(comision) as comision'))
                                             ->where('calculo_id',$request->id)
-                                            ->where('numero_distribuidor',Auth::user()->user)
+                                            ->where('numero_distribuidor',$usuario)
                                             ->where('servicio','like','%NEG%')
                                             ->groupBy('tipo_venta')
                                             ->get();
@@ -519,7 +566,10 @@ class DisplayListados extends Controller
             }
         }
 
-        return(view('estado_cuenta_distribuidor',['descripcion'=>'Cierre de mayo 2021',
+        return(view('estado_cuenta_distribuidor',['descripcion'=>$calculo->descripcion,
+                                                  'distribuidor'=>$pago->distribuidor,
+                                                  'clabe'=>$pago->clabe,
+                                                  'titular'=>$pago->titular,
                                                   'id'=>$request->id,
                                                   'comision'=>$pago->comision,
                                                   'residual'=>$pago->residual,
@@ -551,6 +601,9 @@ class DisplayListados extends Controller
                                                   'rs_u_e'=>$rs_u_e,
                                                   'rs_r_e'=>$rs_r_e,
                                                   'rs_c_e'=>$rs_c_e,
+                                                  'pdf'=>$pago->pdf,
+                                                  'xml'=>$pago->xml,
+
                                                     ]));
     }
     public function export_transacciones_distribuidor(Request $request)

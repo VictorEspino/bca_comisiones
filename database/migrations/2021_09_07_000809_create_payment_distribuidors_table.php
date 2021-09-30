@@ -22,6 +22,10 @@ class CreatePaymentDistribuidorsTable extends Migration
             $table->float("adelantos");
             $table->float("charge_back");
             $table->float("a_pagar");
+            $table->string("pdf");
+            $table->string("xml");
+            $table->string("clabe");
+            $table->string("titular");
             $table->foreignId("calculo_id");
             $table->timestamps();
         });

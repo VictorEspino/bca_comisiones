@@ -11,6 +11,7 @@ use App\Http\Controllers\ConciliacionController;
 use App\Http\Controllers\CalculoComisionesDistController;
 use App\Http\Controllers\BalanceComisionesDistController;
 use App\Http\Controllers\PaymentDistController;
+use App\Http\Controllers\ExcelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -150,8 +151,14 @@ Route::get('/pagos_distribuidores/{id}',[DisplayListados::class,'pagos_distribui
 Route::get('/calculos_semanales/{tipo}',[DisplayListados::class,'calculos_distribuidores'])->name("calculos_semanales")->middleware('auth');
 Route::get('/calculos_mensuales/{tipo}',[DisplayListados::class,'calculos_distribuidores'])->name("calculos_mensuales")->middleware('auth');
 
+Route::get('/calculos_semanales_admin/{tipo}',[DisplayListados::class,'calculos_distribuidores_admin'])->name("calculos_semanales_admin")->middleware('auth');
+Route::get('/calculos_mensuales_admin/{tipo}',[DisplayListados::class,'calculos_distribuidores_admin'])->name("calculos_mensuales_admin")->middleware('auth');
+Route::get('/lista_pagos_calculo/{id}',[DisplayListados::class,'lista_pagos_calculo'])->middleware('auth');
+
 Route::get('/estado_cuenta_distribuidor/{id}',[DisplayListados::class,'estado_cuenta_distribuidor'])->name("estado_cuenta_distribuidor")->middleware('auth');
+Route::get('/estado_cuenta_distribuidor/{id}/{numero_distribuidor}',[DisplayListados::class,'estado_cuenta_distribuidor'])->name("estado_cuenta_distribuidor")->middleware('auth');
 Route::get('/export_transacciones_distribuidor/{id}',[DisplayListados::class,'export_transacciones_distribuidor'])->middleware('auth');
+Route::post('/cargar_factura_distribuidor',[FileUploadController::class,'cargar_factura_distribuidor'])->name('cargar_factura_distribuidor')->middleware('auth');
 
 Route::get('/conciliacion_erp_att/{conciliacion_id}/{periodo}', [ConciliacionController::class,'conciliacion_erp_att']);
 Route::get('/residual_45dias/{conciliacion_id}/{periodo}', [ConciliacionController::class,'residual_45dias']);
@@ -159,3 +166,9 @@ Route::get('/fraude_aviso1/{conciliacion_id}/{periodo}', [ConciliacionController
 Route::get('/fraude_aviso2/{conciliacion_id}/{periodo}', [ConciliacionController::class,'fraude_aviso2']);
 Route::get('/alerta_cb/{conciliacion_id}/{periodo}', [ConciliacionController::class,'alerta_cb']);
 Route::get('/terminar_conciliacion/{conciliacion_id}/{periodo}', [ConciliacionController::class,'conciliacion_terminar']);
+
+Route::post('/carga_transacciones',[ExcelController::class,'transaccions_import'])->name('carga_transacciones')->middleware('auth');
+Route::post('/carga_empleados',[ExcelController::class,'empleados_import'])->name('carga_empleados')->middleware('auth');
+Route::post('/carga_cuotas',[ExcelController::class,'cuotas_import'])->name('carga_cuotas')->middleware('auth');
+Route::post('/carga_ajustes',[ExcelController::class,'ajustes_import'])->name('carga_ajustes')->middleware('auth');
+Route::get('/calculo_seguimiento/{id}',[CalculoComisionesController::class,'calculo_seguimiento'])->middleware('auth');

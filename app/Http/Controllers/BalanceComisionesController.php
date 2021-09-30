@@ -159,7 +159,7 @@ class BalanceComisionesController extends Controller
             'cumple_objetivo'=>true,
             'porcentaje'=>1,
             'nombre'=>'',
-            'puesto'=>'Ejecutivo',
+            'puesto'=>'EJECUTIVO',
             'comentario'=>'',
             'status'=>'Fail'
         );
@@ -201,7 +201,7 @@ class BalanceComisionesController extends Controller
 
         $respuesta["puesto"]=$puesto;
 
-        if($esquema==1 && $puesto=="Ejecutivo")
+        if($esquema==1 && strtoupper($puesto)=="EJECUTIVO")
         {
             if(!($uds_activacion>=10 || ($uds_activacion>=6 && $uds_aep>=4) || ($uds_activacion+$uds_aep>=10)))
             {
@@ -209,7 +209,7 @@ class BalanceComisionesController extends Controller
                 $porcentaje_cobro=0.5;
             }
         }
-        if($esquema==2 && $puesto=="Ejecutivo")
+        if($esquema==2 && strtoupper($puesto)=="EJECUTIVO")
         {
             if(!($uds_activacion>=4 || ($uds_activacion>=2 && $uds_aep>=2) || ($uds_activacion+$uds_aep>=4)))
             {

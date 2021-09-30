@@ -1,12 +1,23 @@
 <x-app-layout>
     <x-slot name="header">
-         {{ __('Principal') }}
+         {{ __('Estado de Cuenta') }}
     </x-slot>
     <div class="w-full flex flex-col text-gray-700">
         <div class="w-full flex flex-row">
             <div class="w-1/2">
-                <div class="w-full text-2xl font-semibold">Estado de cuenta de comisiones</div>
+                <div class="w-full text-2xl font-bold">{{$distribuidor}}</div>
+                <div class="w-full text-xl font-semibold">Estado de cuenta de comisiones</div>
                 <div class="w-full">{{$descripcion}}</div>
+                @if(session('status')!='')
+                <div class="w-full text-sm rounded font-bold p-2 bg-green-300 text-gray-600">
+                    {{session('status')}}
+                </div>
+                @endif
+                @if($errors->any())
+                <div class="w-full text-sm rounded font-bold p-2 bg-red-300 text-gray-600">
+                    Revise la foma de FACTURA
+                </div>
+                @endif
                 <div class="pt-4 w-full text-2xl text-green-600 font-bold flex justify-center"><a href="/export_transacciones_distribuidor/{{$id}}"><i class="far fa-file-excel"></i><span class="text-sm"> Exportar a EXCEL</span></a></div>
             </div>
             <div class="w-1/2 mr-4 flex justify-center">
@@ -38,6 +49,11 @@
                 </table>
             </div>
         </div>
+
+        
+
+
+
         <div class="w-full flex flex-row space-x-2 pt-4">
             <div class="w-1/2 p-2 flex flex-col">
                 <div class="w-full bg-gray-200 rounded-t-lg p-3 text-xl text-gray-100 bg-gradient-to-br from-green-700 to-green-400 flex flex-row justify-between">
@@ -152,6 +168,87 @@
                 </div>
             </div>
         </div>
+
+        <div class="w-full flex flex-row space-x-2 pt-4">
+            <div class="w-full p-2 flex flex-col">
+                <div class="w-full bg-gray-200 rounded-t-lg p-3 text-xl text-gray-100 bg-gradient-to-br from-yellow-700 to-yellow-400 flex flex-row justify-between">
+                    <div class="font-bold">Factura</div>
+                    <div class="font-bold text-sm"></div>
+                </div>
+                @if(!is_null($pdf))
+                <div class="w-full flex flex-col pt-3 pb-3">
+                    <div class="w-full flex flex-row ">
+                        <div class="w-1/3 flex flex-col">
+                            <div class="flex justify-center">
+                                <a href="/facturas/{{$pdf}}" download>
+                                    <i class="text-2xl text-red-700 far fa-file-pdf"></i> PDF 
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="w-1/3 flex flex-col">
+                            <div class="flex justify-center">
+                                <a href="/facturas/{{$xml}}" download>
+                                    <i class="text-2xl text-blue-600 far fa-file-code"></i> XML
+                                </a>
+                            </div>
+                        </div>
+                        <div class="w-1/3 flex flex-col">
+                            <div class="w-full text-sm font-bold">CLABE: {{$clabe}}</div>
+                            <div class="w-full text-sm font-bold">Titular: {{$titular}}</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if(Auth::user()->tipo=="distribuidor")
+                <div class="w-full flex flex-col shadow-lg rounded-b-lg p-5">
+                    <form method="POST" action="{{route('cargar_factura_distribuidor')}}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="w-full flex flex-row ">
+                            <div class="w-5/12 flex flex-col">
+                                <span class="text-sm text-gray-700">Archivo PDF</span>
+                                <input class="w-full" type="file" name="pdf_file">
+                                @error('pdf_file')
+                                    <br><span class="text-xs italic text-red-700 text-xs">{{ $message }}</span>
+                                @enderror  
+                            </div>
+                            <div class="w-5/12 flex flex-col">
+                                <span class="text-sm text-gray-700">Archivo XML</span>
+                                <input class="w-full" type="file" name="xml_file">
+                                @error('xml_file')
+                                    <br><span class="text-xs italic text-red-700 text-xs">{{ $message }}</span>
+                                @enderror 
+                            </div>
+                            <div class="w-2/12 flex flex-col">
+                                <input type="hidden" name="calculo_id" value="{{$id}}">
+                                <input type="hidden" name="numero_distribuidor" value="{{Auth::user()->user}}">
+                                <button class="w-full p-3 bg-green-500 hover:bg-green-700 font-bold rounded-lg text-gray-200 text-xl">Cargar</button>
+                            </div>
+                        </div>
+                        <div class="w-full flex flex-row space-x-10 pt-5">
+                            <div class="w-1/2 flex flex-col">
+                                <span class="text-sm text-gray-700">CLABE</span>
+                                <input class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600" type="text" name="clabe" value="{{old('clabe')}}">
+                                @error('clabe')
+                                    <br><span class="text-xs italic text-red-700 text-xs">{{ $message }}</span>
+                                @enderror  
+                            </div>
+                            <div class="w-1/2 flex flex-col">
+                                <span class="text-sm text-gray-700">Titular</span>
+                                <input class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600" type="text" name="titular" value="{{old('titular')}}">
+                                @error('titular')
+                                    <br><span class="text-xs italic text-red-700 text-xs">{{ $message }}</span>
+                                @enderror  
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @endif
+                
+            </div>
+        </div>
+        
+        
     </div>
 
 </x-app-layout>

@@ -15,8 +15,8 @@
         </div>
         <div class="flex flex-row bg-gray-100 border-b-2 bg-blue-200 rounded-lg shadow-lg py-3 px-3">
             <div class="text-xl font-thin w-2/3 flex flex-col">
-                <div class="font-bold">Residual - Regla 45 dias - Mes (-1)</div>
-                <div class="text-xs font-thin">Contratos activados/renovados en {{$periodo_menos_1}} que <span class="font-bold">no aparecen medidos</span> para comision residual en {{$periodo}}</div> 
+                <div class="font-bold">Residual - Regla 45 dias - Mes (-2)</div>
+                <div class="text-xs font-thin">Contratos activados/renovados en {{$periodo_menos_2}} que <span class="font-bold">no aparecen medidos</span> para comision residual en {{$periodo}}</div> 
                 <div class="text-xs italic font-thin">(Se emite formato de aclaracion)</div>
             </div>
             <div class="text-3xl font-bold w-1/6 flex justify-center">{{$regla_45d}}</div>

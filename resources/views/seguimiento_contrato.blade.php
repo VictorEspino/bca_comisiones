@@ -113,7 +113,24 @@
 ?>
                             <tr>
                                 <td class="border px-4 py-1 text-sm font-thin text-gray-800">{{$contrato->periodo}}</td>
-                                <td class="border px-4 py-1 text-sm font-bold text-gray-800">{{$contrato->tipo=='1'?'Alerta Fraude 1':($contrato->tipo=='2'?'Alerta Fraude 2':'Alerta Charge-Back')}}</td>
+                                <td class="border px-4 py-1 text-sm font-bold text-gray-800">
+                                    <?php
+                                    if($contrato->tipo=='1')
+                                     {echo 'Alerta Roja Fraude 1';}
+                                     if($contrato->tipo=='12')
+                                     {echo 'Alerta Amarilla Fraude 1';}
+                                    if($contrato->tipo=='2')
+                                     {echo 'Alerta Fraude 2';}
+                                    if($contrato->tipo=='22')
+                                     {echo 'Alerta Amarilla Fraude 2';}
+                                    if($contrato->tipo=='3')
+                                     {echo 'Alerta Roja Charge-Back';}
+                                    if($contrato->tipo=='32')
+                                     {echo 'Alerta Amarilla Charge-Back';}
+                                    ?>
+
+
+                                </td>
                             </tr>
 <?php
                 }

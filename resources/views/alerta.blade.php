@@ -16,12 +16,13 @@ header("Expires: 0");
 <td style="background-color:#FF0000;color:#FFFFFF"><b>Empleado</b></td>	
 <td style="background-color:#FF0000;color:#FFFFFF"><b>UDN</b></td>	
 <td style="background-color:#FF0000;color:#FFFFFF"><b>PDV</b></td>
-<td style="background-color:#FF0000;color:#FFFFFF"><b>Conciliacion</b></td>		
+<td style="background-color:#FF0000;color:#FFFFFF"><b>Conciliacion</b></td>	
+<td style="background-color:#FF0000;color:#FFFFFF"><b>Tipo</b></td>		
 </tr>
 <?php
-$alertas=App\Models\Alerta::where('conciliacion_id',$conciliacion_id)
+$alertas=App\Models\Alerta::where('conciliacion_id','like',$conciliacion_id.'%')
 ->where('periodo',$periodo)
-->where('tipo',$tipo)
+->where('tipo','like',$tipo.'%')
 ->get();
 foreach ($alertas as $alerta) {
 	?>
@@ -36,6 +37,7 @@ foreach ($alertas as $alerta) {
     <td>{{$alerta->udn}}</td>
     <td>{{$alerta->pdv}}</td>
     <td>{{$alerta->periodo}}</td>
+    <td>{{$alerta->tipo<10?'ROJA':'AMARILLA'}}</td>
 
 	</tr>
 <?php

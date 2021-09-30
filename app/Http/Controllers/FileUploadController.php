@@ -13,6 +13,7 @@ use App\Models\ComisionATT;
 use App\Models\Residual;
 use App\Models\ChargeBackAtt;
 use App\Models\Conciliacion;
+use App\Models\PaymentDistribuidor;
 
 class FileUploadController extends Controller
 
@@ -525,5 +526,36 @@ class FileUploadController extends Controller
                 ->update(['charge_back_att'=>true]);
         $respuesta['registros']=$registros;
         return json_encode($respuesta);
+    }
+    public function cargar_factura_distribuidor(Request $request)
+    {
+        //return($request);
+        $request->validate([
+            'pdf_file' => 'required|mimes:pdf',
+            'xml_file' => 'required|mimes:xml',
+            'clabe'=>'required|digits:18',
+            'titular'=>'required|max:50',
+           ]);
+
+        $upload_path = public_path('facturas');
+        $file_name = $request->file("pdf_file")->getClientOriginalName();
+        $generated_new_name_pdf = $request->numero_distribuidor.'_'.$request->calculo_id.'_'.time() . '.' . $request->file("pdf_file")->getClientOriginalExtension();
+        $request->file("pdf_file")->move($upload_path, $generated_new_name_pdf);
+
+        $upload_path = public_path('facturas');
+        $file_name = $request->file("xml_file")->getClientOriginalName();
+        $generated_new_name_xml = $request->numero_distribuidor.'_'.$request->calculo_id.'_'.time() . '.' . $request->file("xml_file")->getClientOriginalExtension();
+        $request->file("xml_file")->move($upload_path, $generated_new_name_xml);
+
+        PaymentDistribuidor::where('calculo_id',$request->calculo_id)
+                            ->where('numero_distribuidor',$request->numero_distribuidor)
+                            ->update([
+                                'pdf'=>$generated_new_name_pdf,
+                                'xml'=>$generated_new_name_xml,
+                                'clabe'=>$request->clabe,
+                                'titular'=>$request->titular,
+                            ]);
+
+        return(back()->withStatus('Datos de facturacion OK'));
     }
 }

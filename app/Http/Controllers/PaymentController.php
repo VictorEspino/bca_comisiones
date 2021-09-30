@@ -17,6 +17,7 @@ class PaymentController extends Controller
     public function generar_pagos(Request $request)
     {
         $id_calculo=$request->id;
+        $this->ajuste_25($id_calculo);
         $deletedRows = Payment::where('calculo_id', $id_calculo)->delete();
         $balances=DB::select(DB::raw(
             "select a.empleado, sum(a.comision_ventas) as comision_ventas, sum(a.comision_gerente) as comision_gerente,sum(a.comision_regional) as comision_regional, sum(a.comision_director) as comision_director,sum(a.adeudo_anterior) as adeudo_anterior,sum(a.charge_back) as charge_back,sum(a.retroactivo) as retroactivo from 
@@ -170,9 +171,9 @@ class PaymentController extends Controller
         }
         return($balances);
     }
-    public function ajuste_25(Request $request)
+    public function ajuste_25($calculo_id)
     {
-        $id_calculo=$request->id;
+        $id_calculo=$calculo_id;
         $empleados=DB::table("ajuste_25")->where('calculo_id',$id_calculo)->get();
         foreach($empleados as $empleado)
         {

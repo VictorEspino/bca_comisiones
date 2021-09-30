@@ -20,13 +20,12 @@
                                     <div v-if="this.etapa==0">
                                         <select class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
                                             name="periodo" type="text" placeholder="YYYY-MM-DD" v-model="periodo">
-                                            <option value="2021-01">Enero 2021</option>
-                                            <option value="2021-02">Febrero 2021</option>
-                                            <option value="2021-03">Marzo 2021</option>
-                                            <option value="2021-04">Abril 2021</option>
-                                            <option value="2021-05">Mayo 2021</option>
-                                            <option value="2021-06">Junio 2021</option>
                                             <option value="2021-07">Julio 2021</option>
+                                            <option value="2021-08">Agosto 2021</option>
+                                            <option value="2021-09">Septiembre 2021</option>
+                                            <option value="2021-10">Octubre 2021</option>
+                                            <option value="2021-11">Noviembre 2021</option>
+                                            <option value="2021-12">Diciembre 2021</option>
                                         </select>
                                         <p class="text-red-500 text-xs italic">Campo obligatorio</p>
                                     </div>
