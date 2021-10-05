@@ -18,7 +18,7 @@
                     Revise la foma de FACTURA
                 </div>
                 @endif
-                <div class="pt-4 w-full text-2xl text-green-600 font-bold flex justify-center"><a href="/export_transacciones_distribuidor/{{$id}}"><i class="far fa-file-excel"></i><span class="text-sm"> Exportar a EXCEL</span></a></div>
+                <div class="pt-4 w-full text-2xl text-green-600 font-bold flex justify-center"><a href="/export_transacciones_distribuidor/{{$id}}/{{$usuario}}"><i class="far fa-file-excel"></i><span class="text-sm"> Exportar a EXCEL</span></a></div>
             </div>
             <div class="w-1/2 mr-4 flex justify-center">
                 <table class="w-2/3">
@@ -168,7 +168,20 @@
                 </div>
             </div>
         </div>
-
+        @if(!empty($cr0))
+        <div class="w-full flex flex-row space-x-2 pt-4">
+            <div class="w-full p-2 flex flex-col">
+                <div class="w-full bg-gray-200 rounded-t-lg p-3 text-xl text-gray-100 bg-gradient-to-br from-red-700 to-red-400 flex flex-row justify-between">
+                    <div class="font-bold">No comisionadas</div>
+                </div>
+                <div class="w-full flex flex-col shadow-lg rounded-b-lg p-5">
+                    @foreach($cr0 as $no_comision)
+                        <div class="text-base">{{$no_comision->razon_cr0}} - {{$no_comision->lineas}}</div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @endif
         <div class="w-full flex flex-row space-x-2 pt-4">
             <div class="w-full p-2 flex flex-col">
                 <div class="w-full bg-gray-200 rounded-t-lg p-3 text-xl text-gray-100 bg-gradient-to-br from-yellow-700 to-yellow-400 flex flex-row justify-between">

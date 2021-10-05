@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; filename=transacciones_distribuidor_{{$numero_distribuidor}}.xls");
+header("Content-Disposition: attachment; filename=transacciones_distribuidor_".$numero_distribuidor.".xls");
 header("Pragma: no-cache");
 header("Expires: 0");
 ?>
@@ -19,6 +19,7 @@ header("Expires: 0");
 <td><b>plazo</td>
 <td><b>eq_sin_costo</td>
 <td style="background-color:#0000FF;color:#FFFFFF"><b>comision</td>
+<td style="background-color:#ff3300;color:#FFFFFF"><b>observaciones</td>
 </tr>
 <?php
 $transacciones=App\Models\TransaccionDistribuidor::where('calculo_id',$id_calculo)
@@ -41,6 +42,7 @@ foreach ($transacciones as $transaccion) {
 	<td>{{$transaccion->plazo}}</td>
 	<td>{{$transaccion->eq_sin_costo}}</td>
 	<td style="color:#0000FF">{{$transaccion->comision}}</td>
+	<td>{{$transaccion->razon_cr0}}</td>
 	</tr>
 <?php
 }

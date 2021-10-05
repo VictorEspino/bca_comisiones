@@ -445,6 +445,7 @@ class DisplayListados extends Controller
         $titulo=$calculo->descripcion;
         $query = DB::table('payment_distribuidors')
         ->select('payment_distribuidors.distribuidor','payment_distribuidors.numero_distribuidor','payment_distribuidors.a_pagar','payment_distribuidors.pdf','payment_distribuidors.xml','payment_distribuidors.clabe','payment_distribuidors.titular')
+        ->where('calculo_id',$request->id)
         ->orderBy('payment_distribuidors.distribuidor')
         ->get();
         return(view('lista_pagos_calculo',['titulo'=>$titulo,
@@ -477,6 +478,7 @@ class DisplayListados extends Controller
                                             ->where('calculo_id',$request->id)
                                             ->where('numero_distribuidor',$usuario)
                                             ->where('servicio','not like','%NEG%')
+                                            ->where('credito',1)
                                             ->groupBy('tipo_venta')
                                             ->get();
 
@@ -484,8 +486,18 @@ class DisplayListados extends Controller
                                             ->where('calculo_id',$request->id)
                                             ->where('numero_distribuidor',$usuario)
                                             ->where('servicio','like','%NEG%')
+                                            ->where('credito',1)
                                             ->groupBy('tipo_venta')
                                             ->get();
+
+        $cr0=TransaccionDistribuidor::select(DB::raw('razon_cr0,count(*) as lineas'))
+        ->where('calculo_id',$request->id)
+        ->where('numero_distribuidor',$usuario)
+        ->where('credito',0)
+        ->groupBy('razon_cr0')
+        ->get();
+
+ 
 
         $ac_u_m=0;
         $ac_r_m=0;
@@ -603,13 +615,23 @@ class DisplayListados extends Controller
                                                   'rs_c_e'=>$rs_c_e,
                                                   'pdf'=>$pago->pdf,
                                                   'xml'=>$pago->xml,
+                                                  'usuario'=>$usuario,
+                                                  'cr0'=>$cr0
 
                                                     ]));
     }
     public function export_transacciones_distribuidor(Request $request)
     {
+        if(isset($request->numero_distribuidor))
+            {
+                $usuario=$request->numero_distribuidor;
+            }
+        else{
+                $usuario=Auth::user()->user;
+            }
+        
         return view('export_transacciones_distribuidor',['id_calculo'=>$request->id,
-                                                         'numero_distribuidor'=>Auth::user()->user,
+                                                         'numero_distribuidor'=>$usuario,
                                                         ]);
     }
 }
