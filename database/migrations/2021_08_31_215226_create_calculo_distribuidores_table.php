@@ -24,6 +24,7 @@ class CreateCalculoDistribuidoresTable extends Migration
             $table->boolean('eq0');
             $table->boolean('terminado');
             $table->foreignId('user_id');
+            $table->dateTime('fecha_limite');
             $table->timestamps();
         });
     }

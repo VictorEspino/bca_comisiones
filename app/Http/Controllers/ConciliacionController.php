@@ -97,7 +97,7 @@ class ConciliacionController extends Controller
     }
     public function residual_45dias(Request $request)
     {
-        return(0);
+        //return(0);
         $respuesta=array(
             'success'=>'Archivo cargado con exito',
             'registros'=>0,

@@ -677,7 +677,7 @@ class BalanceComisionesController extends Controller
                     ->first();
             if(is_null($empleado))
             {
-                $respuesta["comment"]="Directir no encontrado para el UDN";
+                $respuesta["comment"]="Director no encontrado para el UDN";
                 return($respuesta);
             }
         }
@@ -762,12 +762,12 @@ class BalanceComisionesController extends Controller
         }
 ////TIENDAS CON PROMOCION DE LOGRO POR APERTURA
 
-        if($rol=="GERENTE" && ($mediciones_pdv->udn=='132'))
+        if($rol=="GERENTE" && ($mediciones_pdv->udn=='133' || $mediciones_pdv->udn=='135'))
         {
-            if($porc_cierre_activacion<1) $porc_cierre_activacion=1;
-            if($porc_cierre_aep<1) $porc_cierre_aep=1;
-            if($porc_cierre_renovacion<1) $porc_cierre_renovacion=1;
-            if($porc_cierre_rep<1) $porc_cierre_rep=1;
+            $porc_cierre_activacion=1;
+            $porc_cierre_aep=1;
+            $porc_cierre_renovacion=1;
+            $porc_cierre_rep=1;
         }
 
         $respuesta["alc_act"]=$alcance_activacion;

@@ -11,7 +11,7 @@
                         <form action="{{route('nuevo_calculo_dist')}}" class="w-full" method="POST" >
                             @csrf
                             <div class="flex flex-row">
-                                <div class="w-1/2 px-3">
+                                <div class="w-1/3 px-3">
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                         for="tipo">
                                         Tipo
@@ -29,14 +29,25 @@
                                         @enderror 
                                     </div>
                                 </div>
-                                <div class="w-1/2 px-3">
+                                <div class="w-1/3 px-3">
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                             for="grid-last-name">
                                         Fecha de Pago
                                     </label>
                                     <input class="appearance-none block w-full bg-gray-200 text-grey-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                            name="f_pago" type="text" placeholder="YYYY-MM-DD" value="{{old('f_fin')}}">
+                                            name="f_pago" type="date" placeholder="YYYY-MM-DD" value="{{old('f_pago')}}">
                                     @error('f_pago')
+                                    <p class="text-red-700 text-xs italic">{{ $message }}</p>
+                                    @enderror 
+                                </div>
+                                <div class="w-1/3 px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                            for="grid-last-name">
+                                        Fecha limite facturas
+                                    </label>
+                                    <input class="appearance-none block w-full bg-gray-200 text-grey-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                            name="f_limite" type="datetime-local" placeholder="YYYY-MM-DD" value="{{old('f_limite')}}">
+                                    @error('f_limite')
                                     <p class="text-red-700 text-xs italic">{{ $message }}</p>
                                     @enderror 
                                 </div>
@@ -49,7 +60,7 @@
                                     </label>
                                     <div>
                                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                            name="f_inicio" type="text" placeholder="YYYY-MM-DD" value="{{old('f_inicio')}}">
+                                            name="f_inicio" type="date" placeholder="YYYY-MM-DD" value="{{old('f_inicio')}}">
                                         @error('f_inicio')
                                         <p class="text-red-700 text-xs italic">{{ $message }}</p>
                                         @enderror 
@@ -62,7 +73,7 @@
                                         Fecha de Fin
                                     </label>
                                     <input class="appearance-none block w-full bg-gray-200 text-grey-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                            name="f_fin" type="text" placeholder="YYYY-MM-DD" value="{{old('f_fin')}}">
+                                            name="f_fin" type="date" placeholder="YYYY-MM-DD" value="{{old('f_fin')}}">
                                     @error('f_fin')
                                     <p class="text-red-700 text-xs italic">{{ $message }}</p>
                                     @enderror 

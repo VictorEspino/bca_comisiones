@@ -9,6 +9,7 @@ use App\Models\Calculo;
 use App\Models\User;
 use App\Models\CalculoDistribuidores;
 use App\Models\Empleado;
+use App\Models\Distribuidor;
 use App\Models\BalanceComisionGerente;
 use App\Models\BalanceComisionesVenta;
 use App\Models\BalanceComisionesRegional;
@@ -20,6 +21,8 @@ use App\Models\TransaccionDistribuidor;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
+use DateTime;
 
 class DisplayListados extends Controller
 {
@@ -469,6 +472,8 @@ class DisplayListados extends Controller
 
         $calculo=CalculoDistribuidores::find($request->id);
 
+        $distribuidor=Distribuidor::where('numero_distribuidor',$usuario)->get()->first();
+
         $pago=PaymentDistribuidor::where('calculo_id',$request->id)
                             ->where('numero_distribuidor',$usuario)
                             ->get()
@@ -577,9 +582,21 @@ class DisplayListados extends Controller
                 $rs_c_e=$empresarial->comision;
             }
         }
-
+        $sql_limite="select max(fecha_limite) as limite from calculo_distribuidores";
+        $ultimo=DB::select(DB::raw($sql_limite));
+        $ultimo=collect($ultimo)->first();
+        $puede_facturar="NO";
+        $limite  = new DateTime($ultimo->limite);
+        //echo $limite->format('Y-m-d H:i:s')."<br>";
+        $ahora=new DateTime('NOW');
+        //echo $ahora->format('Y-m-d H:i:s')."<br>";
+        $puede_facturar=$ahora>$limite?"NO":"SI";
+        //echo $puede_facturar;
+        //return;
         return(view('estado_cuenta_distribuidor',['descripcion'=>$calculo->descripcion,
-                                                  'distribuidor'=>$pago->distribuidor,
+                                                  'distribuidor'=>$distribuidor->nombre,
+                                                  'tipo_fiscal'=>$distribuidor->tipo_fiscal,
+                                                  'f_limite'=>$calculo->fecha_limite,
                                                   'clabe'=>$pago->clabe,
                                                   'titular'=>$pago->titular,
                                                   'id'=>$request->id,
@@ -615,8 +632,10 @@ class DisplayListados extends Controller
                                                   'rs_c_e'=>$rs_c_e,
                                                   'pdf'=>$pago->pdf,
                                                   'xml'=>$pago->xml,
+                                                  'carga_factura'=>$pago->carga_factura,
                                                   'usuario'=>$usuario,
-                                                  'cr0'=>$cr0
+                                                  'cr0'=>$cr0,
+                                                  'puede_facturar'=>$puede_facturar
 
                                                     ]));
     }

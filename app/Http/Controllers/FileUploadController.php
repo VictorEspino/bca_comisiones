@@ -554,6 +554,7 @@ class FileUploadController extends Controller
                                 'xml'=>$generated_new_name_xml,
                                 'clabe'=>$request->clabe,
                                 'titular'=>$request->titular,
+                                'carga_factura'=>now()->toDateTimeString(),
                             ]);
 
         return(back()->withStatus('Datos de facturacion OK'));

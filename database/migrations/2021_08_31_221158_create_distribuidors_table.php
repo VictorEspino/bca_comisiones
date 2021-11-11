@@ -21,6 +21,7 @@ class CreateDistribuidorsTable extends Migration
             $table->string('esquema_m_mas');
             $table->string('esquema_s_emp');
             $table->string('esquema_m_emp');
+            $table->integer('tipo_fiscal')->default(1);//1 es PERSONA MORAL, 2 ES PERSONA FISICA
             $table->timestamps();
         });
     }
