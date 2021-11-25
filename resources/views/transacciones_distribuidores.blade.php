@@ -15,7 +15,7 @@ header("Expires: 0");
 <td><b>contrato</td>
 <td><b>servicio</td>
 <td><b>producto</td>
-<td><b>importe</td>
+<td><b>importe (RENTA CON IMPUESTOS)</td>
 <td><b>plazo</td>
 <td><b>eq_sin_costo</td>
 <td style="background-color:#0000FF;color:#FFFFFF"><b>comision</td>

@@ -18,74 +18,71 @@ class BalanceComisionesController extends Controller
     {
         $id_calculo=$request->id;
         DB::delete('delete from balance_comision_ventas where calculo_id='.$id_calculo);
-
-        $mediciones=DB::select(DB::raw(
-            "
-            select numero_empleado,udn,
-            sum(a.u_act) as u_act,sum(a.r_act) as r_act,sum(a.c_act) as c_act,
-            sum(a.u_aep) as u_aep,sum(a.r_aep) as r_aep,sum(a.c_aep) as c_aep,
-            sum(a.u_ren) as u_ren,sum(a.r_ren) as r_ren,sum(a.c_ren) as c_ren,
-            sum(a.u_rep) as u_rep,sum(a.r_rep) as r_rep,sum(a.c_rep) as c_rep,
-            sum(a.u_seg) as u_seg,sum(a.r_seg) as r_seg,sum(a.c_seg) as c_seg,
-            sum(a.u_add) as u_add,sum(a.r_add) as r_add,sum(a.c_add) as c_add
-            from (
-                SELECT numero_empleado,udn,COUNT(tipo_venta) as u_act, SUM(importe) as r_act, SUM(comision_venta) as c_act,
-                0 as u_aep,0 as r_aep,0 as c_aep,
-                0 as u_ren,0 as r_ren,0 as c_ren,
-                0 as u_rep,0 as r_rep,0 as c_rep,
-                0 as u_seg,0 as r_seg,0 as c_seg,
-                0 as u_add,0 as r_add,0 as c_add
-                FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Activación' OR tipo_venta='Activacion')
-                group by numero_empleado,udn
-                UNION
-                SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
-                COUNT(tipo_venta) as u_aep,SUM(importe) as r_aep,SUM(comision_venta) as c_aep,
-                0 as u_ren,0 as r_ren,0 as c_ren,
-                0 as u_rep,0 as r_rep,0 as c_rep,
-                0 as u_seg,0 as r_seg,0 as c_seg,
-                0 as u_add,0 as r_add,0 as c_add
-                FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Activación Equipo Propio' OR tipo_venta='Activacion Equipo Propio')
-                group by numero_empleado,udn
-                UNION
-                SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
-                0 as u_aep,0 as r_aep,0 as c_aep,
-                COUNT(tipo_venta) as u_ren,SUM(importe) as r_ren,SUM(comision_venta) as c_ren,
-                0 as u_rep,0 as r_rep,0 as c_rep,
-                0 as u_seg,0 as r_seg,0 as c_seg,
-                0 as u_add,0 as r_add,0 as c_add
-                FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Renovación' OR tipo_venta='Renovacion')
-                group by numero_empleado,udn
-                UNION
-                SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
-                0 as u_aep,0 as r_aep,0 as c_aep,
-                0 as u_ren,0 as r_ren,0 as c_ren,
-                COUNT(tipo_venta) as u_rep,SUM(importe) as r_rep,SUM(comision_venta) as c_rep,
-                0 as u_seg,0 as r_seg,0 as c_seg,
-                0 as u_add,0 as r_add,0 as c_add
-                FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Renovación Equipo Propio' OR tipo_venta='Renovacion Equipo Propio')
-                group by numero_empleado,udn
-                UNION
-                SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
-                0 as u_aep,0 as r_aep,0 as c_aep,
-                0 as u_ren,0 as r_ren,0 as c_ren,
-                0 as u_rep,0 as r_rep,0 as c_rep,
-                COUNT(tipo_venta) as u_seg,SUM(importe) as r_seg,SUM(comision_venta) as c_seg,
-                0 as u_add,0 as r_add,0 as c_add
-                FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Protección de equipo' OR tipo_venta='Proteccion de equipo')
-                group by numero_empleado,udn
-                UNION
-                SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
-                0 as u_aep,0 as r_aep,0 as c_aep,
-                0 as u_ren,0 as r_ren,0 as c_ren,
-                0 as u_rep,0 as r_rep,0 as c_rep,
-                0 as u_seg,0 as r_seg,0 as c_seg,
-                COUNT(tipo_venta) as u_add,SUM(importe) as r_add,SUM(comision_venta) as c_add
-                FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='ADD ON' OR tipo_venta='ADD ON')
-                group by numero_empleado,udn
-                ) as a group by a.numero_empleado, a.udn
-            "
-               ));
-
+        $sql_mediciones="
+                select numero_empleado,udn,
+                sum(a.u_act) as u_act,sum(a.r_act) as r_act,sum(a.c_act) as c_act,
+                sum(a.u_aep) as u_aep,sum(a.r_aep) as r_aep,sum(a.c_aep) as c_aep,
+                sum(a.u_ren) as u_ren,sum(a.r_ren) as r_ren,sum(a.c_ren) as c_ren,
+                sum(a.u_rep) as u_rep,sum(a.r_rep) as r_rep,sum(a.c_rep) as c_rep,
+                sum(a.u_seg) as u_seg,sum(a.r_seg) as r_seg,sum(a.c_seg) as c_seg,
+                sum(a.u_add) as u_add,sum(a.r_add) as r_add,sum(a.c_add) as c_add
+                from (
+                    SELECT numero_empleado,udn,COUNT(tipo_venta) as u_act, SUM(importe) as r_act, SUM(comision_venta) as c_act,
+                    0 as u_aep,0 as r_aep,0 as c_aep,
+                    0 as u_ren,0 as r_ren,0 as c_ren,
+                    0 as u_rep,0 as r_rep,0 as c_rep,
+                    0 as u_seg,0 as r_seg,0 as c_seg,
+                    0 as u_add,0 as r_add,0 as c_add
+                    FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Activación' OR tipo_venta='Activacion')
+                    group by numero_empleado,udn
+                    UNION
+                    SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
+                    COUNT(tipo_venta) as u_aep,SUM(importe) as r_aep,SUM(comision_venta) as c_aep,
+                    0 as u_ren,0 as r_ren,0 as c_ren,
+                    0 as u_rep,0 as r_rep,0 as c_rep,
+                    0 as u_seg,0 as r_seg,0 as c_seg,
+                    0 as u_add,0 as r_add,0 as c_add
+                    FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Activación Equipo Propio' OR tipo_venta='Activacion Equipo Propio')
+                    group by numero_empleado,udn
+                    UNION
+                    SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
+                    0 as u_aep,0 as r_aep,0 as c_aep,
+                    COUNT(tipo_venta) as u_ren,SUM(importe) as r_ren,SUM(comision_venta) as c_ren,
+                    0 as u_rep,0 as r_rep,0 as c_rep,
+                    0 as u_seg,0 as r_seg,0 as c_seg,
+                    0 as u_add,0 as r_add,0 as c_add
+                    FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Renovación' OR tipo_venta='Renovacion')
+                    group by numero_empleado,udn
+                    UNION
+                    SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
+                    0 as u_aep,0 as r_aep,0 as c_aep,
+                    0 as u_ren,0 as r_ren,0 as c_ren,
+                    COUNT(tipo_venta) as u_rep,SUM(importe) as r_rep,SUM(comision_venta) as c_rep,
+                    0 as u_seg,0 as r_seg,0 as c_seg,
+                    0 as u_add,0 as r_add,0 as c_add
+                    FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Renovación Equipo Propio' OR tipo_venta='Renovacion Equipo Propio')
+                    group by numero_empleado,udn
+                    UNION
+                    SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
+                    0 as u_aep,0 as r_aep,0 as c_aep,
+                    0 as u_ren,0 as r_ren,0 as c_ren,
+                    0 as u_rep,0 as r_rep,0 as c_rep,
+                    COUNT(tipo_venta) as u_seg,SUM(importe) as r_seg,SUM(comision_venta) as c_seg,
+                    0 as u_add,0 as r_add,0 as c_add
+                    FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Protección de equipo' OR tipo_venta='Proteccion de equipo')
+                    group by numero_empleado,udn
+                    UNION
+                    SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,
+                    0 as u_aep,0 as r_aep,0 as c_aep,
+                    0 as u_ren,0 as r_ren,0 as c_ren,
+                    0 as u_rep,0 as r_rep,0 as c_rep,
+                    0 as u_seg,0 as r_seg,0 as c_seg,
+                    COUNT(tipo_venta) as u_add,SUM(importe) as r_add,SUM(comision_venta) as c_add
+                    FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='ADD ON' OR tipo_venta='ADD ON')
+                    group by numero_empleado,udn
+                    ) as a group by a.numero_empleado, a.udn
+                ";
+        $mediciones=DB::select(DB::raw($sql_mediciones));
         $mediciones=collect($mediciones);
         $cuotas=Cuota::where('calculo_id',$id_calculo)->get();
         $empleados=Empleado::where('calculo_id',$id_calculo)->get();
@@ -169,6 +166,11 @@ class BalanceComisionesController extends Controller
         
         $uds_activacion=0;
         $uds_aep=0;
+        $uds_renovacion=0;
+        $uds_rep=0;
+
+        $sucursal=0;
+
         $comentario="Actividad en";
 
         foreach($mediciones_pdv as $in_udn)
@@ -188,6 +190,10 @@ class BalanceComisionesController extends Controller
 
             $uds_activacion=$uds_activacion+$in_udn->u_act;
             $uds_aep=$uds_aep+$in_udn->u_aep;
+            $uds_renovacion=$uds_renovacion+$in_udn->u_ren;
+            $uds_rep=$uds_rep+$in_udn->u_rep;
+
+            $sucursal=$in_udn->udn;
         }
         $respuesta["esquema"]=$esquema;
         $respuesta["comentario"]=$comentario;
@@ -215,6 +221,27 @@ class BalanceComisionesController extends Controller
             {
                 $cumple_objetivo=false;
                 $porcentaje_cobro=0.5;
+            }
+        }
+
+        if($puesto=="EJECUTIVO DE RENOVACIONES")
+        {
+            $unidades=$uds_activacion+$uds_renovacion+$uds_aep+$uds_rep;
+            if($unidades<6)
+            {
+                $cumple_objetivo=false;
+                $porcentaje_cobro=0.0;
+
+            }
+        }
+        if($puesto=="RENOVADOR")
+        {
+            $unidades=$uds_activacion+$uds_renovacion+$uds_aep+$uds_rep;
+            if($unidades<7)
+            {
+                $cumple_objetivo=false;
+                $porcentaje_cobro=0.5;
+
             }
         }
         $respuesta["cumple_objetivo"]=$cumple_objetivo;

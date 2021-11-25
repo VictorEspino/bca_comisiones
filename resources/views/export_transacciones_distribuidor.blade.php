@@ -12,10 +12,11 @@ header("Expires: 0");
 <td><b>fecha</td>
 <td><b>tipo_venta</td>
 <td><b>mdn</td>
+<td><b>cliente</td>
 <td><b>contrato</td>
 <td><b>servicio</td>
 <td><b>producto</td>
-<td><b>importe</td>
+<td><b>importe (RENTA CON IMPUESTOS)</td>
 <td><b>plazo</td>
 <td><b>eq_sin_costo</td>
 <td style="background-color:#0000FF;color:#FFFFFF"><b>comision</td>
@@ -35,6 +36,7 @@ foreach ($transacciones as $transaccion) {
 	<td>{{$transaccion->fecha}}</td>
 	<td>{{$transaccion->tipo_venta}}</td>
     <td>{{$transaccion->mdn}}</td>
+	<td>{{$transaccion->cliente}}</td>
 	<td>{{$transaccion->contrato}}</td>
 	<td>{{$transaccion->servicio}}</td>
 	<td>{{$transaccion->producto}}</td>

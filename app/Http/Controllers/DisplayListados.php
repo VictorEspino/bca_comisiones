@@ -444,19 +444,36 @@ class DisplayListados extends Controller
     }
     public function lista_pagos_calculo(Request $request)
     {
+        $calculos_distribuidores=CalculoDistribuidores::where('id','<=',$request->id)->orderBy('id','desc')->get()->take(2);
+        $ultima_fecha='';
+        foreach($calculos_distribuidores as $historico)
+        {
+            $ultima_fecha=$historico->fecha_limite;
+        }
         $calculo=CalculoDistribuidores::find($request->id);
+        $calculos_historicos=CalculoDistribuidores::all();
         $titulo=$calculo->descripcion;
         $query = DB::table('payment_distribuidors')
         ->select('payment_distribuidors.distribuidor','payment_distribuidors.numero_distribuidor','payment_distribuidors.a_pagar','payment_distribuidors.pdf','payment_distribuidors.xml','payment_distribuidors.clabe','payment_distribuidors.titular')
         ->where('calculo_id',$request->id)
         ->orderBy('payment_distribuidors.distribuidor')
         ->get();
+        $atrasados= DB::table('payment_distribuidors')
+        ->select('payment_distribuidors.calculo_id','payment_distribuidors.distribuidor','payment_distribuidors.numero_distribuidor','payment_distribuidors.a_pagar','payment_distribuidors.pdf','payment_distribuidors.xml','payment_distribuidors.clabe','payment_distribuidors.titular')
+        ->where('calculo_id','<>',$request->id)
+        ->where('calculo_id','<',$request->id)
+        ->where('carga_factura','>',$ultima_fecha)
+        ->orderBy('payment_distribuidors.distribuidor')
+        ->get();
+        //return($atrasados);
         return(view('lista_pagos_calculo',['titulo'=>$titulo,
                                                'query'=>$query,
                                                'fecha_inicio'=> $calculo->fecha_inicio,
                                                'fecha_fin'=> $calculo->fecha_fin,
                                                'id'=>$calculo->id,
                                                'fecha_pago'=>$calculo->pagado_en,
+                                               'atrasados'=>$atrasados,
+                                               'calculos_historicos'=>$calculos_historicos
                                               ]));
     }
     public function estado_cuenta_distribuidor(Request $request)

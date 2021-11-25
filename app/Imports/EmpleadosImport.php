@@ -25,7 +25,7 @@ class EmpleadosImport implements ToModel,WithHeadingRow,WithValidation,WithBatch
         $fecha_db=\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($fecha);
 
         $modalidad=2;
-        if(strtoupper($row['puesto'])=="EJECUTIVO")
+        if(strtoupper($row['puesto'])=="EJECUTIVO" || strtoupper($row['puesto'])=="RENOVADOR")
         {
             $modalidad=1;
             if(intval($row['sueldo'])==0)
