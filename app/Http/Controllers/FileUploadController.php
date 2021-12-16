@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Cuota;
 use App\Models\Transaccion;
 use App\Models\Calculo;
+use App\Models\CalculoDistribuidores;
 use App\Models\ChargeBackInterno;
 use App\Models\ComisionATT;
 use App\Models\Residual;
@@ -546,6 +547,12 @@ class FileUploadController extends Controller
         $file_name = $request->file("xml_file")->getClientOriginalName();
         $generated_new_name_xml = $request->numero_distribuidor.'_'.$request->calculo_id.'_'.time() . '.' . $request->file("xml_file")->getClientOriginalExtension();
         $request->file("xml_file")->move($upload_path, $generated_new_name_xml);
+
+        $ultimo_limite=CalculoDistribuidores::orderBy('id','desc')->get()->first()->fecha_limite;
+        if(now()>=$ultimo_limite)
+        {
+            return(back()->withErrors(['error', 'Fuera del limite de facturacion']));
+        }
 
         PaymentDistribuidor::where('calculo_id',$request->calculo_id)
                             ->where('numero_distribuidor',$request->numero_distribuidor)

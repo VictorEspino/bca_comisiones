@@ -20,7 +20,7 @@
                 @endif
                 @if($errors->any())
                 <div class="w-full text-sm rounded font-bold p-2 bg-red-300 text-gray-600">
-                    Revise la foma de FACTURA
+                    La carga/actualizacion no se realizo - Revise la foma de FACTURA
                 </div>
                 @endif
                 <div class="pt-4 w-full text-2xl text-green-600 font-bold flex justify-center"><a href="/export_transacciones_distribuidor/{{$id}}/{{$usuario}}"><i class="far fa-file-excel"></i><span class="text-sm"> Exportar a EXCEL</span></a></div>

@@ -463,6 +463,7 @@ class DisplayListados extends Controller
         ->where('calculo_id','<>',$request->id)
         ->where('calculo_id','<',$request->id)
         ->where('carga_factura','>',$ultima_fecha)
+        ->where('carga_factura','<=',$calculo->fecha_limite)
         ->orderBy('payment_distribuidors.distribuidor')
         ->get();
         //return($atrasados);
