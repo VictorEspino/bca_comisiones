@@ -13,6 +13,8 @@
                         <td class="border border-gray-300 font-semibold bg-blue-500 text-gray-200 p-1 text-lg"><center>A</td>
                         <td class="border border-gray-300 font-semibold bg-blue-500 text-gray-200 p-1 text-lg"><center>Pago en</td>
                         <td class="border border-gray-300 font-semibold bg-blue-500 text-gray-200 p-1 text-lg"><center>Total</td>
+                        <td class="border border-gray-300 font-semibold bg-blue-500 text-gray-200 p-1 text-lg"><center>Estatus</td>
+
                     </tr>
                 <?php
                     $color=false;
@@ -26,6 +28,7 @@
                         <td class="border border-gray-300 font-light {{$color?'bg-gray-100':''}} text-gray-700 p-1 text-sm">{{$registro->fecha_fin}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-gray-100':''}} text-gray-700 p-1 text-sm">{{$registro->pagado_en}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-gray-100':''}} text-gray-700 p-1 text-sm">${{number_format($registro->a_pagar,2)}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-gray-100':''}} text-gray-700 p-1 text-sm">{!!$registro->estatus=='1'?'<center>OK':'<center>Cancelado por falta de factura<br>Se incluye cantidad en pago mensual'!!}</td>
                     </tr>
                 <?php
                     $color=!$color;

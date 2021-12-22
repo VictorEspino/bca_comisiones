@@ -18,6 +18,7 @@ use App\Models\PaymentDistribuidor;
 use App\Models\Conciliacion;
 use App\Models\LogConsulta;
 use App\Models\TransaccionDistribuidor;
+use App\Models\ChargeBackDistribuidor;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -409,7 +410,7 @@ class DisplayListados extends Controller
         ->join('payment_distribuidors', 'calculo_distribuidores.id', '=', 'payment_distribuidors.calculo_id')
         ->where('payment_distribuidors.numero_distribuidor',Auth::user()->user)
         ->where('calculo_distribuidores.tipo',$request->tipo)
-        ->select('calculo_distribuidores.id','calculo_distribuidores.descripcion','calculo_distribuidores.fecha_inicio','calculo_distribuidores.fecha_fin','calculo_distribuidores.pagado_en','payment_distribuidors.a_pagar')
+        ->select('calculo_distribuidores.id','calculo_distribuidores.descripcion','calculo_distribuidores.fecha_inicio','calculo_distribuidores.fecha_fin','calculo_distribuidores.pagado_en','payment_distribuidors.a_pagar','payment_distribuidors.estatus')
         ->get();
         if($request->tipo=='1')
         {
@@ -444,18 +445,31 @@ class DisplayListados extends Controller
     }
     public function lista_pagos_calculo(Request $request)
     {
-        $calculos_distribuidores=CalculoDistribuidores::where('id','<=',$request->id)->orderBy('id','desc')->get()->take(2);
+        $calculo=CalculoDistribuidores::find($request->id);
+
+        $calculos_distribuidores=CalculoDistribuidores::where('id','<=',$request->id)
+                                        ->where('tipo',$calculo->tipo)
+                                        ->orderBy('id','desc')
+                                        ->get()->take(2);
         $ultima_fecha='';
         foreach($calculos_distribuidores as $historico)
         {
             $ultima_fecha=$historico->fecha_limite;
         }
-        $calculo=CalculoDistribuidores::find($request->id);
+        
+        $calculos_mismo_tipo=CalculoDistribuidores::select('id')
+                                                    ->where('tipo',$calculo->tipo)
+                                                    ->get();
+        $calculos_mismo_tipo=$calculos_mismo_tipo->pluck('id');
+
+        //return($calculos_mismo_tipo);
+
         $calculos_historicos=CalculoDistribuidores::all();
         $titulo=$calculo->descripcion;
         $query = DB::table('payment_distribuidors')
         ->select('payment_distribuidors.distribuidor','payment_distribuidors.numero_distribuidor','payment_distribuidors.a_pagar','payment_distribuidors.pdf','payment_distribuidors.xml','payment_distribuidors.clabe','payment_distribuidors.titular')
         ->where('calculo_id',$request->id)
+        ->where('estatus',1)
         ->orderBy('payment_distribuidors.distribuidor')
         ->get();
         $atrasados= DB::table('payment_distribuidors')
@@ -464,6 +478,13 @@ class DisplayListados extends Controller
         ->where('calculo_id','<',$request->id)
         ->where('carga_factura','>',$ultima_fecha)
         ->where('carga_factura','<=',$calculo->fecha_limite)
+        ->whereIn('calculo_id',$calculos_mismo_tipo)
+        ->orderBy('payment_distribuidors.distribuidor')
+        ->get();
+        $cancelados = DB::table('payment_distribuidors')
+        ->select('payment_distribuidors.calculo_id','payment_distribuidors.distribuidor','payment_distribuidors.numero_distribuidor','payment_distribuidors.a_pagar','payment_distribuidors.pdf','payment_distribuidors.xml','payment_distribuidors.clabe','payment_distribuidors.titular')
+        ->where('calculo_id',$request->id)
+        ->where('estatus',2)
         ->orderBy('payment_distribuidors.distribuidor')
         ->get();
         //return($atrasados);
@@ -474,6 +495,7 @@ class DisplayListados extends Controller
                                                'id'=>$calculo->id,
                                                'fecha_pago'=>$calculo->pagado_en,
                                                'atrasados'=>$atrasados,
+                                               'cancelados'=>$cancelados,
                                                'calculos_historicos'=>$calculos_historicos
                                               ]));
     }
@@ -600,28 +622,58 @@ class DisplayListados extends Controller
                 $rs_c_e=$empresarial->comision;
             }
         }
-        $sql_limite="select max(fecha_limite) as limite from calculo_distribuidores";
+        $sql_limite="select max(fecha_limite) as limite from calculo_distribuidores where tipo=".$calculo->tipo."";
         $ultimo=DB::select(DB::raw($sql_limite));
         $ultimo=collect($ultimo)->first();
         $puede_facturar="NO";
+        $nota_factura="Fuera del limite de facturacion, debera cargar su factura en el siguiente ciclo de pago.";
         $limite  = new DateTime($ultimo->limite);
         //echo $limite->format('Y-m-d H:i:s')."<br>";
         $ahora=new DateTime('NOW');
         //echo $ahora->format('Y-m-d H:i:s')."<br>";
         $puede_facturar=$ahora>$limite?"NO":"SI";
+
+        if($pago->estatus=="2")
+        {
+            $puede_facturar="NO";
+            $nota_factura="PAGO CANCELADO por falta de factura, Se incluye cantidad en pago mensual";
+        }
+
         //echo $puede_facturar;
         //return;
+        $registros_anticipo="";
+        $registros_cargos="";
+        if($calculo->tipo=="2")
+        {
+            $sql_anticipos="
+                SELECT calculo_distribuidores.descripcion,payment_distribuidors.a_pagar,payment_distribuidors.pdf FROM 
+                payment_distribuidors,calculo_distribuidores 
+                WHERE 
+                payment_distribuidors.calculo_id=calculo_distribuidores.id and 
+                payment_distribuidors.estatus=1 and 
+                calculo_distribuidores.tipo=1 and
+                payment_distribuidors.numero_distribuidor='".$usuario."' and 
+                calculo_distribuidores.fecha_inicio>='".$calculo->fecha_inicio."' and 
+                calculo_distribuidores.fecha_fin<='".$calculo->fecha_fin."'";
+            $registros_anticipo=DB::select(DB::raw($sql_anticipos));
+            $registros_anticipo=collect($registros_anticipo);
+            
+            $registros_cargos=ChargeBackDistribuidor::where('numero_distribuidor',$usuario)
+                                ->where('calculo_id',$calculo->id)
+                                ->get();
+        }
         return(view('estado_cuenta_distribuidor',['descripcion'=>$calculo->descripcion,
                                                   'distribuidor'=>$distribuidor->nombre,
                                                   'tipo_fiscal'=>$distribuidor->tipo_fiscal,
                                                   'f_limite'=>$calculo->fecha_limite,
+                                                  'tipo_calculo'=>$calculo->tipo,
                                                   'clabe'=>$pago->clabe,
                                                   'titular'=>$pago->titular,
                                                   'id'=>$request->id,
                                                   'comision'=>$pago->comision,
                                                   'residual'=>$pago->residual,
                                                   'retroactivo'=>$pago->retroactivo,
-                                                  'anticipos'=>$pago->anticipos,
+                                                  'anticipos'=>$pago->adelantos,
                                                   'cb'=>$pago->charge_back,
                                                   'a_pagar'=>$pago->a_pagar,
                                                   'ac_u_m'=>$ac_u_m,
@@ -653,7 +705,10 @@ class DisplayListados extends Controller
                                                   'carga_factura'=>$pago->carga_factura,
                                                   'usuario'=>$usuario,
                                                   'cr0'=>$cr0,
-                                                  'puede_facturar'=>$puede_facturar
+                                                  'puede_facturar'=>$puede_facturar,
+                                                  'registros_anticipo'=>$registros_anticipo,
+                                                  'registros_cargos'=>$registros_cargos,
+                                                  'nota_factura'=>$nota_factura,
 
                                                     ]));
     }

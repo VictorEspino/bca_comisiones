@@ -237,7 +237,7 @@ class CalculoComisionesDistController extends Controller
        if($plazo=="12"){$factor=6;}
        if($plazo=="18"){$factor=8;}
        if($plazo=="24"){$factor=10;}
-       $comision=($renta/1.16/1.03)*$factor*0.205;
+       $comision=($renta/1.16/1.03)*$factor*0.21; //SE CAMBIA A PETICION DE JON POR LA PRECICION DE EXCEL de 0.205 a 0.21
        return($comision);
    }
    function comisionSeguro()
@@ -849,76 +849,76 @@ class CalculoComisionesDistController extends Controller
    }
    public function comisionConsiguelo_E9($bracket,$tipo_venta)
    {
-       $comision=0;
-       if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
-       {
-        if($bracket=='1'){$comision=738;}
-        if($bracket=='2'){$comision=826;}
-        if($bracket=='3'){$comision=1336;}
-        if($bracket=='4'){$comision=1605;}
-        if($bracket=='5'){$comision=1800;}
-        if($bracket=='6'){$comision=2100;}
-        if($bracket=='7'){$comision=2400;}
-        if($bracket=='8'){$comision=2700;}
-        if($bracket=='9'){$comision=3300;}
-        if($bracket=='10'){$comision=4800;}
-        if($bracket=='11'){$comision=4260;}
-        if($bracket=='12'){$comision=5340;}
-        if($bracket=='13'){$comision=7680;}
-        if($bracket=='14'){$comision=10020;}
-       }
-       if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
-       {
-        if($bracket=='1'){$comision=230;}
-        if($bracket=='2'){$comision=272;}
-        if($bracket=='3'){$comision=445;}
-        if($bracket=='4'){$comision=600;}
-        if($bracket=='5'){$comision=700;}
-        if($bracket=='6'){$comision=840;}
-        if($bracket=='7'){$comision=980;}
-        if($bracket=='8'){$comision=1120;}
-        if($bracket=='9'){$comision=1400;}
-        if($bracket=='10'){$comision=2100;}
-        if($bracket=='11'){$comision=3080;}
-        if($bracket=='12'){$comision=3920;}
-        if($bracket=='13'){$comision=5740;}
-        if($bracket=='14'){$comision=7560;}
-       }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
-       {
-        if($bracket=='1'){$comision=533;}
-        if($bracket=='2'){$comision=632;}
-        if($bracket=='3'){$comision=1102;}
-        if($bracket=='4'){$comision=1392;}
-        if($bracket=='5'){$comision=1625;}
-        if($bracket=='6'){$comision=1950;}
-        if($bracket=='7'){$comision=2275;}
-        if($bracket=='8'){$comision=2600;}
-        if($bracket=='9'){$comision=3250;}
-        if($bracket=='10'){$comision=4875;}
-        if($bracket=='11'){$comision=4290;}
-        if($bracket=='12'){$comision=5460;}
-        if($bracket=='13'){$comision=7995;}
-        if($bracket=='14'){$comision=10530;}
-       }
-       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
-       {
-        if($bracket=='1'){$comision=267;}
-        if($bracket=='2'){$comision=316;}
-        if($bracket=='3'){$comision=551;}
-        if($bracket=='4'){$comision=696;}
-        if($bracket=='5'){$comision=813;}
-        if($bracket=='6'){$comision=975;}
-        if($bracket=='7'){$comision=1138;}
-        if($bracket=='8'){$comision=1300;}
-        if($bracket=='9'){$comision=1625;}
-        if($bracket=='10'){$comision=2438;}
-        if($bracket=='11'){$comision=2145;}
-        if($bracket=='12'){$comision=2730;}
-        if($bracket=='13'){$comision=3998;}
-        if($bracket=='14'){$comision=5265;}
-       }
-       return($comision);
+        $comision=0;
+        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
+        {
+            if($bracket=='1'){$comision=780;}
+            if($bracket=='2'){$comision=875;}
+            if($bracket=='3'){$comision=1415;}
+            if($bracket=='4'){$comision=1712;}
+            if($bracket=='5'){$comision=1925;}
+            if($bracket=='6'){$comision=2250;}
+            if($bracket=='7'){$comision=2575;}
+            if($bracket=='8'){$comision=2900;}
+            if($bracket=='9'){$comision=3550;}
+            if($bracket=='10'){$comision=5175;}
+            if($bracket=='11'){$comision=4810;}
+            if($bracket=='12'){$comision=6040;}
+            if($bracket=='13'){$comision=8705;}
+            if($bracket=='14'){$comision=11370;}
+        }
+        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
+        {
+            if($bracket=='1'){$comision=230;}
+            if($bracket=='2'){$comision=272;}
+            if($bracket=='3'){$comision=445;}
+            if($bracket=='4'){$comision=600;}
+            if($bracket=='5'){$comision=700;}
+            if($bracket=='6'){$comision=840;}
+            if($bracket=='7'){$comision=980;}
+            if($bracket=='8'){$comision=1120;}
+            if($bracket=='9'){$comision=1400;}
+            if($bracket=='10'){$comision=2100;}
+            if($bracket=='11'){$comision=3080;}
+            if($bracket=='12'){$comision=3920;}
+            if($bracket=='13'){$comision=5740;}
+            if($bracket=='14'){$comision=7560;}
+        }
+        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
+        {
+            if($bracket=='1'){$comision=574;}
+            if($bracket=='2'){$comision=680;}
+            if($bracket=='3'){$comision=1182;}
+            if($bracket=='4'){$comision=1499;}
+            if($bracket=='5'){$comision=1750;}
+            if($bracket=='6'){$comision=2100;}
+            if($bracket=='7'){$comision=2450;}
+            if($bracket=='8'){$comision=2800;}
+            if($bracket=='9'){$comision=3500;}
+            if($bracket=='10'){$comision=5250;}
+            if($bracket=='11'){$comision=4840;}
+            if($bracket=='12'){$comision=6160;}
+            if($bracket=='13'){$comision=9020;}
+            if($bracket=='14'){$comision=11880;}
+        }
+        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+        {
+            if($bracket=='1'){$comision=287;}
+            if($bracket=='2'){$comision=340;}
+            if($bracket=='3'){$comision=591;}
+            if($bracket=='4'){$comision=750;}
+            if($bracket=='5'){$comision=875;}
+            if($bracket=='6'){$comision=1050;}
+            if($bracket=='7'){$comision=1225;}
+            if($bracket=='8'){$comision=1400;}
+            if($bracket=='9'){$comision=1750;}
+            if($bracket=='10'){$comision=2625;}
+            if($bracket=='11'){$comision=2420;}
+            if($bracket=='12'){$comision=3080;}
+            if($bracket=='13'){$comision=4510;}
+            if($bracket=='14'){$comision=5940;}
+        }
+        return($comision);
    }
    public function comisionArmalo_E1($plan,$tipo_venta)
    {

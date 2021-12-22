@@ -28,6 +28,7 @@ class CreatePaymentDistribuidorsTable extends Migration
             $table->string("titular");
             $table->foreignId("calculo_id");
             $table->dateTime("carga_factura");
+            $table->integer('estatus')->default(1);
             $table->timestamps();
         });
     }

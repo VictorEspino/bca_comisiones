@@ -40,7 +40,7 @@
                         <td class="text-green-700 font-semibold">(+) $ {{number_format($retroactivo,2)}}</td>
                     </tr>
                     <tr class="border-b-2">
-                        <td class="">Charge-Back</td>
+                        <td class="">Cargos</td>
                         <td class="text-red-700 font-semibold">(-) $ {{number_format($cb,2)}}</td>
                     </tr>
                     <tr class="border-b-2">
@@ -187,6 +187,38 @@
             </div>
         </div>
         @endif
+        @if($tipo_calculo=="2")
+        @if(!empty($registros_cargos))
+        <div class="w-full flex flex-row space-x-2 pt-4">
+            <div class="w-full p-2 flex flex-col">
+                <div class="w-full bg-gray-200 rounded-t-lg p-3 text-xl text-gray-100 bg-gradient-to-br from-red-400 to-yellow-700 flex flex-row justify-between">
+                    <div class="font-bold">Cargos</div>
+                </div>
+                <div class="w-full flex flex-col shadow-lg rounded-b-lg p-5">
+                    @foreach($registros_cargos as $registro)
+                        <div class="text-base">{{$registro->concepto}} - ${{number_format($registro->cb,2)}}</div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @endif
+        @if(!empty($registros_anticipo))
+        <div class="w-full flex flex-row space-x-2 pt-4">
+            <div class="w-full p-2 flex flex-col">
+                <div class="w-full bg-gray-200 rounded-t-lg p-3 text-xl text-gray-100 bg-gradient-to-br from-blue-700 to-blue-400 flex flex-row justify-between">
+                    <div class="font-bold">Adelantos Pagados</div>
+                </div>
+                <div class="w-full flex flex-col shadow-lg rounded-b-lg p-5">
+                    @foreach($registros_anticipo as $registro)
+                        <div class="text-base">{{$registro->descripcion}} - ${{number_format($registro->a_pagar,2)}} (<a href="/facturas/{{$registro->pdf}}" download>
+                            <i class="text-2xl text-red-700 far fa-file-pdf"></i>
+                        </a>)</div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @endif
+        @endif
         <div class="w-full flex flex-row space-x-2 pt-4">
             <div class="w-full p-2 flex flex-col items-center">
                 <div class="w-full bg-gray-200 rounded-t-lg p-3 text-xl text-gray-100 bg-gradient-to-br from-yellow-700 to-yellow-400 flex flex-row justify-between">
@@ -292,7 +324,7 @@
                 @endif
                 @if(is_null($pdf) && $puede_facturar=="NO")
                 <div class="w-full flex flex-col rounded-b-lg p-5 text-center">
-                    <span class="text-xl text-red-700 font-bold">Fuera del limite de facturacion, debera cargar su factura en el siguiente ciclo de pago.</span>
+                    <span class="text-xl text-red-700 font-bold">{{$nota_factura}}</span>
                 </div>
                 @endif
                 
