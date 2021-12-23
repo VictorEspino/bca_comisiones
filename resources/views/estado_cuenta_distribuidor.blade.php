@@ -193,6 +193,9 @@
             <div class="w-full p-2 flex flex-col">
                 <div class="w-full bg-gray-200 rounded-t-lg p-3 text-xl text-gray-100 bg-gradient-to-br from-red-400 to-yellow-700 flex flex-row justify-between">
                     <div class="font-bold">Cargos</div>
+                    <div>
+                    <a href="/export_cb_distribuidor/{{$id}}/{{$usuario}}"><i class="far fa-file-excel"></i><span class="text-sm"> Exportar a EXCEL</span></a>
+                    </div>
                 </div>
                 <div class="w-full flex flex-col shadow-lg rounded-b-lg p-5">
                     @foreach($registros_cargos as $registro)

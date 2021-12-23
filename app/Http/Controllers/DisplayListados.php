@@ -19,6 +19,8 @@ use App\Models\Conciliacion;
 use App\Models\LogConsulta;
 use App\Models\TransaccionDistribuidor;
 use App\Models\ChargeBackDistribuidor;
+use App\Models\ChargeBackDetalleDistribuidor;
+use App\Models\ChargeBackSaldoDistribuidor;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -725,5 +727,29 @@ class DisplayListados extends Controller
         return view('export_transacciones_distribuidor',['id_calculo'=>$request->id,
                                                          'numero_distribuidor'=>$usuario,
                                                         ]);
+    }
+    public function export_cb_distribuidor(Request $request)
+    {
+        if(isset($request->numero_distribuidor))
+            {
+                $usuario=$request->numero_distribuidor;
+            }
+        else{
+                $usuario=Auth::user()->user;
+            }
+        
+        $calculo_id=$request->id;
+        $numero_distribuidor=$usuario;
+
+        $saldo=ChargeBackSaldoDistribuidor::where('calculo_id',$calculo_id)
+                                            ->where('numero_distribuidor',$numero_distribuidor)
+                                            ->get();
+        $detalles=ChargeBackDetalleDistribuidor::where('calculo_id',$calculo_id)
+                                            ->where('numero_distribuidor',$numero_distribuidor)
+                                            ->get();
+        return view('export_cb_distribuidor',['saldo'=>$saldo,
+                                              'detalles'=>$detalles,
+                                              'numero_distribuidor'=>$usuario
+                                              ]);
     }
 }

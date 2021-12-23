@@ -158,6 +158,7 @@ Route::get('/lista_pagos_calculo/{id}',[DisplayListados::class,'lista_pagos_calc
 Route::get('/estado_cuenta_distribuidor/{id}',[DisplayListados::class,'estado_cuenta_distribuidor'])->name("estado_cuenta_distribuidor")->middleware('auth');
 Route::get('/estado_cuenta_distribuidor/{id}/{numero_distribuidor}',[DisplayListados::class,'estado_cuenta_distribuidor'])->name("estado_cuenta_distribuidor")->middleware('auth');
 Route::get('/export_transacciones_distribuidor/{id}/{numero_distribuidor}',[DisplayListados::class,'export_transacciones_distribuidor'])->middleware('auth');
+Route::get('/export_cb_distribuidor/{id}/{numero_distribuidor}',[DisplayListados::class,'export_cb_distribuidor'])->middleware('auth');
 Route::post('/cargar_factura_distribuidor',[FileUploadController::class,'cargar_factura_distribuidor'])->name('cargar_factura_distribuidor')->middleware('auth');
 
 Route::get('/conciliacion_erp_att/{conciliacion_id}/{periodo}', [ConciliacionController::class,'conciliacion_erp_att']);
