@@ -789,7 +789,7 @@ class BalanceComisionesController extends Controller
         }
 ////TIENDAS CON PROMOCION DE LOGRO POR APERTURA
 
-        if($rol=="GERENTE" && ($mediciones_pdv->udn=='133' || $mediciones_pdv->udn=='135'))
+        if($rol=="GERENTE" && ($mediciones_pdv->udn=='133' || $mediciones_pdv->udn=='13500'))
         {
             $porc_cierre_activacion=1;
             $porc_cierre_aep=1;

@@ -81,7 +81,7 @@ class CalculoComisionesDistController extends Controller
             $comision=0;
             $esquema_mas=0;
             $esquema_emp=0;
-            
+            $reg_distribuidor=[];
             if($distribuidores->contains('numero_distribuidor',$credito->numero_distribuidor)) //CON ESTE BLOQUE SE OBTIENE EL VALOR DEL ESQUEMA
             {
                 $reg_distribuidor=$distribuidores->where('numero_distribuidor',$credito->numero_distribuidor);
@@ -135,6 +135,7 @@ class CalculoComisionesDistController extends Controller
                     if(strpos($plan,"ARMALO")!== false)
                     {
                         $comision=$this->comisionArmalo($plan,$tipo_venta,$esquema_mas);
+                        $comision=$this->comisionEspecialArmalo($reg_distribuidor,$comision,$plan,$tipo_venta);
                         if(($tipo_venta=="Activación" || $tipo_venta=="Activacion") && $eq_sin_costo)
                             {
                                 $comision=$comision-$this->performanceElementArmalo($plan,$tipo_venta);
@@ -1586,5 +1587,30 @@ class CalculoComisionesDistController extends Controller
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);
+   }
+   public function comisionEspecialArmalo($reg_distribuidor,$comision_original,$plan,$tipo_venta)
+   {
+       $numero_distribuidor=$reg_distribuidor->first()->numero_distribuidor;
+
+       if(
+            $numero_distribuidor=='100002' || //	AFG CONECTIVITI SOLUTIONS SAS
+            $numero_distribuidor=='100033' || //	CONECTA SERVICIOS MOVILES DE MEXICO SAS DE CV
+            $numero_distribuidor=='100009' || //	D Y A COMMUNICATION SAS
+            $numero_distribuidor=='100015' || //	JN & TELECOMUNICACIONES VENTAS Y SERVICIOS SA DE CV
+            $numero_distribuidor=='100020' || //	NAXE COMMUNIQUE SAS
+            $numero_distribuidor=='100027'    //	TECNOLOGIA DIGITAL IH SAS' 
+         )
+       {
+            if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
+            {
+                if(strpos($plan,'3')!== false) {return(690);} 
+                if(strpos($plan,'5')!== false) {return(1270);}
+                if(strpos($plan,'11')!== false) {return(1680);}
+                if(strpos($plan,'17')!== false) {return(2300);}
+                if(strpos($plan,'26')!== false) {return(3100);}
+                if(strpos($plan,'40')!== false) {return(4400);}
+            }
+        }
+       return($comision_original);
    }
 }
