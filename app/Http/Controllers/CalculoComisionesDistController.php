@@ -140,6 +140,15 @@ class CalculoComisionesDistController extends Controller
                             {
                                 $comision=$comision-$this->performanceElementArmalo($plan,$tipo_venta);
                             }
+                        $factor_enero_2022=1;
+                        if($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")
+                            {
+                                if($credito->numero_distribuidor=='100008' || $credito->numero_distribuidor=='100023')
+                                {$factor_enero_2022=1;}
+                                if($credito->numero_distribuidor=='100027')
+                                {$factor_enero_2022=1;}
+                                $comision=$factor_enero_2022*$comision;
+                            }
                     }
                     if(strpos($plan,"DAMOS")!== false || strpos($plan,"YA")!== false || strpos($plan,"SIMPLE")!== false) // PLANES DAMOS MAS o YA
                     {   

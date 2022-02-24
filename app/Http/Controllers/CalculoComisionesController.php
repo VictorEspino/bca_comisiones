@@ -110,6 +110,21 @@ class CalculoComisionesController extends Controller
                                 $comision_reg=$comision_reg-$this->performanceElementArmalo_regional($plan,$tipo_venta);
                                 $comision_dir=$comision_dir-$this->performanceElementArmalo_director($plan,$tipo_venta);
                             }
+                        if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
+                            {
+                                $comision=$comision*0.75;
+                                $comision_gte=$comision_gte*0.75;
+                                $comision_reg=$comision_reg*0.75;
+                                $comision_dir=$comision_dir*0.75;
+                            }
+                        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+                            {
+                                $comision=0;
+                                $comision_gte=0;
+                                $comision_reg=0;
+                                $comision_dir=0;
+                            }
+
                     }
                     if(strpos($plan,"DAMOS")!== false || strpos($plan,"YA")!== false || strpos($plan,"SIMPLE")!== false) // PLANES DAMOS MAS o YA
                     {   
