@@ -104,7 +104,6 @@ class CalculoComisionesDistController extends Controller
                     $esquema_mas=1;
                     $esquema_emp=1;
             }
-        
             if($tipo_venta=="Activación" || $tipo_venta=="Activacion" ||
                 $tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio" ||
                 $tipo_venta=="Renovación" || $tipo_venta=="Renovacion" ||
@@ -120,7 +119,7 @@ class CalculoComisionesDistController extends Controller
                     && strpos($plan,"Protecci")=== false 
                     && strpos($plan,"SIMPLE")=== false
                     && strpos($plan,"ARMALO")===false
-                    && strpos($plan,"NEG")===false
+                    && strpos(strtoupper($plan),"NEG")===false
                     ) 
                     //SE TRATA DE UN PLAN CONSIGUELO U OTRO NO NOMBRADO
                     {
@@ -159,7 +158,7 @@ class CalculoComisionesDistController extends Controller
                     {   
                         $comision=$this->comisionSeguro();
                     }
-                    if(strpos($plan,"NEG")!== false) // EMPRESARIAL
+                    if(strpos(strtoupper($plan),"NEG")!== false) // EMPRESARIAL
                     {   
                         $comision=$this->comisionEmpresarial($tipo_venta,$credito->plazo,$renta_transaccion,$esquema_emp);
                     }
