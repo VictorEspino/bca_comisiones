@@ -40982,8 +40982,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/victorespino/Documents/Dev/comisiones_bca/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/victorespino/Documents/Dev/comisiones_bca/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Users/victorespino/Documents/Dev/bca_comisiones/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/victorespino/Documents/Dev/bca_comisiones/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })

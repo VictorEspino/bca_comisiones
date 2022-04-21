@@ -547,7 +547,7 @@ class FileUploadController extends Controller
         $file_name = $request->file("xml_file")->getClientOriginalName();
         $generated_new_name_xml = $request->numero_distribuidor.'_'.$request->calculo_id.'_'.time() . '.' . $request->file("xml_file")->getClientOriginalExtension();
         $request->file("xml_file")->move($upload_path, $generated_new_name_xml);
-        $calculo_tipo=Calculo::find($request->calculo_id);
+        $calculo_tipo=CalculoDistribuidores::find($request->calculo_id);
         $ultimo_limite=CalculoDistribuidores::where('tipo',$calculo_tipo->tipo)->orderBy('id','desc')->get()->first()->fecha_limite;
         if(now()>=$ultimo_limite)
         {

@@ -162,6 +162,15 @@ class CalculoComisionesDistController extends Controller
                     {   
                         $comision=$this->comisionEmpresarial($tipo_venta,$credito->plazo,$renta_transaccion,$esquema_emp);
                     }
+                    if(strpos($plan,"BYOD")!== false)
+                    {
+                        $comision=200;
+                    }
+                    if(strpos($plan,"INTERNET EN CASA")!== false)
+                    {
+                        $comision=$credito->importe/1.16/1.03;
+                    }
+
                 }
             if($tipo_venta=="ADD ON") // INSTANCIA DE ADD ON
                 {

@@ -66,7 +66,7 @@ class CalculoComisionesController extends Controller
                     //    strpos($plan,"COMPARTELO")=== false 
                     strpos($plan,"DAMOS")=== false 
                     && strpos($plan,"YA")=== false 
-                    && strpos($plan,"Protecci")=== false 
+                    && strpos(strtoupper($plan),"PROTECCI")=== false 
                     && strpos($plan,"SIMPLE")=== false
                     && strpos($plan,"ARMALO")===false) 
                     //SE TRATA DE UN PLAN CONSIGUELO U OTRO NO NOMBRADO
@@ -112,10 +112,10 @@ class CalculoComisionesController extends Controller
                             }
                         if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
                             {
-                                $comision=$comision*0.75;
-                                $comision_gte=$comision_gte*0.75;
-                                $comision_reg=$comision_reg*0.75;
-                                $comision_dir=$comision_dir*0.75;
+                                $comision=$comision*1;
+                                $comision_gte=$comision_gte*1;
+                                $comision_reg=$comision_reg*1;
+                                $comision_dir=$comision_dir*1;
                             }
                         if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
                             {
@@ -150,17 +150,60 @@ class CalculoComisionesController extends Controller
                     //        $comision=$this->comisionCompartelo_3($tipo_venta);
                     //    }
                     //}
-                    if(strpos($plan,"Protecci")!== false) // INSTANCIA DE SEGURO
-                    {   
+                    if(strpos(strtoupper($plan),"PROTECCI")!== false) // INSTANCIA DE SEGURO
+                    {  
+                        if($renta_transaccion<99)
+                        {
+                            $comision=39;
+                            $comision_gte=21;
+                            $comision_reg=14;
+                            $comision_dir=9;
+                        }
+                        if($renta_transaccion>=99 && $renta_transaccion<139)
+                        {
+                            $comision=56;
+                            $comision_gte=31;
+                            $comision_reg=20;
+                            $comision_dir=13;
+                        }
+                        if($renta_transaccion>=139 && $renta_transaccion<179)
+                        {
+                            $comision=79;
+                            $comision_gte=43;
+                            $comision_reg=29;
+                            $comision_dir=18;
+                        }
+                        if($renta_transaccion>=179 && $renta_transaccion<=199)
+                        {
+                            $comision=102;
+                            $comision_gte=56;
+                            $comision_reg=37;
+                            $comision_dir=23;
+                        }
+                        if($renta_transaccion>=199 && $renta_transaccion<239)
+                        {
+                            $comision=113;
+                            $comision_gte=62;
+                            $comision_reg=41;
+                            $comision_dir=26;
+                        }
+                        if($renta_transaccion>=239)
+                        {
+                            $comision=136;
+                            $comision_gte=74;
+                            $comision_reg=49;
+                            $comision_dir=31;
+                        }
+                         /*
                        $registro_venta=$registros_act_ren_eq_nuevo->where('pedido',$pedido);
                        foreach ($registro_venta as $registro) {
                            //echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$registro->servicio."--".$registro->tipo_venta."--".$registro->importe."<br>";
                            $renta_padre=$registro->importe;
                            $plan_padre=$registro->servicio;
                            $movimiento_padre=$registro->tipo_venta;
-                       }
+                       }*/
                        //if(strpos($plan_padre,"CONSIGUELO")!== false)
-                       if(
+                       /*if(
                            //strpos($plan_padre,"COMPARTELO")=== false 
                            strpos($plan_padre,"DAMOS")=== false
                             && strpos($plan_padre,"YA")=== false 
@@ -186,6 +229,7 @@ class CalculoComisionesController extends Controller
                             $comision_dir=$this->comisionSeguroArmalo_director($plan_padre,$movimiento_padre);
                             $comision=$this->comisionSeguroArmalo($plan_padre,$movimiento_padre);
                         }
+                        */
                        //if(strpos($plan_padre,"COMPARTELO")!== false)
                        //{
                        //     $comision_gte=15;
@@ -398,101 +442,101 @@ class CalculoComisionesController extends Controller
         $comision=0;
         if($bracket==1)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=182;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=93;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=136;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=68;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=157;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=65;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=67;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=34;}
         }
         if($bracket==2)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=202;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=110;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=160;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=80;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=171;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=77;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=78;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=39;}
         }
         if($bracket==3)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=342;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=181;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=264;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=132;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=284;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=127;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=129;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=65;}
         }
         if($bracket==4)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=430;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=244;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=355;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=178;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=346;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=171;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=174;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=87;}
         }
         if($bracket==5)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=495;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=280;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=406;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=203;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=598;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=364;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=687;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=344;}
         }
         if($bracket==6)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=594;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=336;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=488;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=244;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=727;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=437;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=824;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=412;}
         }
         if($bracket==7)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=693;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=392;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=569;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=285;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=856;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=510;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=962;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=481;}
         }
         if($bracket==8)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=792;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=448;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=650;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=325;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=984;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=583;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=1099;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=550;}
         }
         if($bracket==9)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=990;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=560;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=813;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=406;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=1212;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=728;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=1374;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=687;}
         }
         if($bracket==10)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=1484;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=841;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=1219;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=610;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=1855;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=1093;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=2061;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=1031;}
         }
         if($bracket==11)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=1711;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=1233;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=1250;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=625;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=2149;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=1603;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=2113;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=1057;}
         }
         if($bracket==12)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=2771;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=1569;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=1600;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=800;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=3527;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=2040;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=2704;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=1352;}
         }
         if($bracket==13)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=4058;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=2297;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=2350;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=1175;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=5200;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=2987;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=3972;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=1986;}
         }
         if($bracket==14)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=5344;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=3026;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=3100;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=1550;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=6872;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=3934;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=5239;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=2620;}
         }
         return($comision);
     }
@@ -604,101 +648,101 @@ class CalculoComisionesController extends Controller
         $comision=0;
         if($bracket==1)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=34;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=37;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=37;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=19;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=32;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=26;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=26;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=13;}
         }
         if($bracket==2)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=43;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=44;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=44;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=22;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=38;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=31;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=31;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=16;}
         }
         if($bracket==3)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=99;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=72;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=72;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=36;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=77;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=51;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=51;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=26;}
         }
         if($bracket==4)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=129;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=97;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=97;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=48;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=98;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=68;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=68;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=34;}
         }
         if($bracket==5)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=130;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=111;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=111;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=56;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=161;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=145;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=145;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=73;}
         }
         if($bracket==6)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=156;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=134;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=134;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=67;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=195;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=174;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=174;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=87;}
         }
         if($bracket==7)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=182;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=156;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=156;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=78;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=229;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=203;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=203;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=102;}
         }
         if($bracket==8)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=208;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=178;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=178;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=89;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=263;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=232;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=232;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=116;}
         }
         if($bracket==9)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=260;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=223;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=223;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=111;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=331;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=290;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=290;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=145;}
         }
         if($bracket==10)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=390;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=334;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=334;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=167;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=500;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=435;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=435;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=218;}
         }
         if($bracket==11)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=572;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=490;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=490;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=245;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=736;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=638;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=638;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=319;}
         }
         if($bracket==12)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=728;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=624;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=624;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=312;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=939;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=812;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=812;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=406;}
         }
         if($bracket==13)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=1066;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=914;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=914;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=457;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=1379;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=1188;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=1188;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=594;}
         }
         if($bracket==14)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=1405;}
-            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=1204;}
-            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=1204;}
-            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=602;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=1818;}
+            if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=1565;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=1565;}
+            if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=783;}
         }
         return($comision);
     }
@@ -707,7 +751,7 @@ class CalculoComisionesController extends Controller
         $comision=0;
         if($bracket==1)
         {
-            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=11;}
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=10;}
             if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")){$comision=14;}
             if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=8;}
             if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")){$comision=4;}
