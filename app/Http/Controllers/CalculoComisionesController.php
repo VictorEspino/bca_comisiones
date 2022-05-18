@@ -2424,6 +2424,7 @@ class CalculoComisionesController extends Controller
 
         if(($tipo_venta=="Activación" || $tipo_venta=="Activacion"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=142;}
             if(strpos($plan,"3")!== false){$comision=167;}
             if(strpos($plan,"5")!== false){$comision=303;}
             if(strpos($plan,"9")!== false){$comision=606;} //NUEVO
@@ -2436,6 +2437,7 @@ class CalculoComisionesController extends Controller
         }
         if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=45;}
             if(strpos($plan,"3")!== false){$comision=77;}
             if(strpos($plan,"5")!== false){$comision=144;}
             if(strpos($plan,"9")!== false){$comision=369;}
@@ -2448,6 +2450,7 @@ class CalculoComisionesController extends Controller
         }
         if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=45;}
             if(strpos($plan,"3")!== false){$comision=78;}
             if(strpos($plan,"5")!== false){$comision=147;}
             if(strpos($plan,"9")!== false){$comision=698;}
@@ -2469,6 +2472,7 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"20")!== false){$comision=552;}
             if(strpos($plan,"26")!== false){$comision=657;}
             if(strpos($plan,"40")!== false){$comision=921;}
+            $comision=0;
         }
         
         return($comision);
@@ -2476,6 +2480,7 @@ class CalculoComisionesController extends Controller
 
     public function performanceElementEjecutivoArmalo($plan)
     {
+        if(strpos($plan,"2 ")!== false){return(100);}
         if(strpos($plan,"3")!== false){return(100);}
         if(strpos($plan,"5")!== false){return(150);}
         if(strpos($plan,"9")!== false){return(150);}
@@ -2493,6 +2498,7 @@ class CalculoComisionesController extends Controller
 
         if(($tipo_venta=="Activación" || $tipo_venta=="Activacion"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=29;}
             if(strpos($plan,"3")!== false){$comision=33;}
             if(strpos($plan,"5")!== false){$comision=84;}
             if(strpos($plan,"9")!== false){$comision=222;}
@@ -2505,6 +2511,7 @@ class CalculoComisionesController extends Controller
         }
         if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=18;}
             if(strpos($plan,"3")!== false){$comision=30;}
             if(strpos($plan,"5")!== false){$comision=57;}
             if(strpos($plan,"9")!== false){$comision=147;}
@@ -2517,6 +2524,7 @@ class CalculoComisionesController extends Controller
         }
         if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=18;}
             if(strpos($plan,"3")!== false){$comision=31;}
             if(strpos($plan,"5")!== false){$comision=57;}
             if(strpos($plan,"9")!== false){$comision=147;}
@@ -2538,6 +2546,7 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"20")!== false){$comision=117;}
             if(strpos($plan,"26")!== false){$comision=139;}
             if(strpos($plan,"40")!== false){$comision=195;}
+            $comision=0;
         }
         
         return($comision);
@@ -2545,6 +2554,7 @@ class CalculoComisionesController extends Controller
 
     public function performanceElementArmalo_gerente($plan)
     {
+        if(strpos($plan,"2 ")!== false){return(26);}
         if(strpos($plan,"3")!== false){return(26);}
         if(strpos($plan,"5")!== false){return(26);}
         if(strpos($plan,"9")!== false){return(26);}
@@ -2562,6 +2572,7 @@ class CalculoComisionesController extends Controller
 
         if(($tipo_venta=="Activación" || $tipo_venta=="Activacion"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=8;}
             if(strpos($plan,"3")!== false){$comision=12;}
             if(strpos($plan,"5")!== false){$comision=23;}
             if(strpos($plan,"9")!== false){$comision=28;}
@@ -2574,6 +2585,7 @@ class CalculoComisionesController extends Controller
         }
         if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=9;}
             if(strpos($plan,"3")!== false){$comision=16;}
             if(strpos($plan,"5")!== false){$comision=32;}
             if(strpos($plan,"9")!== false){$comision=43;}
@@ -2586,6 +2598,7 @@ class CalculoComisionesController extends Controller
         }
         if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
         {
+            if(strpos($plan,"3")!== false){$comision=6;}
             if(strpos($plan,"3")!== false){$comision=9;}
             if(strpos($plan,"5")!== false){$comision=16;}
             if(strpos($plan,"9")!== false){$comision=22;}
@@ -2607,6 +2620,7 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"20")!== false){$comision=18;}
             if(strpos($plan,"26")!== false){$comision=21;}
             if(strpos($plan,"40")!== false){$comision=29;}
+            $comision=0;
         }
         
         return($comision);
@@ -2622,6 +2636,7 @@ class CalculoComisionesController extends Controller
 
         if(($tipo_venta=="Activación" || $tipo_venta=="Activacion"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=5;}
             if(strpos($plan,"3")!== false){$comision=6;}
             if(strpos($plan,"5")!== false){$comision=11;}
             if(strpos($plan,"9")!== false){$comision=15;}
@@ -2634,6 +2649,7 @@ class CalculoComisionesController extends Controller
         }
         if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=5;}
             if(strpos($plan,"3")!== false){$comision=9;}
             if(strpos($plan,"5")!== false){$comision=16;}
             if(strpos($plan,"9")!== false){$comision=22;}
@@ -2646,6 +2662,7 @@ class CalculoComisionesController extends Controller
         }
         if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
         {
+            if(strpos($plan,"2 ")!== false){$comision=3;}
             if(strpos($plan,"3")!== false){$comision=4;}
             if(strpos($plan,"5")!== false){$comision=8;}
             if(strpos($plan,"9")!== false){$comision=11;}
@@ -2667,6 +2684,7 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"20")!== false){$comision=9;}
             if(strpos($plan,"26")!== false){$comision=11;}
             if(strpos($plan,"40")!== false){$comision=15;}
+            $comision=0;
         }
         
         return($comision);
@@ -2679,6 +2697,11 @@ class CalculoComisionesController extends Controller
     public function comisionSeguroArmalo($plan,$tipo_venta)
     {
         $comision=0;
+        if(strpos($plan,"2 ")!== false)
+        {
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=61;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=50;}
+        }
         if(strpos($plan,"3")!== false)
         {
             if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=61;}
@@ -2730,6 +2753,11 @@ class CalculoComisionesController extends Controller
     public function comisionSeguroArmalo_gerente($plan,$tipo_venta)
     {
         $comision=0;
+        if(strpos($plan,"2 ")!== false)
+        {
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=18;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=17;}
+        }
         if(strpos($plan,"3")!== false)
         {
             if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=18;}
@@ -2781,6 +2809,11 @@ class CalculoComisionesController extends Controller
     public function comisionSeguroArmalo_regional($plan,$tipo_venta)
     {
         $comision=0;
+        if(strpos($plan,"2 ")!== false)
+        {
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=5;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=5;}
+        }
         if(strpos($plan,"3")!== false)
         {
             if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=5;}
@@ -2832,6 +2865,11 @@ class CalculoComisionesController extends Controller
     public function comisionSeguroArmalo_director($plan,$tipo_venta)
     {
         $comision=0;
+        if(strpos($plan,"2 ")!== false)
+        {
+            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=3;}
+            if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion")){$comision=3;}
+        }
         if(strpos($plan,"3")!== false)
         {
             if(($tipo_venta=="Activación" || $tipo_venta=="Activacion")){$comision=3;}

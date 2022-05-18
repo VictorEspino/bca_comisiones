@@ -70,7 +70,7 @@ class CalculoComisionesDistController extends Controller
         
         $distribuidores=Distribuidor::all();
         $transacciones_pagadas=0;
-
+        $tipos_venta=[];
         foreach ($transacciones as $credito) {
             $renta_transaccion=$credito->importe;
             $tipo_venta=$credito->tipo_venta;
@@ -104,19 +104,31 @@ class CalculoComisionesDistController extends Controller
                     $esquema_mas=1;
                     $esquema_emp=1;
             }
+
             if($tipo_venta=="Activación" || $tipo_venta=="Activacion" ||
                 $tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio" ||
                 $tipo_venta=="Renovación" || $tipo_venta=="Renovacion" ||
                 $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio" ||
                 $tipo_venta=="Protección de equipo" || $tipo_venta=="Proteccion de equipo" ||
+                $tipo_venta=="Protección de Equipo" || $tipo_venta=="Proteccion de Equipo" ||
                 $tipo_venta=="Renovación Empresarial" || $tipo_venta=="Renovacion Empresarial")
                 {
+                    
+                    try{
+                        $conteo_actual=$tipos_venta[$tipo_venta];
+                        $tipos_venta[$tipo_venta]=$conteo_actual+1;
+                    }
+                    catch(\Exception $e)
+                    {
+                        $tipos_venta[$tipo_venta]=1;
+                    }
+
                     if($tipo_venta=="Renovación Empresarial" || $tipo_venta=="Renovacion Empresarial") {$tipo_venta="Renovación";}
                     if(
                     //    strpos($plan,"COMPARTELO")=== false 
                     strpos($plan,"DAMOS")=== false 
                     && strpos($plan,"YA")=== false 
-                    && strpos($plan,"Protecci")=== false 
+                    && strpos(strtoupper($plan),"PROTECCI")=== false
                     && strpos($plan,"SIMPLE")=== false
                     && strpos($plan,"ARMALO")===false
                     && strpos(strtoupper($plan),"NEG")===false
@@ -154,9 +166,33 @@ class CalculoComisionesDistController extends Controller
                         $comision=$this->comisionDamosYa($renta_transaccion,$credito->plazo);
 
                     }
-                    if(strpos($plan,"Protecci")!== false) // INSTANCIA DE SEGURO
-                    {   
-                        $comision=$this->comisionSeguro();
+                    if(strpos(strtoupper($plan),"PROTECCI")!== false) // INSTANCIA DE SEGURO
+                    {  
+                        if($renta_transaccion<99)
+                        {
+                            $comision=89;
+                        }
+                        if($renta_transaccion>=99 && $renta_transaccion<139)
+                        {
+                            $comision=128;
+                        }
+                        if($renta_transaccion>=139 && $renta_transaccion<179)
+                        {
+                            $comision=180;
+                        }
+                        if($renta_transaccion>=179 && $renta_transaccion<=199)
+                        {
+                            $comision=231;
+                        }
+                        if($renta_transaccion>=199 && $renta_transaccion<239)
+                        {
+                            $comision=257;
+                        }
+                        if($renta_transaccion>=239)
+                        {
+                            $comision=309;
+                        }
+                        
                     }
                     if(strpos(strtoupper($plan),"NEG")!== false) // EMPRESARIAL
                     {   
@@ -192,6 +228,7 @@ class CalculoComisionesDistController extends Controller
             $transaccion_calculada->save();
             $transacciones_pagadas=$transacciones_pagadas+1;
         }
+        //return($tipos_venta);
         return($transacciones_pagadas);
    }
    public function obtenBracket($renta)
