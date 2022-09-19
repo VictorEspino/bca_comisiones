@@ -152,6 +152,52 @@ class CalculoComisionesController extends Controller
                     //}
                     if(strpos(strtoupper($plan),"PROTECCI")!== false) // INSTANCIA DE SEGURO
                     {  
+
+                        if($renta_transaccion<99)
+                        {
+                            $comision=45;
+                            $comision_gte=30;
+                            $comision_reg=21;
+                            $comision_dir=11;
+                        }
+                        if($renta_transaccion>=99 && $renta_transaccion<139)
+                        {
+                            $comision=64;
+                            $comision_gte=44;
+                            $comision_reg=31;
+                            $comision_dir=15;
+                        }
+                        if($renta_transaccion>=139 && $renta_transaccion<179)
+                        {
+                            $comision=90;
+                            $comision_gte=61;
+                            $comision_reg=43;
+                            $comision_dir=22;
+                        }
+                        if($renta_transaccion>=179 && $renta_transaccion<=199)
+                        {
+                            $comision=116;
+                            $comision_gte=79;
+                            $comision_reg=56;
+                            $comision_dir=28;
+                        }
+                        if($renta_transaccion>=199 && $renta_transaccion<239)
+                        {
+                            $comision=129;
+                            $comision_gte=87;
+                            $comision_reg=62;
+                            $comision_dir=31;
+                        }
+                        if($renta_transaccion>=239)
+                        {
+                            $comision=155;
+                            $comision_gte=105;
+                            $comision_reg=74;
+                            $comision_dir=37;
+                        }
+
+
+                        /*
                         if($renta_transaccion<99)
                         {
                             $comision=39;
@@ -194,6 +240,7 @@ class CalculoComisionesController extends Controller
                             $comision_reg=49;
                             $comision_dir=31;
                         }
+                        */
                          /*
                        $registro_venta=$registros_act_ren_eq_nuevo->where('pedido',$pedido);
                        foreach ($registro_venta as $registro) {

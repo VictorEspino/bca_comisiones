@@ -72,6 +72,7 @@ class CalculoComisionesDistController extends Controller
         $transacciones_pagadas=0;
         $tipos_venta=[];
         foreach ($transacciones as $credito) {
+            $comision_default=$credito->razon_cr0;
             $renta_transaccion=$credito->importe;
             $tipo_venta=$credito->tipo_venta;
             $plan=$credito->servicio;
@@ -199,16 +200,17 @@ class CalculoComisionesDistController extends Controller
                         $comision=$credito->importe/1.16/1.03;
                     }
 
-                    $factor_enero_2022=1;
+                    $factor_mayo_2022=1;
                     if($tipo_venta=="Renovación" || $tipo_venta=="Renovacion" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
                         {
-                            if($credito->numero_distribuidor=='100011' || $credito->numero_distribuidor=='100020' || $credito->numero_distribuidor=='100038')
-                            {$factor_enero_2022=0.75;}
-                            if($credito->numero_distribuidor=='100027'|| $credito->numero_distribuidor=='100025')
-                            {$factor_enero_2022=0.85;}
-                            
-                            $factor_enero_2022=1;
-                            $comision=$factor_enero_2022*$comision;
+                            //if($credito->numero_distribuidor=='100011')
+                            //{$factor_mayo_2022=0.5;}
+                            //if($credito->numero_distribuidor=='100009' || $credito->numero_distribuidor=='100014' || $credito->numero_distribuidor=='100025'  || $credito->numero_distribuidor=='100028')
+                            //{$factor_mayo_2022=0.9;}
+                            //if($credito->numero_distribuidor=='100009' || $credito->numero_distribuidor=='100013' || $credito->numero_distribuidor=='100020' || $credito->numero_distribuidor=='100025' || $credito->numero_distribuidor=='100037')
+                            //{$factor_mayo_2022=0.85;}
+                        
+                            //$comision=$factor_mayo_2022*$comision;
                         }
 
 
@@ -229,6 +231,11 @@ class CalculoComisionesDistController extends Controller
             }
             else{
                 $transaccion_calculada->comision=$comision;
+            }
+
+            if($comision_default>0)
+            {
+                $transaccion_calculada->comision=$comision_default;
             }
 
             $transaccion_calculada->save();
@@ -269,6 +276,8 @@ class CalculoComisionesDistController extends Controller
        if($esquema=="9"){$comision=$this->comisionConsiguelo_E9($bracket,$tipo_venta);}
        if($esquema=="10"){$comision=$this->comisionConsiguelo_E7($bracket,$tipo_venta);}
        if($esquema=="11"){$comision=$this->comisionConsiguelo_E8($bracket,$tipo_venta);}
+       //CASTELAN
+       if($esquema=="12"){$comision=$this->comisionConsiguelo_E9($bracket,$tipo_venta);}
        return($comision);
    }
    function performanceElement($bracket)
@@ -289,6 +298,7 @@ class CalculoComisionesDistController extends Controller
         if($esquema=="9"){$comision=$this->comisionArmalo_E9($plan,$tipo_venta);}
         if($esquema=="10"){$comision=$this->comisionArmalo_E10($plan,$tipo_venta);}
         if($esquema=="11"){$comision=$this->comisionArmalo_E11($plan,$tipo_venta);}
+        if($esquema=="12"){$comision=$this->comisionArmalo_E12($plan,$tipo_venta);}
        return($comision);
    }
    function performanceElementArmalo($plan,$tipo_venta)
@@ -1586,6 +1596,53 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'20')!== false) {$comision=1206;}
         if(strpos($plan,'26')!== false) {$comision=1434;}
         if(strpos($plan,'40')!== false) {$comision=2011;}
+        $comision=0;
+       }
+       return($comision);
+   }
+   public function comisionArmalo_E12($plan,$tipo_venta)
+   {
+       $comision=0;
+       if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
+       {
+        if(strpos($plan,'2 ')!== false) {$comision=321;}
+        if(strpos($plan,'3')!== false) {$comision=942;}//OK
+        if(strpos($plan,'5')!== false) {$comision=1554;}//OK
+        if(strpos($plan,'9')!== false) {$comision=2046;}//OK
+        if(strpos($plan,'11')!== false) {$comision=2251;}//OK
+        if(strpos($plan,'14')!== false) {$comision=2661;}//OK
+        if(strpos($plan,'17')!== false) {$comision=3071;}//OK
+        if(strpos($plan,'20')!== false) {$comision=3481;}//OK
+        if(strpos($plan,'26')!== false) {$comision=3891;}//OK
+        if(strpos($plan,'40')!== false) {$comision=5326;}//OK
+       }
+       if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
+       {
+        if(strpos($plan,'2 ')!== false) {$comision=321;}
+        if(strpos($plan,'3')!== false) {$comision=942;}//OK
+        if(strpos($plan,'5')!== false) {$comision=1554;}//OK
+        if(strpos($plan,'9')!== false) {$comision=2046;}//OK
+        if(strpos($plan,'11')!== false) {$comision=2251;}//OK
+        if(strpos($plan,'14')!== false) {$comision=2661;}//OK
+        if(strpos($plan,'17')!== false) {$comision=3071;}//OK
+        if(strpos($plan,'20')!== false) {$comision=3481;}//OK
+        if(strpos($plan,'26')!== false) {$comision=3891;}//OK
+        if(strpos($plan,'40')!== false) {$comision=5326;}//OK
+       }
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
+       {
+        if(strpos($plan,'3')!== false) {$comision=942;}
+        if(strpos($plan,'5')!== false) {$comision=1554;}
+        if(strpos($plan,'9')!== false) {$comision=2046;} 
+        if(strpos($plan,'11')!== false) {$comision=2251;}
+        if(strpos($plan,'14')!== false) {$comision=2661;}
+        if(strpos($plan,'17')!== false) {$comision=3071;}
+        if(strpos($plan,'20')!== false) {$comision=3481;}
+        if(strpos($plan,'26')!== false) {$comision=3891;}
+        if(strpos($plan,'40')!== false) {$comision=5326;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
         $comision=0;
        }
        return($comision);
