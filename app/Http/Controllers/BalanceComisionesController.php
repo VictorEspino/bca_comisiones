@@ -126,8 +126,8 @@ class BalanceComisionesController extends Controller
                 $balance_row->porcentaje_cobro=$cumplimiento["porcentaje"];
                 $balance_row->comision_final_activacion=$medicion->c_act*$cumplimiento["porcentaje"];
                 $balance_row->comision_final_aep=$medicion->c_aep*$cumplimiento["porcentaje"];
-                $balance_row->comision_final_renovacion=$medicion->c_ren*$cumplimiento["porcentaje"];
-                $balance_row->comision_final_rep=$medicion->c_rep*$cumplimiento["porcentaje"];
+                $balance_row->comision_final_renovacion=$medicion->c_ren*$cumplimiento["porcentaje_ren"];
+                $balance_row->comision_final_rep=$medicion->c_rep*$cumplimiento["porcentaje_ren"];
                 $balance_row->comision_final_seguro=$medicion->c_seg*$cumplimiento["porcentaje"];
                 $balance_row->comision_final_addon=$medicion->c_add*$cumplimiento["porcentaje"];
                 $balance_row->comision_final=$balance_row->comision_final_activacion+$balance_row->comision_final_aep+$balance_row->comision_final_renovacion+$balance_row->comision_final_rep+$balance_row->comision_final_seguro+$balance_row->comision_final_addon;
@@ -155,6 +155,8 @@ class BalanceComisionesController extends Controller
             'esquema'=>1,
             'cumple_objetivo'=>true,
             'porcentaje'=>1,
+            'cumple_objetivo_ren'=>true,
+            'porcentaje_ren'=>1,
             'nombre'=>'',
             'puesto'=>'EJECUTIVO',
             'comentario'=>'',
@@ -199,6 +201,8 @@ class BalanceComisionesController extends Controller
         $respuesta["comentario"]=$comentario;
         $cumple_objetivo=true;
         $porcentaje_cobro=1.0;
+        $cumple_objetivo_ren=true;
+        $porcentaje_cobro_ren=1.0;
         if(is_null($empleado)) return($respuesta);
         $puesto=$empleado->puesto;
         $respuesta["nombre"]=$empleado->nombre;
@@ -206,7 +210,7 @@ class BalanceComisionesController extends Controller
         if(is_null($empleado))
 
         $respuesta["puesto"]=$puesto;
-
+        /*
         if($esquema==1 && strtoupper($puesto)=="EJECUTIVO")
         {
             if(!($uds_activacion>=10 || ($uds_activacion>=6 && $uds_aep>=4) || ($uds_activacion+$uds_aep>=10)))
@@ -223,6 +227,66 @@ class BalanceComisionesController extends Controller
                 $porcentaje_cobro=0.5;
             }
         }
+        */
+        
+        if($esquema==1 && strtoupper($puesto)=="EJECUTIVO")
+        {
+
+            //CALIFICA ACTIVACIONES
+
+            if((ceil($uds_activacion*1.5)+$uds_aep)<12)
+            {
+                $cumple_objetivo=false;
+                $porcentaje_cobro=0.5;
+            }
+            if((ceil($uds_activacion*1.5)+$uds_aep)>=12)
+            {
+                $cumple_objetivo=false;
+                $porcentaje_cobro=0.8;
+            }
+            if((($uds_activacion*1.5)+$uds_aep)>=15)
+            {
+                $cumple_objetivo=true;
+                $porcentaje_cobro=1;
+            }
+
+            //UNA VEZ CALIFICADAS LAS ACTIVACIONES CALIFICA RENOVACIONES
+            $porcentaje_cobro_ren=$porcentaje_cobro;
+
+            if(($uds_renovacion+$uds_rep)<7 &&  $porcentaje_cobro>=0.8 )
+            {
+                $porcentaje_cobro_ren=0;
+            }
+
+
+        }
+        if($esquema==2 && strtoupper($puesto)=="EJECUTIVO")
+        {
+            if((ceil($uds_activacion*1.5)+$uds_aep)<6)
+            {
+                $cumple_objetivo=false;
+                $porcentaje_cobro=0.5;
+            }
+            if((ceil($uds_activacion*1.5)+$uds_aep)>=6)
+            {
+                $cumple_objetivo=false;
+                $porcentaje_cobro=0.8;
+            }
+            if((($uds_activacion*1.5)+$uds_aep)>=8)
+            {
+                $cumple_objetivo=true;
+                $porcentaje_cobro=1;
+            }
+            //UNA VEZ CALIFICADAS LAS ACTIVACIONES CALIFICA RENOVACIONES
+            $porcentaje_cobro_ren=$porcentaje_cobro;
+
+            if(($uds_renovacion+$uds_rep)<4 &&  $porcentaje_cobro>=0.8 )
+            {
+                $porcentaje_cobro_ren=0;
+            }
+
+        }
+        
 
         if($puesto=="EJECUTIVO DE RENOVACIONES")
         {
@@ -231,6 +295,7 @@ class BalanceComisionesController extends Controller
             {
                 $cumple_objetivo=false;
                 $porcentaje_cobro=0.0;
+                $porcentaje_cobro_ren=0.0;
 
             }
         }
@@ -241,11 +306,14 @@ class BalanceComisionesController extends Controller
             {
                 $cumple_objetivo=false;
                 $porcentaje_cobro=0.5;
+                $porcentaje_cobro_ren=0.5;
 
             }
         }
         $respuesta["cumple_objetivo"]=$cumple_objetivo;
         $respuesta["porcentaje"]=$porcentaje_cobro;
+        $respuesta["cumple_objetivo_ren"]=$cumple_objetivo_ren;
+        $respuesta["porcentaje_ren"]=$porcentaje_cobro_ren;
         $respuesta["status"]="OK";
         return($respuesta);
     }
@@ -716,6 +784,7 @@ class BalanceComisionesController extends Controller
         $porc_cierre_aep=0;
         $porc_cierre_renovacion=0;
         $porc_cierre_rep=0;
+        /*
         if($cuota_activacion!=0){$alcance_activacion=$mediciones_pdv->u_act/$cuota_activacion;}
         else{$alcance_activacion=0.9999;}    
         if($cuota_aep!=0){$alcance_aep=$mediciones_pdv->u_aep/$cuota_aep;}
@@ -724,6 +793,25 @@ class BalanceComisionesController extends Controller
         else{$alcance_renovacion=0.9999;}
         if($cuota_rep!=0){$alcance_rep=$mediciones_pdv->u_rep/$cuota_rep;}
         else{$alcance_rep=0.9999;}
+        */
+        if($cuota_activacion!=0){
+            $alcance_activacion=($mediciones_pdv->u_act+$mediciones_pdv->u_aep)/$cuota_activacion;
+            $alcance_aep=$alcance_activacion;
+        }
+        else{
+            $alcance_activacion=0.9999;
+            $alcance_aep=$alcance_activacion;
+        }    
+        
+        if($cuota_renovacion!=0){
+            $alcance_renovacion=($mediciones_pdv->u_ren+$mediciones_pdv->u_rep)/$cuota_renovacion;
+            $alcance_rep=$alcance_renovacion;
+        }
+        else{
+            $alcance_renovacion=0.9999;
+            $alcance_rep=$alcance_renovacion;
+        }
+
         if($alcance_activacion<0.8)
         {
             $porc_cierre_activacion=$alcance_activacion;

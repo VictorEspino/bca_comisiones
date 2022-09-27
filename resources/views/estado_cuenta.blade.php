@@ -191,7 +191,7 @@ return;
 ?>
                         <div class="flex flex-row px-2">
                             <div class="w-1/2 px-2 pt-1">
-                                Retroactivos (CIS)
+                                Adicional y Retro
                             </div>
                             <div class="px-2 pt-1">
                                 ${{number_format($pagos->retroactivo)}}
@@ -394,7 +394,7 @@ if($registros_venta)
                     </div>
                     <div class="flex flex-col">
                         <div class="text-xs">Contribucion minima quincenal para alcanzar 100% de comision</div>
-                        <div class="font-bold text-base">{{$balance_ventas->esquema=='1'?'10':'4'}} unidades activaciones</div>
+                        <div class="font-bold text-base">{{$balance_ventas->esquema=='1'?'15':'8'}} unidades activaciones</div>
                         <!--<div class="font-bold text-base">{{$balance_ventas->esquema=='1'?'6':'2'}} activaciones con equipo + {{$balance_ventas->esquema=='1'?'4':'2'}} activaciones equipo propio</div>-->
                     </div>
                 </div>

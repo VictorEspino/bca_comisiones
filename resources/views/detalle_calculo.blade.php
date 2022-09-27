@@ -18,16 +18,16 @@
                 <div class="w-1/2 flex flex-col bg-gradient-to-br from-blue-700 to-green-300 text-white rounded-lg py-3 px-3">
                     <div class="flex flex-col md:flex-row lg:flex-row">
                         <div class="w-5/6 font-bold">Activaciones</div>
-                        <div class="text-sm font-bold">{{number_format(100*$tr_activaciones/$activaciones,2)}}%</div> 
+                        <div class="text-sm font-bold">{{number_format(100*($tr_activaciones+$tr_aep)/$activaciones,2)}}%</div> 
                     </div> 
-                    <div class="text-3xl font-bold">{{number_format($tr_activaciones)}}</div>
+                    <div class="text-3xl font-bold">{{number_format($tr_activaciones+$tr_aep)}}</div>
                     <div class="flex flex-row">
                         <div class="font-bold text-xs">Cuota {{number_format($activaciones)}} | Rentas ${{number_format($tr_renta_activ)}}</div> 
                     </div> 
                 </div>
                 <div class="w-1/2 flex flex-col bg-gradient-to-br from-pink-600 to-yellow-300 text-white rounded-lg py-3 px-3">
                     <div class="flex flex-col md:flex-row lg:flex-row">
-                        <div class="w-5/6 font-bold">Act Eq Propio</div><div class="text-sm font-bold">{{number_format(100*$tr_aep/$aep,2)}}%</div> 
+                        <div class="w-5/6 font-bold">Act Eq Propio</div><div class="text-sm font-bold"></div> 
                     </div> 
                     <div class="text-3xl font-bold">{{number_format($tr_aep)}}</div>
                     <div class="flex flex-row">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="w-1/2 flex flex-col bg-gradient-to-r from-yellow-400 to-yellow-700 text-white rounded-lg py-3 px-3">
                     <div class="flex flex-col md:flex-row lg:flex-row">
-                        <div class="w-5/6 font-bold">Ren Eq Propio</div><div class="text-sm font-bold">{{number_format(100*$tr_rep/$rep,2)}}%</div> 
+                        <div class="w-5/6 font-bold">Ren Eq Propio</div><div class="text-sm font-bold"></div> 
                     </div> 
                     <div class="text-3xl font-bold">{{number_format($tr_rep)}}</div>
                     <div class="flex flex-row">
