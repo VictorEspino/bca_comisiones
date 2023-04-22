@@ -26976,22 +26976,30 @@ var render = function() {
           _c("div", { staticClass: "flex flex-row space-x-5 w-full" }, [
             _c("div", { staticClass: "w-1/12" }, [
               _c("a", { attrs: { href: "/detalle_calculo_dist/" + _vm.id } }, [
-                _c("i", {
-                  staticClass: "fas fa-bars",
-                  staticStyle: { "font-size": "20px", color: "red" }
-                })
+                _c(
+                  "i",
+                  {
+                    staticClass: "fas fa-bars",
+                    staticStyle: { "font-size": "20px", color: "red" }
+                  },
+                  [_vm._v("DETALLE")]
+                )
               ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "w-1/12 font-bold text-green-600" }, [
-              _c("i", {
-                staticClass: "fas fa-edit cursor-pointer",
-                on: {
-                  click: function($event) {
-                    return _vm.toogleEditMode()
+              _c(
+                "i",
+                {
+                  staticClass: "fas fa-edit cursor-pointer",
+                  on: {
+                    click: function($event) {
+                      return _vm.toogleEditMode()
+                    }
                   }
-                }
-              })
+                },
+                [_vm._v("EDITAR")]
+              )
             ])
           ])
         ])

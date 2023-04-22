@@ -203,14 +203,14 @@ class CalculoComisionesDistController extends Controller
                     $factor_mayo_2022=1;
                     if($tipo_venta=="Renovación" || $tipo_venta=="Renovacion" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
                         {
-                            //if($credito->numero_distribuidor=='100011')
-                            //{$factor_mayo_2022=0.5;}
-                            //if($credito->numero_distribuidor=='100009' || $credito->numero_distribuidor=='100014' || $credito->numero_distribuidor=='100025'  || $credito->numero_distribuidor=='100028')
+                            //if($credito->numero_distribuidor=='100013')
                             //{$factor_mayo_2022=0.9;}
-                            //if($credito->numero_distribuidor=='100009' || $credito->numero_distribuidor=='100013' || $credito->numero_distribuidor=='100020' || $credito->numero_distribuidor=='100025' || $credito->numero_distribuidor=='100037')
-                            //{$factor_mayo_2022=0.85;}
+                            if($credito->numero_distribuidor=='100011' || $credito->numero_distribuidor=='100028')
+                            {$factor_mayo_2022=0.9;}
+                            //if($credito->numero_distribuidor=='100028')
+                            //{$factor_mayo_2022=0.75;}
                         
-                            //$comision=$factor_mayo_2022*$comision;
+                            $comision=$factor_mayo_2022*$comision;
                         }
 
 
@@ -233,9 +233,13 @@ class CalculoComisionesDistController extends Controller
                 $transaccion_calculada->comision=$comision;
             }
 
-            if($comision_default>0)
+            if($comision_default>1)
             {
                 $transaccion_calculada->comision=$comision_default;
+            }
+            if($comision_default<1 && $comision_default>0)
+            {
+                $transaccion_calculada->comision=$comision*$comision_default;
             }
 
             $transaccion_calculada->save();

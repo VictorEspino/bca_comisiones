@@ -19,7 +19,7 @@
                     {
                 ?>
                     <tr class="">
-                        <td class="border border-gray-300 font-light {{$color?'bg-gray-100':''}} text-gray-700 p-1 text-sm"><center><a href="/lista_pagos_calculo/{{$registro->id}}"><i class="far fa-edit"></i></a></td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-gray-100':''}} text-gray-700 p-1 text-sm"><center><a href="/lista_pagos_calculo/{{$registro->id}}"><i class="far fa-edit">EDITAR</i></a></td>
                         <td class="border border-gray-300 font-light {{$color?'bg-gray-100':''}} text-gray-700 p-1 text-sm">{{$registro->descripcion}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-gray-100':''}} text-gray-700 p-1 text-sm">{{$registro->fecha_inicio}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-gray-100':''}} text-gray-700 p-1 text-sm">{{$registro->fecha_fin}}</td>

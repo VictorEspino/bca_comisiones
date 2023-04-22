@@ -14,11 +14,11 @@
             <div class="flex flex-row space-x-5 w-full">
                 <div class="w-1/12">
                     <a v-bind:href='"/detalle_calculo_dist/"+id'>
-                        <i class="fas fa-bars" style='font-size:20px;color:red'></i>
+                        <i class="fas fa-bars" style='font-size:20px;color:red'>DETALLE</i>
                     </a>
                 </div>
                 <div class="w-1/12 font-bold text-green-600">
-                    <i class="fas fa-edit cursor-pointer" v-on:click="toogleEditMode()"></i>
+                    <i class="fas fa-edit cursor-pointer" v-on:click="toogleEditMode()">EDITAR</i>
                 </div>
             </div>
         </div>

@@ -79,7 +79,7 @@
                                 <div class="mx-3 text-sm italic font-thin">Ventas en detalle incluida su comision unitaria</div>
                             </td>
                             <td class="bg-blue-500 text-2xl p-4 text-white">
-                                <center><a href="{{route('transacciones_distribuidores',$id_calculo)}}"><i class="fas fa-cloud-download-alt"></i></a>
+                                <center><a href="{{route('transacciones_distribuidores',$id_calculo)}}"><i class="fas fa-cloud-download-alt">DETALLE</i></a>
                             </td>
                         </tr>
                         <tr>
