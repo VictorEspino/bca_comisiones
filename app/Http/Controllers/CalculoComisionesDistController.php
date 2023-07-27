@@ -200,20 +200,29 @@ class CalculoComisionesDistController extends Controller
                         $comision=$credito->importe/1.16/1.03;
                     }
 
-                    $factor_mayo_2022=1;
+                    /*$factor_mayo_2022=1;
                     if($tipo_venta=="Renovación" || $tipo_venta=="Renovacion" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
                         {
-                            //if($credito->numero_distribuidor=='100013')
-                            //{$factor_mayo_2022=0.9;}
-                            if($credito->numero_distribuidor=='100011' || $credito->numero_distribuidor=='100028')
+                            
+                            if($credito->numero_distribuidor=='100011' ||
+                               $credito->numero_distribuidor=='100025' 
+                            )
+                            {$factor_mayo_2022=0.85;}
+                            
+                            if($credito->numero_distribuidor=='100013' 
+                            )
                             {$factor_mayo_2022=0.9;}
-                            //if($credito->numero_distribuidor=='100028')
-                            //{$factor_mayo_2022=0.75;}
-                        
+                            
+                            if($credito->numero_distribuidor=='100028' 
+                            )
+                            {$factor_mayo_2022=0.8;}
+                            
+                            if($credito->numero_distribuidor=='100038')
+                            {$factor_mayo_2022=0.93;}
+
                             $comision=$factor_mayo_2022*$comision;
-                        }
 
-
+                        }*/
 
                 }
             if($tipo_venta=="ADD ON") // INSTANCIA DE ADD ON
@@ -303,6 +312,7 @@ class CalculoComisionesDistController extends Controller
         if($esquema=="10"){$comision=$this->comisionArmalo_E10($plan,$tipo_venta);}
         if($esquema=="11"){$comision=$this->comisionArmalo_E11($plan,$tipo_venta);}
         if($esquema=="12"){$comision=$this->comisionArmalo_E12($plan,$tipo_venta);}
+        if($esquema=="13"){$comision=$this->comisionArmalo_E13($plan,$tipo_venta);}
        return($comision);
    }
    function performanceElementArmalo($plan,$tipo_venta)
@@ -340,6 +350,11 @@ class CalculoComisionesDistController extends Controller
        if($esquema=="8"){$comision=$this->comisionEmpresarial_E8($tipo_venta,$plazo,$renta);}
        if($esquema=="9"){$comision=$this->comisionEmpresarial_E9($tipo_venta,$plazo,$renta);}
        if($esquema=="10"){$comision=$this->comisionEmpresarial_E10($tipo_venta,$plazo,$renta);}
+
+       //if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       //{
+       //     $comision=$comision*0.6125;
+       //}
        return($comision);
    }
    public function comisionConsiguelo_E1($bracket,$tipo_venta)
@@ -1007,8 +1022,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=573;}
         if(strpos($plan,'3')!== false) {$comision=906;}
         if(strpos($plan,'5')!== false) {$comision=1631;}
-        if(strpos($plan,'9')!== false) {$comision=2060;}
-        if(strpos($plan,'11')!== false) {$comision=2082;}
+        if(strpos($plan,'8')!== false) {$comision=1872;}
+        if(strpos($plan,'9')!== false) {$comision=1872;}
+        if(strpos($plan,'10')!== false) {$comision=2187;}
+        if(strpos($plan,'11')!== false) {$comision=2187;}
+        if(strpos($plan,'12')!== false) {$comision=2190;}
         if(strpos($plan,'14')!== false) {$comision=2420;}
         if(strpos($plan,'17')!== false) {$comision=2705;}
         if(strpos($plan,'20')!== false) {$comision=3050;}
@@ -1020,8 +1038,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=268;}
         if(strpos($plan,'3')!== false) {$comision=751;}
         if(strpos($plan,'5')!== false) {$comision=1349;}
-        if(strpos($plan,'9')!== false) {$comision=1770;}
-        if(strpos($plan,'11')!== false) {$comision=1797;}
+        if(strpos($plan,'8')!== false) {$comision=1613;}
+        if(strpos($plan,'9')!== false) {$comision=1613;}
+        if(strpos($plan,'10')!== false) {$comision=1959;}
+        if(strpos($plan,'11')!== false) {$comision=1959;}
+        if(strpos($plan,'12')!== false) {$comision=1962;}
         if(strpos($plan,'14')!== false) {$comision=2125;}
         if(strpos($plan,'17')!== false) {$comision=2418;}
         if(strpos($plan,'20')!== false) {$comision=2760;}
@@ -1030,10 +1051,14 @@ class CalculoComisionesDistController extends Controller
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
+        if(strpos($plan,'2')!== false) {$comision=274;}
         if(strpos($plan,'3')!== false) {$comision=734;}
         if(strpos($plan,'5')!== false) {$comision=1421;}
+        if(strpos($plan,'8')!== false) {$comision=1699;}
         if(strpos($plan,'9')!== false) {$comision=1875;}
-        if(strpos($plan,'11')!== false) {$comision=1912;}
+        if(strpos($plan,'10')!== false) {$comision=1875;}
+        if(strpos($plan,'11')!== false) {$comision=2084;}
+        if(strpos($plan,'12')!== false) {$comision=2084;}
         if(strpos($plan,'14')!== false) {$comision=2264;}
         if(strpos($plan,'17')!== false) {$comision=2581;}
         if(strpos($plan,'20')!== false) {$comision=2932;}
@@ -1063,8 +1088,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=597;}
         if(strpos($plan,'3')!== false) {$comision=965;}
         if(strpos($plan,'5')!== false) {$comision=1716;}
-        if(strpos($plan,'9')!== false) {$comision=2190;}
-        if(strpos($plan,'11')!== false) {$comision=2210;}
+        if(strpos($plan,'8')!== false) {$comision=1973;}
+        if(strpos($plan,'9')!== false) {$comision=1973;}
+        if(strpos($plan,'10')!== false) {$comision=2310;}
+        if(strpos($plan,'11')!== false) {$comision=2310;}
+        if(strpos($plan,'12')!== false) {$comision=2312;}
         if(strpos($plan,'14')!== false) {$comision=2580;}
         if(strpos($plan,'17')!== false) {$comision=2881;}
         if(strpos($plan,'20')!== false) {$comision=3270;}
@@ -1076,8 +1104,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=269;}
         if(strpos($plan,'3')!== false) {$comision=751;}
         if(strpos($plan,'5')!== false) {$comision=1349;}
-        if(strpos($plan,'9')!== false) {$comision=1780;}
-        if(strpos($plan,'11')!== false) {$comision=1797;}
+        if(strpos($plan,'8')!== false) {$comision=1613;}
+        if(strpos($plan,'9')!== false) {$comision=1613;}
+        if(strpos($plan,'10')!== false) {$comision=1959;}
+        if(strpos($plan,'11')!== false) {$comision=1959;}
+        if(strpos($plan,'12')!== false) {$comision=1962;}
         if(strpos($plan,'14')!== false) {$comision=2120;}
         if(strpos($plan,'17')!== false) {$comision=2418;}
         if(strpos($plan,'20')!== false) {$comision=2760;}
@@ -1086,10 +1117,14 @@ class CalculoComisionesDistController extends Controller
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
+        if(strpos($plan,'2')!== false) {$comision=275;}
         if(strpos($plan,'3')!== false) {$comision=734;}
         if(strpos($plan,'5')!== false) {$comision=1421;}
+        if(strpos($plan,'8')!== false) {$comision=1699;}
         if(strpos($plan,'9')!== false) {$comision=1874;}
-        if(strpos($plan,'11')!== false) {$comision=1912;}
+        if(strpos($plan,'10')!== false) {$comision=1874;}
+        if(strpos($plan,'11')!== false) {$comision=2084;}
+        if(strpos($plan,'12')!== false) {$comision=2084;}
         if(strpos($plan,'14')!== false) {$comision=2264;}
         if(strpos($plan,'17')!== false) {$comision=2581;}
         if(strpos($plan,'20')!== false) {$comision=2932;}
@@ -1173,8 +1208,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=583;}
         if(strpos($plan,'3')!== false) {$comision=930;}
         if(strpos($plan,'5')!== false) {$comision=1668;}
-        if(strpos($plan,'9')!== false) {$comision=2094;}
-        if(strpos($plan,'11')!== false) {$comision=2107;}
+        if(strpos($plan,'8')!== false) {$comision=1916;}
+        if(strpos($plan,'9')!== false) {$comision=2916;}
+        if(strpos($plan,'10')!== false) {$comision=2241;}
+        if(strpos($plan,'11')!== false) {$comision=2241;}
+        if(strpos($plan,'12')!== false) {$comision=2243;}
         if(strpos($plan,'14')!== false) {$comision=2450;}
         if(strpos($plan,'17')!== false) {$comision=2730;}
         if(strpos($plan,'20')!== false) {$comision=3080;}
@@ -1186,8 +1224,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=152;}
         if(strpos($plan,'3')!== false) {$comision=450;}
         if(strpos($plan,'5')!== false) {$comision=633;}
+        if(strpos($plan,'8')!== false) {$comision=925;}
         if(strpos($plan,'9')!== false) {$comision=925;}
-        if(strpos($plan,'11')!== false) {$comision=941;}
+        if(strpos($plan,'10')!== false) {$comision=653;}
+        if(strpos($plan,'11')!== false) {$comision=653;}
+        if(strpos($plan,'12')!== false) {$comision=656;}
         if(strpos($plan,'14')!== false) {$comision=1090;}
         if(strpos($plan,'17')!== false) {$comision=1242;}
         if(strpos($plan,'20')!== false) {$comision=1330;}
@@ -1196,11 +1237,15 @@ class CalculoComisionesDistController extends Controller
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
+        if(strpos($plan,'2')!== false) {$comision=256;}
         if(strpos($plan,'3')!== false) {$comision=679;}
         if(strpos($plan,'5')!== false) {$comision=1229;}
-        if(strpos($plan,'9')!== false) {$comision=1625;}
-        if(strpos($plan,'11')!== false) {$comision=1656;}
-        if(strpos($plan,'14')!== false) {$comision=1958;}
+        if(strpos($plan,'8')!== false) {$comision=1459;}
+        if(strpos($plan,'9')!== false) {$comision=1656;}
+        if(strpos($plan,'10')!== false) {$comision=1656;}
+        if(strpos($plan,'11')!== false) {$comision=1809;}
+        if(strpos($plan,'12')!== false) {$comision=1809;}
+        if(strpos($plan,'14')!== false) {$comision=2083;}
         if(strpos($plan,'17')!== false) {$comision=2229;}
         if(strpos($plan,'20')!== false) {$comision=2530;}
         if(strpos($plan,'26')!== false) {$comision=2868;}
@@ -1229,8 +1274,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=610;}
         if(strpos($plan,'3')!== false) {$comision=1001;}
         if(strpos($plan,'5')!== false) {$comision=1794;}
-        if(strpos($plan,'9')!== false) {$comision=2240;}
-        if(strpos($plan,'11')!== false) {$comision=2261;}
+        if(strpos($plan,'8')!== false) {$comision=2067;}
+        if(strpos($plan,'9')!== false) {$comision=2067;}
+        if(strpos($plan,'10')!== false) {$comision=2424;}
+        if(strpos($plan,'11')!== false) {$comision=2424;}
+        if(strpos($plan,'12')!== false) {$comision=2427;}
         if(strpos($plan,'14')!== false) {$comision=2620;}
         if(strpos($plan,'17')!== false) {$comision=2931;}
         if(strpos($plan,'20')!== false) {$comision=3320;}
@@ -1242,8 +1290,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=243;}
         if(strpos($plan,'3')!== false) {$comision=686;}
         if(strpos($plan,'5')!== false) {$comision=1368;}
-        if(strpos($plan,'9')!== false) {$comision=1840;}
-        if(strpos($plan,'11')!== false) {$comision=1861;}
+        if(strpos($plan,'8')!== false) {$comision=1635;}
+        if(strpos($plan,'9')!== false) {$comision=1635;}
+        if(strpos($plan,'10')!== false) {$comision=1986;}
+        if(strpos($plan,'11')!== false) {$comision=1986;}
+        if(strpos($plan,'12')!== false) {$comision=1989;}
         if(strpos($plan,'14')!== false) {$comision=2220;}
         if(strpos($plan,'17')!== false) {$comision=2531;}
         if(strpos($plan,'20')!== false) {$comision=2920;}
@@ -1252,10 +1303,14 @@ class CalculoComisionesDistController extends Controller
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
+        if(strpos($plan,'2')!== false) {$comision=229;}
         if(strpos($plan,'3')!== false) {$comision=830;}
         if(strpos($plan,'5')!== false) {$comision=1621;}
+        if(strpos($plan,'8')!== false) {$comision=1938;}
         if(strpos($plan,'9')!== false) {$comision=2123;}
+        if(strpos($plan,'10')!== false) {$comision=2123;}
         if(strpos($plan,'11')!== false) {$comision=2169;}
+        if(strpos($plan,'12')!== false) {$comision=2169;}
         if(strpos($plan,'14')!== false) {$comision=2571;}
         if(strpos($plan,'17')!== false) {$comision=2933;}
         if(strpos($plan,'20')!== false) {$comision=3334;}
@@ -1277,7 +1332,7 @@ class CalculoComisionesDistController extends Controller
        }
        return($comision);
    }
-   public function comisionArmalo_E6($plan,$tipo_venta)
+   public function comisionArmalo_E6($plan,$tipo_venta) //EX MASTERS
    {
        $comision=0;
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
@@ -1285,8 +1340,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=610;}
         if(strpos($plan,'3')!== false) {$comision=1001;}
         if(strpos($plan,'5')!== false) {$comision=1794;}
-        if(strpos($plan,'9')!== false) {$comision=2240;}
-        if(strpos($plan,'11')!== false) {$comision=2261;}
+        if(strpos($plan,'8')!== false) {$comision=2067;}
+        if(strpos($plan,'9')!== false) {$comision=2067;}
+        if(strpos($plan,'10')!== false) {$comision=2424;}
+        if(strpos($plan,'11')!== false) {$comision=2424;}
+        if(strpos($plan,'12')!== false) {$comision=2427;}
         if(strpos($plan,'14')!== false) {$comision=2620;}
         if(strpos($plan,'17')!== false) {$comision=2931;}
         if(strpos($plan,'20')!== false) {$comision=3320;}
@@ -1298,8 +1356,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=152;}
         if(strpos($plan,'3')!== false) {$comision=450;}
         if(strpos($plan,'5')!== false) {$comision=633;}
-        if(strpos($plan,'9')!== false) {$comision=930;}
-        if(strpos($plan,'11')!== false) {$comision=941;}
+        if(strpos($plan,'8')!== false) {$comision=757;}
+        if(strpos($plan,'9')!== false) {$comision=757;}
+        if(strpos($plan,'10')!== false) {$comision=917;}
+        if(strpos($plan,'11')!== false) {$comision=917;}
+        if(strpos($plan,'12')!== false) {$comision=920;}
         if(strpos($plan,'14')!== false) {$comision=1090;}
         if(strpos($plan,'17')!== false) {$comision=1242;}
         if(strpos($plan,'20')!== false) {$comision=1330;}
@@ -1308,10 +1369,14 @@ class CalculoComisionesDistController extends Controller
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
+        if(strpos($plan,'2')!== false) {$comision=229;}
         if(strpos($plan,'3')!== false) {$comision=830;}
         if(strpos($plan,'5')!== false) {$comision=1621;}
+        if(strpos($plan,'8')!== false) {$comision=1938;}
         if(strpos($plan,'9')!== false) {$comision=2123;}
+        if(strpos($plan,'10')!== false) {$comision=2123;}
         if(strpos($plan,'11')!== false) {$comision=2169;}
+        if(strpos($plan,'12')!== false) {$comision=2169;}
         if(strpos($plan,'14')!== false) {$comision=2571;}
         if(strpos($plan,'17')!== false) {$comision=2933;}
         if(strpos($plan,'20')!== false) {$comision=3334;}
@@ -1340,9 +1405,12 @@ class CalculoComisionesDistController extends Controller
        {
         if(strpos($plan,'2 ')!== false) {$comision=555;}
         if(strpos($plan,'3')!== false) {$comision=857;}
-        if(strpos($plan,'5')!== false) {$comision=1542;}
-        if(strpos($plan,'9')!== false) {$comision=1940;}
-        if(strpos($plan,'11')!== false) {$comision=1953;}
+        if(strpos($plan,'5')!== false) {$comision=1560;}
+        if(strpos($plan,'8')!== false) {$comision=1765;}
+        if(strpos($plan,'9')!== false) {$comision=1765;}
+        if(strpos($plan,'10')!== false) {$comision=2058;}
+        if(strpos($plan,'11')!== false) {$comision=2058;}
+        if(strpos($plan,'12')!== false) {$comision=2061;}
         if(strpos($plan,'14')!== false) {$comision=2270;}
         if(strpos($plan,'17')!== false) {$comision=2529;}
         if(strpos($plan,'20')!== false) {$comision=2840;}
@@ -1354,8 +1422,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=152;}
         if(strpos($plan,'3')!== false) {$comision=450;} //ORIG 270
         if(strpos($plan,'5')!== false) {$comision=633;} //ORIG 505
-        if(strpos($plan,'9')!== false) {$comision=930;}
-        if(strpos($plan,'11')!== false) {$comision=941;} //ORIG 718
+        if(strpos($plan,'8')!== false) {$comision=757;}
+        if(strpos($plan,'9')!== false) {$comision=757;}
+        if(strpos($plan,'10')!== false) {$comision=919;}
+        if(strpos($plan,'11')!== false) {$comision=919;} //ORIG 718
+        if(strpos($plan,'12')!== false) {$comision=921;}
         if(strpos($plan,'14')!== false) {$comision=1090;}
         if(strpos($plan,'17')!== false) {$comision=1242;} //ORIG 985
         if(strpos($plan,'20')!== false) {$comision=1330;}
@@ -1364,10 +1435,14 @@ class CalculoComisionesDistController extends Controller
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
+        if(strpos($plan,'2')!== false) {$comision=229;}
         if(strpos($plan,'3')!== false) {$comision=686;}
-        if(strpos($plan,'5')!== false) {$comision=1330;}
+        if(strpos($plan,'5')!== false) {$comision=1390;}
+        if(strpos($plan,'8')!== false) {$comision=1590;}
         if(strpos($plan,'9')!== false) {$comision=1750;}
+        if(strpos($plan,'10')!== false) {$comision=1750;}
         if(strpos($plan,'11')!== false) {$comision=1784;}
+        if(strpos($plan,'12')!== false) {$comision=1784;}
         if(strpos($plan,'14')!== false) {$comision=2111;}
         if(strpos($plan,'17')!== false) {$comision=2405;}
         if(strpos($plan,'20')!== false) {$comision=2731;}
@@ -1397,8 +1472,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=526;}
         if(strpos($plan,'3')!== false) {$comision=786;}
         if(strpos($plan,'5')!== false) {$comision=1416;}
-        if(strpos($plan,'9')!== false) {$comision=1780;}
-        if(strpos($plan,'11')!== false) {$comision=1800;}
+        if(strpos($plan,'8')!== false) {$comision=1615;}
+        if(strpos($plan,'9')!== false) {$comision=1615;}
+        if(strpos($plan,'10')!== false) {$comision=1875;}
+        if(strpos($plan,'11')!== false) {$comision=1875;}
+        if(strpos($plan,'12')!== false) {$comision=1878;}
         if(strpos($plan,'14')!== false) {$comision=2090;}
         if(strpos($plan,'17')!== false) {$comision=2328;}
         if(strpos($plan,'20')!== false) {$comision=2608;}
@@ -1410,8 +1488,11 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2 ')!== false) {$comision=151;}
         if(strpos($plan,'3')!== false) {$comision=450;} //ORIG=231
         if(strpos($plan,'5')!== false) {$comision=633;} //ORIG=434
-        if(strpos($plan,'9')!== false) {$comision=930;} 
-        if(strpos($plan,'11')!== false) {$comision=941;} //ORIG 616
+        if(strpos($plan,'8')!== false) {$comision=757;}
+        if(strpos($plan,'9')!== false) {$comision=757;}
+        if(strpos($plan,'10')!== false) {$comision=919;} 
+        if(strpos($plan,'11')!== false) {$comision=919;} //ORIG 616
+        if(strpos($plan,'12')!== false) {$comision=921;}
         if(strpos($plan,'14')!== false) {$comision=1090;}
         if(strpos($plan,'17')!== false) {$comision=1242;}
         if(strpos($plan,'20')!== false) {$comision=1330;}
@@ -1420,10 +1501,14 @@ class CalculoComisionesDistController extends Controller
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
+        if(strpos($plan,'2')!== false) {$comision=229;}
         if(strpos($plan,'3')!== false) {$comision=638;}
         if(strpos($plan,'5')!== false) {$comision=1235;}
+        if(strpos($plan,'8')!== false) {$comision=176;}
         if(strpos($plan,'9')!== false) {$comision=1625;}
+        if(strpos($plan,'10')!== false) {$comision=1625;}
         if(strpos($plan,'11')!== false) {$comision=1656;}
+        if(strpos($plan,'12')!== false) {$comision=1656;}
         if(strpos($plan,'14')!== false) {$comision=1918;}
         if(strpos($plan,'17')!== false) {$comision=2229;}
         if(strpos($plan,'20')!== false) {$comision=2530;}
@@ -1450,41 +1535,51 @@ class CalculoComisionesDistController extends Controller
        $comision=0;
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
-        if(strpos($plan,'2 ')!== false) {$comision=321;}
-        if(strpos($plan,'3')!== false) {$comision=861;}//OK
-        if(strpos($plan,'5')!== false) {$comision=1402;}//OK
-        if(strpos($plan,'9')!== false) {$comision=1846;}//OK
-        if(strpos($plan,'11')!== false) {$comision=2031;}//OK
-        if(strpos($plan,'14')!== false) {$comision=2401;}//OK
-        if(strpos($plan,'17')!== false) {$comision=2771;}//OK
-        if(strpos($plan,'20')!== false) {$comision=3141;}//OK
-        if(strpos($plan,'26')!== false) {$comision=3511;}//OK
-        if(strpos($plan,'40')!== false) {$comision=4806;}//OK
+        if(strpos($plan,'2 ')!== false) {$comision=573;}
+        if(strpos($plan,'3')!== false) {$comision=1261;}//OK
+        if(strpos($plan,'5')!== false) {$comision=1802;}//OK
+        if(strpos($plan,'8')!== false) {$comision=2172;}
+        if(strpos($plan,'9')!== false) {$comision=2172;}//OK
+        if(strpos($plan,'10')!== false) {$comision=2432;}
+        if(strpos($plan,'11')!== false) {$comision=2616;}//OK
+        if(strpos($plan,'12')!== false) {$comision=2616;}
+        if(strpos($plan,'14')!== false) {$comision=2986;}//OK
+        if(strpos($plan,'17')!== false) {$comision=2355;}//OK
+        if(strpos($plan,'20')!== false) {$comision=3726;}//OK
+        if(strpos($plan,'26')!== false) {$comision=4096;}//OK
+        if(strpos($plan,'40')!== false) {$comision=5576;}//OK
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=321;}
         if(strpos($plan,'3')!== false) {$comision=861;}//OK
         if(strpos($plan,'5')!== false) {$comision=1402;}//OK
-        if(strpos($plan,'9')!== false) {$comision=1846;}//OK
+        if(strpos($plan,'8')!== false) {$comision=1772;}
+        if(strpos($plan,'9')!== false) {$comision=1772;}//OK
+        if(strpos($plan,'10')!== false) {$comision=2031;}
         if(strpos($plan,'11')!== false) {$comision=2031;}//OK
-        if(strpos($plan,'14')!== false) {$comision=2401;}//OK
-        if(strpos($plan,'17')!== false) {$comision=2771;}//OK
-        if(strpos($plan,'20')!== false) {$comision=3141;}//OK
-        if(strpos($plan,'26')!== false) {$comision=3511;}//OK
-        if(strpos($plan,'40')!== false) {$comision=4806;}//OK
+        if(strpos($plan,'12')!== false) {$comision=2216;}
+        if(strpos($plan,'14')!== false) {$comision=2586;}//OK
+        if(strpos($plan,'17')!== false) {$comision=2956;}//OK
+        if(strpos($plan,'20')!== false) {$comision=3326;}//OK
+        if(strpos($plan,'26')!== false) {$comision=3696;}//OK
+        if(strpos($plan,'40')!== false) {$comision=5176;}//OK
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
+        if(strpos($plan,'2')!== false) {$comision=321;}
         if(strpos($plan,'3')!== false) {$comision=861;}
         if(strpos($plan,'5')!== false) {$comision=1402;}
-        if(strpos($plan,'9')!== false) {$comision=1846;} 
-        if(strpos($plan,'11')!== false) {$comision=2031;}
-        if(strpos($plan,'14')!== false) {$comision=2401;}
-        if(strpos($plan,'17')!== false) {$comision=2771;}
-        if(strpos($plan,'20')!== false) {$comision=3141;}
-        if(strpos($plan,'26')!== false) {$comision=3511;}
-        if(strpos($plan,'40')!== false) {$comision=4806;}
+        if(strpos($plan,'8')!== false) {$comision=1772;}
+        if(strpos($plan,'9')!== false) {$comision=1772;} 
+        if(strpos($plan,'10')!== false) {$comision=2031;}
+        if(strpos($plan,'11')!== false) {$comision=2216;}
+        if(strpos($plan,'12')!== false) {$comision=2216;}
+        if(strpos($plan,'14')!== false) {$comision=2586;}
+        if(strpos($plan,'17')!== false) {$comision=2956;}
+        if(strpos($plan,'20')!== false) {$comision=3326;}
+        if(strpos($plan,'26')!== false) {$comision=3696;}
+        if(strpos($plan,'40')!== false) {$comision=5176;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
@@ -1492,16 +1587,19 @@ class CalculoComisionesDistController extends Controller
        }
        return($comision);
    }
-   public function comisionArmalo_E10($plan,$tipo_venta)
+   public function comisionArmalo_E10($plan,$tipo_venta) //JN
    {
        $comision=0;
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=555;}
         if(strpos($plan,'3')!== false) {$comision=857;}
-        if(strpos($plan,'5')!== false) {$comision=1542;}
-        if(strpos($plan,'9')!== false) {$comision=1940;}
-        if(strpos($plan,'11')!== false) {$comision=1953;}
+        if(strpos($plan,'5')!== false) {$comision=1450;}
+        if(strpos($plan,'8')!== false) {$comision=1765;}
+        if(strpos($plan,'9')!== false) {$comision=1765;}
+        if(strpos($plan,'10')!== false) {$comision=2058;}
+        if(strpos($plan,'11')!== false) {$comision=2058;}
+        if(strpos($plan,'12')!== false) {$comision=2061;}
         if(strpos($plan,'14')!== false) {$comision=2270;}
         if(strpos($plan,'17')!== false) {$comision=2529;}
         if(strpos($plan,'20')!== false) {$comision=2840;}
@@ -1510,23 +1608,30 @@ class CalculoComisionesDistController extends Controller
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
-        if(strpos($plan,'2 ')!== false) {$comision=268;}
-        if(strpos($plan,'3')!== false) {$comision=751;} //ORIG 270
-        if(strpos($plan,'5')!== false) {$comision=1349;} //ORIG 505
-        if(strpos($plan,'9')!== false) {$comision=1780;}
-        if(strpos($plan,'11')!== false) {$comision=1797;} //ORIG 718
-        if(strpos($plan,'14')!== false) {$comision=2120;}
-        if(strpos($plan,'17')!== false) {$comision=2418;} //ORIG 985
-        if(strpos($plan,'20')!== false) {$comision=2760;}
-        if(strpos($plan,'26')!== false) {$comision=3100;} //ORIG 1338
-        if(strpos($plan,'40')!== false) {$comision=4400;} //ORIG 1877
+        if(strpos($plan,'2 ')!== false) {$comision=152;}
+        if(strpos($plan,'3')!== false) {$comision=450;} //ORIG 270
+        if(strpos($plan,'5')!== false) {$comision=633;} //ORIG 505
+        if(strpos($plan,'8')!== false) {$comision=757;}
+        if(strpos($plan,'9')!== false) {$comision=757;}
+        if(strpos($plan,'10')!== false) {$comision=919;}
+        if(strpos($plan,'11')!== false) {$comision=919;}
+        if(strpos($plan,'12')!== false) {$comision=921;} 
+        if(strpos($plan,'14')!== false) {$comision=1090;}
+        if(strpos($plan,'17')!== false) {$comision=1252;} //ORIG 985
+        if(strpos($plan,'20')!== false) {$comision=1330;}
+        if(strpos($plan,'26')!== false) {$comision=1499;} //ORIG 1338
+        if(strpos($plan,'40')!== false) {$comision=2099;} //ORIG 1877
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
+        if(strpos($plan,'2')!== false) {$comision=229;}
         if(strpos($plan,'3')!== false) {$comision=686;}
-        if(strpos($plan,'5')!== false) {$comision=1330;}
+        if(strpos($plan,'5')!== false) {$comision=1050;}
+        if(strpos($plan,'8')!== false) {$comision=1590;}
         if(strpos($plan,'9')!== false) {$comision=1750;}
+        if(strpos($plan,'10')!== false) {$comision=1750;}
         if(strpos($plan,'11')!== false) {$comision=1784;}
+        if(strpos($plan,'12')!== false) {$comision=1784;}
         if(strpos($plan,'14')!== false) {$comision=2111;}
         if(strpos($plan,'17')!== false) {$comision=2405;}
         if(strpos($plan,'20')!== false) {$comision=2731;}
@@ -1604,49 +1709,125 @@ class CalculoComisionesDistController extends Controller
        }
        return($comision);
    }
-   public function comisionArmalo_E12($plan,$tipo_venta)
+   public function comisionArmalo_E12($plan,$tipo_venta) //CASTELAN
    {
        $comision=0;
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
-        if(strpos($plan,'2 ')!== false) {$comision=321;}
-        if(strpos($plan,'3')!== false) {$comision=942;}//OK
-        if(strpos($plan,'5')!== false) {$comision=1554;}//OK
-        if(strpos($plan,'9')!== false) {$comision=2046;}//OK
-        if(strpos($plan,'11')!== false) {$comision=2251;}//OK
-        if(strpos($plan,'14')!== false) {$comision=2661;}//OK
-        if(strpos($plan,'17')!== false) {$comision=3071;}//OK
-        if(strpos($plan,'20')!== false) {$comision=3481;}//OK
-        if(strpos($plan,'26')!== false) {$comision=3891;}//OK
-        if(strpos($plan,'40')!== false) {$comision=5326;}//OK
+        if(strpos($plan,'2 ')!== false) {$comision=573;}
+        if(strpos($plan,'3')!== false) {$comision=1377;}//OK
+        if(strpos($plan,'5')!== false) {$comision=2106;}//OK
+        if(strpos($plan,'8')!== false) {$comision=2556;}
+        if(strpos($plan,'9')!== false) {$comision=2556;}//OK
+        if(strpos($plan,'10')!== false) {$comision=2871;}
+        if(strpos($plan,'11')!== false) {$comision=2871;}//OK
+        if(strpos($plan,'12')!== false) {$comision=3096;}
+        if(strpos($plan,'14')!== false) {$comision=3546;}//OK
+        if(strpos($plan,'17')!== false) {$comision=3996;}//OK
+        if(strpos($plan,'20')!== false) {$comision=4446;}//OK
+        if(strpos($plan,'26')!== false) {$comision=4896;}//OK
+        if(strpos($plan,'40')!== false) {$comision=6696;}//OK
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
-        if(strpos($plan,'2 ')!== false) {$comision=321;}
-        if(strpos($plan,'3')!== false) {$comision=942;}//OK
-        if(strpos($plan,'5')!== false) {$comision=1554;}//OK
-        if(strpos($plan,'9')!== false) {$comision=2046;}//OK
-        if(strpos($plan,'11')!== false) {$comision=2251;}//OK
-        if(strpos($plan,'14')!== false) {$comision=2661;}//OK
-        if(strpos($plan,'17')!== false) {$comision=3071;}//OK
-        if(strpos($plan,'20')!== false) {$comision=3481;}//OK
-        if(strpos($plan,'26')!== false) {$comision=3891;}//OK
-        if(strpos($plan,'40')!== false) {$comision=5326;}//OK
+        if(strpos($plan,'2 ')!== false) {$comision=173;}
+        if(strpos($plan,'3')!== false) {$comision=977;}//OK
+        if(strpos($plan,'5')!== false) {$comision=1706;}//OK
+        if(strpos($plan,'8')!== false) {$comision=2156;}
+        if(strpos($plan,'9')!== false) {$comision=2156;}
+        if(strpos($plan,'10')!== false) {$comision=2471;}//OK
+        if(strpos($plan,'11')!== false) {$comision=2471;}//OK
+        if(strpos($plan,'12')!== false) {$comision=2696;}
+        if(strpos($plan,'14')!== false) {$comision=3146;}//OK
+        if(strpos($plan,'17')!== false) {$comision=3596;}//OK
+        if(strpos($plan,'20')!== false) {$comision=4046;}//OK
+        if(strpos($plan,'26')!== false) {$comision=4496;}//OK
+        if(strpos($plan,'40')!== false) {$comision=6296;}//OK
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-        if(strpos($plan,'3')!== false) {$comision=942;}
+        if(strpos($plan,'2')!== false) {$comision=321;}
+        if(strpos($plan,'3')!== false) {$comision=861;}
         if(strpos($plan,'5')!== false) {$comision=1554;}
-        if(strpos($plan,'9')!== false) {$comision=2046;} 
-        if(strpos($plan,'11')!== false) {$comision=2251;}
-        if(strpos($plan,'14')!== false) {$comision=2661;}
-        if(strpos($plan,'17')!== false) {$comision=3071;}
-        if(strpos($plan,'20')!== false) {$comision=3481;}
-        if(strpos($plan,'26')!== false) {$comision=3891;}
-        if(strpos($plan,'40')!== false) {$comision=5326;}
+        if(strpos($plan,'8')!== false) {$comision=1964;}
+        if(strpos($plan,'9')!== false) {$comision=2251;}
+        if(strpos($plan,'10')!== false) {$comision=2251;} 
+        if(strpos($plan,'11')!== false) {$comision=2456;}
+        if(strpos($plan,'12')!== false) {$comision=2456;}
+        if(strpos($plan,'14')!== false) {$comision=2866;}
+        if(strpos($plan,'17')!== false) {$comision=3276;}
+        if(strpos($plan,'20')!== false) {$comision=3686;}
+        if(strpos($plan,'26')!== false) {$comision=4096;}
+        if(strpos($plan,'40')!== false) {$comision=5736;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
+        $comision=0;
+       }
+       return($comision);
+   }
+   public function comisionArmalo_E13($plan,$tipo_venta) //IH
+   {
+       $comision=0;
+       if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
+       {
+        if(strpos($plan,'2 ')!== false) {$comision=555;}
+        if(strpos($plan,'3')!== false) {$comision=857;}
+        if(strpos($plan,'5')!== false) {$comision=1542;}
+        if(strpos($plan,'8')!== false) {$comision=1765;}
+        if(strpos($plan,'9')!== false) {$comision=1765;}
+        if(strpos($plan,'10')!== false) {$comision=2058;}
+        if(strpos($plan,'11')!== false) {$comision=2058;}
+        if(strpos($plan,'12')!== false) {$comision=2060;}
+        if(strpos($plan,'14')!== false) {$comision=2270;}
+        if(strpos($plan,'17')!== false) {$comision=2529;}
+        if(strpos($plan,'20')!== false) {$comision=2840;}
+        if(strpos($plan,'26')!== false) {$comision=3149;}
+        if(strpos($plan,'40')!== false) {$comision=4288;}
+       }
+       if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
+       {
+        if(strpos($plan,'2 ')!== false) {$comision=265;}
+        if(strpos($plan,'3')!== false) {$comision=751;} //ORIG 270
+        if(strpos($plan,'5')!== false) {$comision=1349;} //ORIG 505
+        if(strpos($plan,'8')!== false) {$comision=1546;}
+        if(strpos($plan,'9')!== false) {$comision=1546;}
+        if(strpos($plan,'10')!== false) {$comision=1879;}
+        if(strpos($plan,'11')!== false) {$comision=1879;} //ORIG 718
+        if(strpos($plan,'12')!== false) {$comision=1881;}
+        if(strpos($plan,'14')!== false) {$comision=2120;}
+        if(strpos($plan,'17')!== false) {$comision=2418;} //ORIG 985
+        if(strpos($plan,'20')!== false) {$comision=2723;}
+        if(strpos($plan,'26')!== false) {$comision=3100;} //ORIG 1338
+        if(strpos($plan,'40')!== false) {$comision=4400;} //ORIG 1877
+       }
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
+       {
+        if(strpos($plan,'2')!== false) {$comision=243;}
+        if(strpos($plan,'3')!== false) {$comision=686;}
+        if(strpos($plan,'5')!== false) {$comision=1330;}
+        if(strpos($plan,'8')!== false) {$comision=1590;}
+        if(strpos($plan,'9')!== false) {$comision=1750;}
+        if(strpos($plan,'10')!== false) {$comision=1750;}
+        if(strpos($plan,'11')!== false) {$comision=1784;}
+        if(strpos($plan,'12')!== false) {$comision=1784;}
+        if(strpos($plan,'14')!== false) {$comision=2111;}
+        if(strpos($plan,'17')!== false) {$comision=2405;}
+        if(strpos($plan,'20')!== false) {$comision=2731;}
+        if(strpos($plan,'26')!== false) {$comision=3107;}
+        if(strpos($plan,'40')!== false) {$comision=4358;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+        if(strpos($plan,'3')!== false) {$comision=313;}
+        if(strpos($plan,'5')!== false) {$comision=626;}
+        if(strpos($plan,'9')!== false) {$comision=811;}
+        if(strpos($plan,'11')!== false) {$comision=834;}
+        if(strpos($plan,'14')!== false) {$comision=996;}
+        if(strpos($plan,'17')!== false) {$comision=1144;}
+        if(strpos($plan,'20')!== false) {$comision=1306;}
+        if(strpos($plan,'26')!== false) {$comision=1554;}
+        if(strpos($plan,'40')!== false) {$comision=2179;}
         $comision=0;
        }
        return($comision);
@@ -1661,11 +1842,17 @@ class CalculoComisionesDistController extends Controller
             if($plazo=="18"){$factor=4.25;}
             if($plazo>=24){$factor=4.5;}
        }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-            if($plazo=="12"){$factor=4;}
-            if($plazo=="18"){$factor=4.25;}
-            if($plazo>=24){$factor=4.5;}
+            if($plazo=="12"){$factor=3;}
+            if($plazo=="18"){$factor=3.4;}
+            if($plazo>=24){$factor=3.93;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+            if($plazo=="12"){$factor=1.5;}
+            if($plazo=="18"){$factor=1.7;}
+            if($plazo>=24){$factor=1.97;}
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);
@@ -1680,11 +1867,17 @@ class CalculoComisionesDistController extends Controller
             if($plazo=="18"){$factor=4.25;}
             if($plazo>=24){$factor=4.5;}
        }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-            if($plazo=="12"){$factor=4;}
-            if($plazo=="18"){$factor=4.25;}
-            if($plazo>=24){$factor=4.5;}
+            if($plazo=="12"){$factor=3;}
+            if($plazo=="18"){$factor=3.4;}
+            if($plazo>=24){$factor=3.75;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+            if($plazo=="12"){$factor=1.5;}
+            if($plazo=="18"){$factor=1.7;}
+            if($plazo>=24){$factor=1.88;}
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);
@@ -1699,7 +1892,13 @@ class CalculoComisionesDistController extends Controller
             if($plazo=="18"){$factor=4;}
             if($plazo>=24){$factor=4.25;}
        }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
+       {
+            if($plazo=="12"){$factor=3;}
+            if($plazo=="18"){$factor=3;}
+            if($plazo>=24){$factor=3;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
             if($plazo=="12"){$factor=3;}
             if($plazo=="18"){$factor=3;}
@@ -1718,11 +1917,17 @@ class CalculoComisionesDistController extends Controller
             if($plazo=="18"){$factor=3.5;}
             if($plazo>=24){$factor=3.75;}
        }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-            if($plazo=="12"){$factor=2.44;}
-            if($plazo=="18"){$factor=2.63;}
-            if($plazo>=24){$factor=2.81;}
+            if($plazo=="12"){$factor=1.83;}
+            if($plazo=="18"){$factor=2.13;}
+            if($plazo>=24){$factor=2.35;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+            if($plazo=="12"){$factor=0.92;}
+            if($plazo=="18"){$factor=1.07;}
+            if($plazo>=24){$factor=1.18;}
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);
@@ -1737,11 +1942,17 @@ class CalculoComisionesDistController extends Controller
             if($plazo=="18"){$factor=3.25;}
             if($plazo>=24){$factor=3.75;}
        }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-            if($plazo=="12"){$factor=2.25;}
-            if($plazo=="18"){$factor=2.44;}
-            if($plazo>=24){$factor=2.81;}
+            if($plazo=="12"){$factor=1.68;}
+            if($plazo=="18"){$factor=1.95;}
+            if($plazo>=24){$factor=2.35;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+            if($plazo=="12"){$factor=0.84;}
+            if($plazo=="18"){$factor=0.98;}
+            if($plazo>=24){$factor=1.18;}
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);
@@ -1775,11 +1986,17 @@ class CalculoComisionesDistController extends Controller
             if($plazo=="18"){$factor=4;}
             if($plazo>=24){$factor=4.25;}
        }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-            if($plazo=="12"){$factor=3.1;}
-            if($plazo=="18"){$factor=3.5;}
-            if($plazo>=24){$factor=3.8;}
+            if($plazo=="12"){$factor=2.07;}
+            if($plazo=="18"){$factor=2.6;}
+            if($plazo>=24){$factor=3.35;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+            if($plazo=="12"){$factor=1.04;}
+            if($plazo=="18"){$factor=1.3;}
+            if($plazo>=24){$factor=1.68;}
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);
@@ -1794,11 +2011,17 @@ class CalculoComisionesDistController extends Controller
             if($plazo=="18"){$factor=3;}
             if($plazo>=24){$factor=3.25;}
        }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-            if($plazo=="12"){$factor=2.06;}
-            if($plazo=="18"){$factor=2.25;}
-            if($plazo>=24){$factor=2.44;}
+            if($plazo=="12"){$factor=1.55;}
+            if($plazo=="18"){$factor=1.8;}
+            if($plazo>=24){$factor=2.05;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+            if($plazo=="12"){$factor=0.78;}
+            if($plazo=="18"){$factor=0.9;}
+            if($plazo>=24){$factor=1.03;}
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);
@@ -1813,11 +2036,17 @@ class CalculoComisionesDistController extends Controller
             if($plazo=="18"){$factor=3.75;}
             if($plazo>=24){$factor=4.25;}
        }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-            if($plazo=="12"){$factor=3;}
-            if($plazo=="18"){$factor=3.5;}
-            if($plazo>=24){$factor=4;}
+            if($plazo=="12"){$factor=2.25;}
+            if($plazo=="18"){$factor=2.8;}
+            if($plazo>=24){$factor=3.35;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+            if($plazo=="12"){$factor=1.13;}
+            if($plazo=="18"){$factor=1.4;}
+            if($plazo>=24){$factor=1.68;}
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);
@@ -1832,11 +2061,17 @@ class CalculoComisionesDistController extends Controller
             if($plazo=="18"){$factor=3.25;}
             if($plazo>=24){$factor=4;}
        }
-       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-            if($plazo=="12"){$factor=2.75;}
-            if($plazo=="18"){$factor=3.25;}
-            if($plazo>=24){$factor=4;}
+            if($plazo=="12"){$factor=2.07;}
+            if($plazo=="18"){$factor=2.6;}
+            if($plazo>=24){$factor=3.35;}
+       }
+       if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+            if($plazo=="12"){$factor=1.04;}
+            if($plazo=="18"){$factor=1.3;}
+            if($plazo>=24){$factor=1.68;}
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);

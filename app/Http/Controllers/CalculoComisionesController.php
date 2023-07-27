@@ -2474,11 +2474,14 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=142;}
             if(strpos($plan,"3")!== false){$comision=205;}
             if(strpos($plan,"5")!== false){$comision=352;}
-            if(strpos($plan,"9")!== false){$comision=675;} //NUEVO
-            if(strpos($plan,"11")!== false){$comision=683;}
-            if(strpos($plan,"14")!== false){$comision=839;} //NUEVO
-            if(strpos($plan,"17")!== false){$comision=933;}
-            if(strpos($plan,"20")!== false){$comision=1038;} //NUEVO
+            if(strpos($plan,"8")!== false){$comision=624;} //NUEVO EN JUNIO 2023
+            if(strpos($plan,"9")!== false){$comision=726;} //NUEVO
+            if(strpos($plan,"10")!== false){$comision=726;} //NUEVO EN JUNIO 2023
+            if(strpos($plan,"11")!== false){$comision=782;}
+            if(strpos($plan,"12")!== false){$comision=782;} //NUEVO EN JUNIO 2023
+            if(strpos($plan,"14")!== false){$comision=894;} //NUEVO
+            if(strpos($plan,"17")!== false){$comision=978;}
+            if(strpos($plan,"20")!== false){$comision=1083;} //NUEVO
             if(strpos($plan,"26")!== false){$comision=1147;}
             if(strpos($plan,"40")!== false){$comision=1540;}
         }
@@ -2487,23 +2490,29 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=45;}
             if(strpos($plan,"3")!== false){$comision=115;}
             if(strpos($plan,"5")!== false){$comision=193;}
-            if(strpos($plan,"9")!== false){$comision=438;}
-            if(strpos($plan,"11")!== false){$comision=446;}
-            if(strpos($plan,"14")!== false){$comision=513;}
-            if(strpos($plan,"17")!== false){$comision=585;}
-            if(strpos($plan,"20")!== false){$comision=618;}
-            if(strpos($plan,"26")!== false){$comision=697;}
-            if(strpos($plan,"40")!== false){$comision=976;}
+            if(strpos($plan,"8")!== false){$comision=225;} //NUEVO JUNIO2023
+            if(strpos($plan,"9")!== false){$comision=478;}
+            if(strpos($plan,"10")!== false){$comision=478;} //NUEVO JUNIO2023
+            if(strpos($plan,"11")!== false){$comision=485;}
+            if(strpos($plan,"12")!== false){$comision=485;} //NUEVO JUNIO2023
+            if(strpos($plan,"14")!== false){$comision=566;}
+            if(strpos($plan,"17")!== false){$comision=638;}
+            if(strpos($plan,"20")!== false){$comision=688;}
+            if(strpos($plan,"26")!== false){$comision=789;}
+            if(strpos($plan,"40")!== false){$comision=1077;}
         }
         if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
         {
             if(strpos($plan,"2 ")!== false){$comision=45;}
             if(strpos($plan,"3")!== false){$comision=116;}
             if(strpos($plan,"5")!== false){$comision=196;}
+            if(strpos($plan,"8")!== false){$comision=640;} //NUEVO JUNIO2023
             if(strpos($plan,"9")!== false){$comision=777;}
+            if(strpos($plan,"10")!== false){$comision=777;} //NUEVO JUNIO2023
             if(strpos($plan,"11")!== false){$comision=778;}
-            if(strpos($plan,"14")!== false){$comision=916;}
-            if(strpos($plan,"17")!== false){$comision=1040;}
+            if(strpos($plan,"12")!== false){$comision=778;}
+            if(strpos($plan,"14")!== false){$comision=922;}
+            if(strpos($plan,"17")!== false){$comision=1046;}
             if(strpos($plan,"20")!== false){$comision=1178;}
             if(strpos($plan,"26")!== false){$comision=1313;}
             if(strpos($plan,"40")!== false){$comision=1842;}
@@ -2530,8 +2539,11 @@ class CalculoComisionesController extends Controller
         if(strpos($plan,"2 ")!== false){return(100);}
         if(strpos($plan,"3")!== false){return(100);}
         if(strpos($plan,"5")!== false){return(150);}
+        if(strpos($plan,"8")!== false){return(150);}
         if(strpos($plan,"9")!== false){return(150);}
+        if(strpos($plan,"10")!== false){return(150);}
         if(strpos($plan,"11")!== false){return(150);}
+        if(strpos($plan,"12")!== false){return(150);}
         if(strpos($plan,"14")!== false){return(150);}
         if(strpos($plan,"17")!== false){return(150);}
         if(strpos($plan,"20")!== false){return(150);}
@@ -2548,8 +2560,11 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=34;}
             if(strpos($plan,"3")!== false){$comision=47;}
             if(strpos($plan,"5")!== false){$comision=103;}
-            if(strpos($plan,"9")!== false){$comision=186;}
-            if(strpos($plan,"11")!== false){$comision=193;}
+            if(strpos($plan,"8")!== false){$comision=126;}
+            if(strpos($plan,"9")!== false){$comision=146;}
+            if(strpos($plan,"10")!== false){$comision=146;}
+            if(strpos($plan,"11")!== false){$comision=166;}
+            if(strpos($plan,"12")!== false){$comision=166;}
             if(strpos($plan,"14")!== false){$comision=230;}
             if(strpos($plan,"17")!== false){$comision=258;}
             if(strpos($plan,"20")!== false){$comision=278;}
@@ -2561,8 +2576,11 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=18;}
             if(strpos($plan,"3")!== false){$comision=44;}
             if(strpos($plan,"5")!== false){$comision=76;}
-            if(strpos($plan,"9")!== false){$comision=170;}
+            if(strpos($plan,"8")!== false){$comision=100;}
+            if(strpos($plan,"9")!== false){$comision=182;}
+            if(strpos($plan,"10")!== false){$comision=182;}
             if(strpos($plan,"11")!== false){$comision=176;}
+            if(strpos($plan,"12")!== false){$comision=190;}
             if(strpos($plan,"14")!== false){$comision=204;}
             if(strpos($plan,"17")!== false){$comision=232;}
             if(strpos($plan,"20")!== false){$comision=245;}
@@ -2574,10 +2592,13 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=18;}
             if(strpos($plan,"3")!== false){$comision=45;}
             if(strpos($plan,"5")!== false){$comision=76;}
+            if(strpos($plan,"8")!== false){$comision=100;}
             if(strpos($plan,"9")!== false){$comision=170;}
+            if(strpos($plan,"10")!== false){$comision=170;}
             if(strpos($plan,"11")!== false){$comision=176;}
-            if(strpos($plan,"14")!== false){$comision=206;}
-            if(strpos($plan,"17")!== false){$comision=232;}
+            if(strpos($plan,"12")!== false){$comision=176;}
+            if(strpos($plan,"14")!== false){$comision=212;}
+            if(strpos($plan,"17")!== false){$comision=240;}
             if(strpos($plan,"20")!== false){$comision=261;}
             if(strpos($plan,"26")!== false){$comision=277;}
             if(strpos($plan,"40")!== false){$comision=389;}
@@ -2604,8 +2625,11 @@ class CalculoComisionesController extends Controller
         if(strpos($plan,"2 ")!== false){return(26);}
         if(strpos($plan,"3")!== false){return(26);}
         if(strpos($plan,"5")!== false){return(26);}
+        if(strpos($plan,"8")!== false){return(26);}
         if(strpos($plan,"9")!== false){return(26);}
+        if(strpos($plan,"10")!== false){return(26);}
         if(strpos($plan,"11")!== false){return(26);}
+        if(strpos($plan,"12")!== false){return(26);}
         if(strpos($plan,"14")!== false){return(26);}
         if(strpos($plan,"17")!== false){return(26);}
         if(strpos($plan,"20")!== false){return(26);}
@@ -2622,8 +2646,11 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=8;}
             if(strpos($plan,"3")!== false){$comision=18;}
             if(strpos($plan,"5")!== false){$comision=30;}
+            if(strpos($plan,"8")!== false){$comision=32;}
             if(strpos($plan,"9")!== false){$comision=35;}
+            if(strpos($plan,"10")!== false){$comision=35;}
             if(strpos($plan,"11")!== false){$comision=40;}
+            if(strpos($plan,"12")!== false){$comision=38;}
             if(strpos($plan,"14")!== false){$comision=45;}
             if(strpos($plan,"17")!== false){$comision=50;}
             if(strpos($plan,"20")!== false){$comision=52;}
@@ -2635,8 +2662,11 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=9;}
             if(strpos($plan,"3")!== false){$comision=22;}
             if(strpos($plan,"5")!== false){$comision=39;}
+            if(strpos($plan,"8")!== false){$comision=48;}
             if(strpos($plan,"9")!== false){$comision=53;}
+            if(strpos($plan,"10")!== false){$comision=55;}
             if(strpos($plan,"11")!== false){$comision=55;}
+            if(strpos($plan,"12")!== false){$comision=61;}
             if(strpos($plan,"14")!== false){$comision=65;}
             if(strpos($plan,"17")!== false){$comision=72;}
             if(strpos($plan,"20")!== false){$comision=75;}
@@ -2648,8 +2678,11 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"3")!== false){$comision=6;}
             if(strpos($plan,"3")!== false){$comision=15;}
             if(strpos($plan,"5")!== false){$comision=23;}
+            if(strpos($plan,"8")!== false){$comision=25;}
             if(strpos($plan,"9")!== false){$comision=31;}
+            if(strpos($plan,"10")!== false){$comision=31;}
             if(strpos($plan,"11")!== false){$comision=33;}
+            if(strpos($plan,"12")!== false){$comision=33;}
             if(strpos($plan,"14")!== false){$comision=37;}
             if(strpos($plan,"17")!== false){$comision=38;}
             if(strpos($plan,"20")!== false){$comision=40;}
@@ -2686,8 +2719,11 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=5;}
             if(strpos($plan,"3")!== false){$comision=9;}
             if(strpos($plan,"5")!== false){$comision=15;}
+            if(strpos($plan,"8")!== false){$comision=18;}
             if(strpos($plan,"9")!== false){$comision=18;}
+            if(strpos($plan,"10")!== false){$comision=20;}
             if(strpos($plan,"11")!== false){$comision=20;}
+            if(strpos($plan,"12")!== false){$comision=22;}
             if(strpos($plan,"14")!== false){$comision=23;}
             if(strpos($plan,"17")!== false){$comision=26;}
             if(strpos($plan,"20")!== false){$comision=27;}
@@ -2699,8 +2735,11 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=5;}
             if(strpos($plan,"3")!== false){$comision=12;}
             if(strpos($plan,"5")!== false){$comision=20;}
+            if(strpos($plan,"8")!== false){$comision=24;}
             if(strpos($plan,"9")!== false){$comision=24;}
+            if(strpos($plan,"10")!== false){$comision=26;}
             if(strpos($plan,"11")!== false){$comision=27;}
+            if(strpos($plan,"12")!== false){$comision=29;}
             if(strpos($plan,"14")!== false){$comision=30;}
             if(strpos($plan,"17")!== false){$comision=35;}
             if(strpos($plan,"20")!== false){$comision=38;}
@@ -2712,8 +2751,11 @@ class CalculoComisionesController extends Controller
             if(strpos($plan,"2 ")!== false){$comision=3;}
             if(strpos($plan,"3")!== false){$comision=7;}
             if(strpos($plan,"5")!== false){$comision=12;}
+            if(strpos($plan,"8")!== false){$comision=13;}
             if(strpos($plan,"9")!== false){$comision=15;}
+            if(strpos($plan,"10")!== false){$comision=15;}
             if(strpos($plan,"11")!== false){$comision=16;}
+            if(strpos($plan,"12")!== false){$comision=16;}
             if(strpos($plan,"14")!== false){$comision=18;}
             if(strpos($plan,"17")!== false){$comision=19;}
             if(strpos($plan,"20")!== false){$comision=20;}
