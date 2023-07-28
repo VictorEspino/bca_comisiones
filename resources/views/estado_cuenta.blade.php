@@ -1158,4 +1158,83 @@ else
 <?php
 }
 ?>
+<?php
+
+$saldo=App\Models\ChargeBackSaldoInterno::where('numero_empleado',$id_empleado)
+->where('calculo_id',$id_calculo)
+->get();
+
+foreach($saldo as $registro)
+{
+
+?>
+<div class="flex flex-col content-justify py-3 px-3 space-y-3 space-x-0 lg:space-y-0 md:space-y-0 lg:px-8 md:px-8 lg:py-8 md:py-8lg:space-x-5 md:space-x-5">
+    <div class="flex flex-col space-y-2 w-full lg:w-8/12 md:w-8/12">
+        <div class="text-3xl text-red-700 font-bold">SALDO</div>
+    </div>
+    <div class="flex justify-center text-xs font-bold px-3 ">
+        <table class="lg:w-7/12 md:w-9/12 w-full" border=1>
+        <tr><td colspan="9" class="px-3 py-3 bg-gradient-to-br from-red-900 to-yellow-500 text-white text-xl  font-bold">Saldo</td></tr>
+        <tr>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Saldo anterior</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Nuevo Charge-Back</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Descuento del periodo</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Saldo final</td>
+        </tr>
+        <tr>
+            <td class="text-gray-900 font-thin text-sm px-3 bg-blue-100"><center><b>${{number_format($registro->saldo_inicial,2)}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 bg-blue-100"><center><b>${{number_format($registro->nuevo_charge_back,2)}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 bg-blue-100"><center><b>${{number_format($registro->aplicado,2)}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 bg-blue-100"><center><b>${{number_format($registro->saldo_final,2)}}</td>
+        </tr>
+        </table>
+    </div>
+</div>
+<div class="flex flex-col content-justify py-3 px-3 space-y-3 space-x-0 lg:space-y-0 md:space-y-0 lg:px-8 md:px-8 lg:py-8 md:py-8lg:space-x-5 md:space-x-5">
+    <div class="flex flex-col space-y-2 w-full lg:w-8/12 md:w-8/12">
+        <div class="text-3xl text-red-700 font-bold">DETALLE NUEVO CHG-BCK</div>
+    </div>
+    <div class="flex justify-center text-xs font-bold px-3 ">
+        <table class="lg:w-9/12 md:w-9/12 w-full" border=1>
+        <tr><td colspan="9" class="px-3 py-3 bg-gradient-to-br from-red-900 to-yellow-500 text-white text-xl  font-bold">Detalles</td></tr>
+        <tr>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Punto de Venta</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Cuenta</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Contrato</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Plan</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Fecha Activacion</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Fecha Desactivacion</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Movimiento</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Tipo Baja</td>
+            <td class="px-3 py-2 bg-gray-300 font-bold">Charge-Back</td>
+        </tr>
+        <?php
+        $detalles=App\Models\ChargeBackDetalleInterno::where('numero_empleado',$id_empleado)
+        ->where('calculo_id',$id_calculo)
+        ->get();
+        $color=true;
+        foreach($detalles as $registro_det)
+        {
+        ?>
+        <tr>
+            <td class="text-gray-900 font-thin text-sm px-3 {{$color?'bg-blue-100':''}}"><center><b>{{$registro_det->pdv}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 {{$color?'bg-blue-100':''}}"><center><b>{{$registro_det->cuenta}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 {{$color?'bg-blue-100':''}}"><center><b>{{$registro_det->contrato}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 {{$color?'bg-blue-100':''}}"><center><b>{{$registro_det->plan}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 {{$color?'bg-blue-100':''}}"><center><b>{{$registro_det->fecha_activacion}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 {{$color?'bg-blue-100':''}}"><center><b>{{$registro_det->fecha_desactivacion}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 {{$color?'bg-blue-100':''}}"><center><b>{{$registro_det->movimiento}}</td>
+            <td class="text-gray-900 font-thin text-sm px-3 {{$color?'bg-blue-100':''}}"><center><b>{{$registro_det->tipo_baja}}</td>
+            <td class="text-gray-900 font-bold text-sm px-3 {{$color?'bg-blue-100':''}}"><center><b>${{number_format($registro_det->charge_back,2)}}</td>
+        </tr>
+        <?php
+        $color=!$color;
+        }
+        ?>
+        </table>
+    </div>
+</div>
+<?php
+}
+?>
 </body>
