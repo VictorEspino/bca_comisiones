@@ -33,7 +33,7 @@ class BalanceComisionesController extends Controller
                     0 as u_rep,0 as r_rep,0 as c_rep,
                     0 as u_seg,0 as r_seg,0 as c_seg,
                     0 as u_add,0 as r_add,0 as c_add
-                    FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Activación' OR tipo_venta='Activacion')
+                    FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='Activación' OR tipo_venta='Activacion' OR tipo_venta='ATT Por Semana')
                     group by numero_empleado,udn
                     UNION
                     SELECT numero_empleado,udn,0 as u_act,0 as r_act,0 as c_act,

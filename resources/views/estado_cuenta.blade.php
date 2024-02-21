@@ -484,7 +484,7 @@ if($registros_venta)
     $seguros=$transacciones_venta->whereIn('tipo_venta',['Proteccion de equipo',
                                                         'Protección de equipo'
                                                        ]);
-    $addons=$transacciones_venta->whereIn('tipo_venta',['ADD ON']);
+    $addons=$transacciones_venta->whereIn('tipo_venta',['ADD ON','ATT Por Semana']);
 
 $tipo_actual="";
 $color=false;
@@ -715,7 +715,7 @@ else
                         $seguros=$transacciones_venta->whereIn('tipo_venta',['Proteccion de equipo',
                                                                             'Protección de equipo'
                                                                            ]);
-                        $addons=$transacciones_venta->whereIn('tipo_venta',['ADD ON']);
+                        $addons=$transacciones_venta->whereIn('tipo_venta',['ADD ON','ATT Por Semana']);
                     
                     $tipo_actual="";
                     $color=false;
@@ -985,7 +985,7 @@ else
                 0 as u_rep,
                 0 as u_seg,
                 COUNT(tipo_venta) as u_add
-                FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='ADD ON' OR tipo_venta='ADD ON')
+                FROM transaccions where (credito=1 or credito=0) AND calculo_id='$id_calculo' AND (tipo_venta='ADD ON' OR tipo_venta='ADD ON' OR tipo_venta='ATT Por Semana')
                 group by udn,pdv
                 ) as a group by a.udn,a.pdv
     ) as z where z.udn in (select udn from cuotas where regional='$id_empleado')

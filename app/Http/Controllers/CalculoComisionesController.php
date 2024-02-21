@@ -68,7 +68,8 @@ class CalculoComisionesController extends Controller
                     && strpos($plan,"YA")=== false 
                     && strpos(strtoupper($plan),"PROTECCI")=== false 
                     && strpos($plan,"SIMPLE")=== false
-                    && strpos($plan,"ARMALO")===false) 
+                    && strpos($plan,"ARMALO")===false
+                    ) 
                     //SE TRATA DE UN PLAN CONSIGUELO U OTRO NO NOMBRADO
                     {
                         $bracket=$this->obtenBracket($renta_transaccion);
@@ -97,7 +98,7 @@ class CalculoComisionesController extends Controller
                             }
                         }
                     }
-                    if(strpos($plan,"ARMALO")!== false)
+                    if(strpos($plan,"ARMALO")!== false && strpos($plan,"ARMALO NEGOCIOS")=== false)
                     {
                         $comision_gte=$this->comisionArmalo_gerente($plan,$tipo_venta);
                         $comision_reg=$this->comisionArmalo_regional($plan,$tipo_venta);
@@ -125,6 +126,34 @@ class CalculoComisionesController extends Controller
                                 $comision_dir=0;
                             }
 
+                    }
+                    if(strpos($plan,"ARMALO NEGOCIOS")!== false)
+                    {
+                        $bracket=$this->obtenBracket($renta_transaccion);
+                        $comision_gte=$this->comisionConsiguelo_gerente($bracket,$tipo_venta);
+                        $comision_reg=$this->comisionConsiguelo_regional($bracket,$tipo_venta);
+                        $comision_dir=$this->comisionConsiguelo_director($bracket,$tipo_venta);
+                        if($esquema=="1" || $esquema=="2"){
+                            $comision=$this->comisionConsiguelo_1_2($bracket,$tipo_venta);
+                            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion") && $eq_sin_costo)
+                            {
+                                $comision=$comision-$this->performanceElementEjecutivo_1_2($bracket);
+                                $comision_gte=$comision_gte-$this->performanceElement_gerente($bracket);
+                                $comision_reg=$comision_reg-$this->performanceElement_regional($bracket);
+                                $comision_dir=$comision_dir-$this->performanceElement_director($bracket);
+                            }
+                        }
+                        else{
+                            //echo "<br>-TIPO:".$tipo_venta.", BRACKET:".$bracket."<br>";
+                            $comision=$this->comisionConsiguelo_3($bracket,$tipo_venta);
+                            if(($tipo_venta=="Activación" || $tipo_venta=="Activacion") && $eq_sin_costo)
+                            {
+                                $comision=$comision-$this->performanceElementEjecutivo_3($bracket);
+                                $comision_gte=$comision_gte-$this->performanceElement_gerente($bracket);
+                                $comision_reg=$comision_reg-$this->performanceElement_regional($bracket);
+                                $comision_dir=$comision_dir-$this->performanceElement_director($bracket);
+                            }
+                        }
                     }
                     if(strpos($plan,"DAMOS")!== false || strpos($plan,"YA")!== false || strpos($plan,"SIMPLE")!== false) // PLANES DAMOS MAS o YA
                     {   
@@ -300,6 +329,14 @@ class CalculoComisionesController extends Controller
                     $comision_dir=$this->comisionAddOn_director($plan,$renta_transaccion);
                 }
             
+            if($tipo_venta=="ATT Por Semana") // INSTANCIA NUEVO PLAN
+                {
+                    $comision=250;
+                    $comision_gte=75;
+                    $comision_reg=24;
+                    $comision_dir=12;
+                }
+
             
             //echo "-- Comision ".$comision;
             $transaccion_calculada=Transaccion::find($credito->id);

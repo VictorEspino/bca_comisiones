@@ -200,36 +200,30 @@ class CalculoComisionesDistController extends Controller
                         $comision=$credito->importe/1.16/1.03;
                     }
 
-                    /*$factor_mayo_2022=1;
+                    if(strpos($plan,"SEMANA")!== false) // ATT POR SEMANA
+                    {
+                        $comision=$this->comisionPorSemana($credito->numero_distribuidor);
+                    }
+
+                    $factor_mayo_2022=1;
                     if($tipo_venta=="Renovación" || $tipo_venta=="Renovacion" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
                         {
-                            
-                            if($credito->numero_distribuidor=='100011' ||
-                               $credito->numero_distribuidor=='100025' 
+
+                                                
+                            if($credito->numero_distribuidor=='100013' || $credito->numero_distribuidor=='100028' 
                             )
-                            {$factor_mayo_2022=0.85;}
+                            {$factor_mayo_2022=0.90;}
                             
-                            if($credito->numero_distribuidor=='100013' 
-                            )
-                            {$factor_mayo_2022=0.9;}
-                            
-                            if($credito->numero_distribuidor=='100028' 
-                            )
-                            {$factor_mayo_2022=0.8;}
-                            
-                            if($credito->numero_distribuidor=='100038')
-                            {$factor_mayo_2022=0.93;}
 
                             $comision=$factor_mayo_2022*$comision;
 
-                        }*/
+                        }
 
                 }
             if($tipo_venta=="ADD ON") // INSTANCIA DE ADD ON
                 {
                     $comision=$this->comisionAddOn($plan,$renta_transaccion);
                 }
-            
             
             //echo "-- Comision ".$comision;
             $transaccion_calculada=TransaccionDistribuidor::find($credito->id);
@@ -353,8 +347,11 @@ class CalculoComisionesDistController extends Controller
 
        //if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        //{
-       //     $comision=$comision*0.6125;
-       //}
+    //        if($esquema!="7")
+     //       {
+      //          $comision=$comision*0.732;
+    //        }
+      // }
        return($comision);
    }
    public function comisionConsiguelo_E1($bracket,$tipo_venta)
@@ -1504,7 +1501,7 @@ class CalculoComisionesDistController extends Controller
         if(strpos($plan,'2')!== false) {$comision=229;}
         if(strpos($plan,'3')!== false) {$comision=638;}
         if(strpos($plan,'5')!== false) {$comision=1235;}
-        if(strpos($plan,'8')!== false) {$comision=176;}
+        if(strpos($plan,'8')!== false) {$comision=1416;}
         if(strpos($plan,'9')!== false) {$comision=1625;}
         if(strpos($plan,'10')!== false) {$comision=1625;}
         if(strpos($plan,'11')!== false) {$comision=1656;}
@@ -2100,5 +2097,31 @@ class CalculoComisionesDistController extends Controller
             }
         }
        return($comision_original);
+   }
+   public function comisionPorSemana($numero_distribuidor)
+   {
+        $comision=750;
+        if($numero_distribuidor=='100005') { $comision=900;}
+        if($numero_distribuidor=='100008') { $comision=900;}
+        if($numero_distribuidor=='100009') { $comision=770;}
+        if($numero_distribuidor=='100011') { $comision=800;}
+        if($numero_distribuidor=='100013') { $comision=750;}
+        if($numero_distribuidor=='100014') { $comision=800;}
+        if($numero_distribuidor=='100022') { $comision=900;}
+        if($numero_distribuidor=='100024') { $comision=820;}
+        if($numero_distribuidor=='100026') { $comision=750;}
+        if($numero_distribuidor=='100027') { $comision=740;}
+        if($numero_distribuidor=='100028') { $comision=750;}
+        if($numero_distribuidor=='100029') { $comision=750;}
+        if($numero_distribuidor=='100032') { $comision=900;}
+        if($numero_distribuidor=='100033') { $comision=740;}
+        if($numero_distribuidor=='100035') { $comision=900;}
+        if($numero_distribuidor=='100042') { $comision=750;}
+        if($numero_distribuidor=='100044') { $comision=750;}
+        if($numero_distribuidor=='100045') { $comision=750;}
+        if($numero_distribuidor=='100047') { $comision=990;}
+        if($numero_distribuidor=='100048') { $comision=750;}
+        if($numero_distribuidor=='100049') { $comision=790;}
+        return($comision);
    }
 }
