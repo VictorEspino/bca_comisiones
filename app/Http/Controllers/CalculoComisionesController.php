@@ -167,6 +167,19 @@ class CalculoComisionesController extends Controller
                             $comision=$this->comisionDamosYa_3($renta_transaccion,$credito->plazo);
                         }
                     }
+                    if(strpos($plan,"AZUL")!== false || 
+                        strpos($plan,"BLACK")!== false || 
+                        strpos($plan,"DIAMANTE")!== false ||
+                        strpos($plan,"ORO")!== false ||
+                        strpos($plan,"PLATA")!== false ||
+                        strpos($plan,"TITANIO")!== false
+                        )
+                    {
+                        $comision_gte=$this->comisionPremium_gerente($plan,$tipo_venta);
+                        $comision_reg=$this->comisionPremium_regional($plan,$tipo_venta);
+                        $comision_dir=$this->comisionPremium_director($plan,$tipo_venta);
+                        $comision=$this->comisionPremium($plan,$tipo_venta);
+                    }
                     //if(strpos($plan,"COMPARTELO")!== false) // POPOTES, LINEAS ADICIONALES COMPARTELO
                     //{   
                     //    $comision=$this->comisionCompartelo_gerente($tipo_venta);
@@ -3047,5 +3060,177 @@ class CalculoComisionesController extends Controller
     public function calculo_seguimiento(Request $request)
     {
         return(view('calculo_seguimiento',['id'=>$request->id]));
+    }
+    public function comisionPremium($plan,$tipo_venta)
+    {
+        $comision=0;
+
+        if(($tipo_venta=="Activación" || $tipo_venta=="Activacion"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=205;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=352;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=624;}
+            if(strpos($plan,"PLATA")!== false){$comision=726;} 
+            if(strpos($plan,"ORO")!== false){$comision=782;}
+            if(strpos($plan,"BLACK")!== false){$comision=894;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=1147;}
+            if(strpos($plan,"TITANIO")!== false){$comision=894;}
+        }
+        if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=115;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=193;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=225;}
+            if(strpos($plan,"PLATA")!== false){$comision=478;} 
+            if(strpos($plan,"ORO")!== false){$comision=485;}
+            if(strpos($plan,"BLACK")!== false){$comision=566;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=789;}
+        }
+        if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=116;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=196;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=640;}
+            if(strpos($plan,"PLATA")!== false){$comision=777;} 
+            if(strpos($plan,"ORO")!== false){$comision=778;}
+            if(strpos($plan,"BLACK")!== false){$comision=922;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=1313;}
+            if(strpos($plan,"TITANIO")!== false){$comision=922;}
+        }
+        if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio"))
+        {
+            $comision=0;
+        }
+        
+        return($comision);
+    }
+    public function comisionPremium_gerente($plan,$tipo_venta)
+    {
+        $comision=0;
+
+        if(($tipo_venta=="Activación" || $tipo_venta=="Activacion"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=47;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=103;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=126;}
+            if(strpos($plan,"PLATA")!== false){$comision=146;} 
+            if(strpos($plan,"ORO")!== false){$comision=166;}
+            if(strpos($plan,"BLACK")!== false){$comision=230;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=309;}
+            if(strpos($plan,"TITANIO")!== false){$comision=230;}
+        }
+        if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=44;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=76;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=100;}
+            if(strpos($plan,"PLATA")!== false){$comision=182;} 
+            if(strpos($plan,"ORO")!== false){$comision=190;}
+            if(strpos($plan,"BLACK")!== false){$comision=204;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=277;}
+        }
+        if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=45;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=76;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=100;}
+            if(strpos($plan,"PLATA")!== false){$comision=170;} 
+            if(strpos($plan,"ORO")!== false){$comision=176;}
+            if(strpos($plan,"BLACK")!== false){$comision=212;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=277;}
+            if(strpos($plan,"TITANIO")!== false){$comision=212;}
+        }
+        if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio"))
+        {
+            $comision=0;
+        }
+        
+        return($comision);
+    }
+    public function comisionPremium_regional($plan,$tipo_venta)
+    {
+        $comision=0;
+
+        if(($tipo_venta=="Activación" || $tipo_venta=="Activacion"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=18;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=30;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=32;}
+            if(strpos($plan,"PLATA")!== false){$comision=35;} 
+            if(strpos($plan,"ORO")!== false){$comision=38;}
+            if(strpos($plan,"BLACK")!== false){$comision=45;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=54;}
+            if(strpos($plan,"TITANIO")!== false){$comision=45;}
+        }
+        if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=22;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=39;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=48;}
+            if(strpos($plan,"PLATA")!== false){$comision=55;} 
+            if(strpos($plan,"ORO")!== false){$comision=61;}
+            if(strpos($plan,"BLACK")!== false){$comision=65;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=82;}
+        }
+        if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=15;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=23;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=25;}
+            if(strpos($plan,"PLATA")!== false){$comision=31;} 
+            if(strpos($plan,"ORO")!== false){$comision=33;}
+            if(strpos($plan,"BLACK")!== false){$comision=37;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=41;}
+            if(strpos($plan,"TITANIO")!== false){$comision=37;}
+        }
+        if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio"))
+        {
+            $comision=0;
+        }
+        
+        return($comision);
+    }
+    public function comisionPremium_director($plan,$tipo_venta)
+    {
+        $comision=0;
+
+        if(($tipo_venta=="Activación" || $tipo_venta=="Activacion"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=9;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=15;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=18;}
+            if(strpos($plan,"PLATA")!== false){$comision=20;} 
+            if(strpos($plan,"ORO")!== false){$comision=22;}
+            if(strpos($plan,"BLACK")!== false){$comision=23;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=29;}
+            if(strpos($plan,"TITANIO")!== false){$comision=23;}
+        }
+        if(($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=12;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=20;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=24;}
+            if(strpos($plan,"PLATA")!== false){$comision=26;} 
+            if(strpos($plan,"ORO")!== false){$comision=29;}
+            if(strpos($plan,"BLACK")!== false){$comision=30;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=41;}
+        }
+        if(($tipo_venta=="Renovación" || $tipo_venta=="Renovacion"))
+        {
+            if(strpos($plan,"AZUL 1")!== false){$comision=7;}
+            if(strpos($plan,"AZUL 2")!== false){$comision=12;}
+            if(strpos($plan,"AZUL 3")!== false){$comision=13;}
+            if(strpos($plan,"PLATA")!== false){$comision=15;} 
+            if(strpos($plan,"ORO")!== false){$comision=16;}
+            if(strpos($plan,"BLACK")!== false){$comision=18;}
+            if(strpos($plan,"DIAMANTE")!== false){$comision=21;}
+            if(strpos($plan,"TITANIO")!== false){$comision=18;}
+        }
+        if(($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio"))
+        {
+            $comision=0;
+        }
+        
+        return($comision);
     }
 }

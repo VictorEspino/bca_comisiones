@@ -144,7 +144,14 @@ class CalculoComisionesDistController extends Controller
                                 
                             }
                     }
-                    if(strpos($plan,"ARMALO")!== false)
+                    if(strpos($plan,"ARMALO")!== false 
+                        || strpos($plan,"AZUL")!== false
+                        || strpos($plan,"PLATA")!== false
+                        || strpos($plan,"ORO")!== false
+                        || strpos($plan,"BLACK")!== false
+                        || strpos($plan,"DIAMANTE")!== false
+                        || strpos($plan,"TITANIO")!== false
+                    )
                     {
                         $comision=$this->comisionArmalo($plan,$tipo_venta,$esquema_mas);
                         //$comision=$this->comisionEspecialArmalo($reg_distribuidor,$comision,$plan,$tipo_venta);
@@ -154,10 +161,14 @@ class CalculoComisionesDistController extends Controller
                             }
                 
                     }
-                    if(strpos($plan,"DAMOS")!== false || strpos($plan,"YA")!== false || strpos($plan,"SIMPLE")!== false) // PLANES DAMOS MAS o YA
+                    if(strpos($plan,"DAMOS")!== false || strpos($plan,"YA")!== false) // PLANES DAMOS MAS o YA
                     {   
                         $comision=$this->comisionDamosYa($renta_transaccion,$credito->plazo);
 
+                    }
+                    if(strpos($plan,"SIMPLE")!== false)
+                    {
+                        $comision=$this->comisionSimple($credito->numero_distribuidor,$esquema_mas,$renta_transaccion,$credito->plazo);
                     }
                     if(strpos(strtoupper($plan),"PROTECCI")!== false) // INSTANCIA DE SEGURO
                     {  
@@ -207,15 +218,11 @@ class CalculoComisionesDistController extends Controller
 
                     $factor_mayo_2022=1;
                     if($tipo_venta=="Renovación" || $tipo_venta=="Renovacion" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
-                        {
-
-                                                
-                            if($credito->numero_distribuidor=='100013' || $credito->numero_distribuidor=='100028' 
+                        {        
+                            if($credito->numero_distribuidor=='100011' || $credito->numero_distribuidor=='100013' || $credito->numero_distribuidor=='100028' 
                             )
-                            {$factor_mayo_2022=0.90;}
-                            
-
-                            $comision=$factor_mayo_2022*$comision;
+                            {$factor_mayo_2022=0.85;}
+                            //$comision=$factor_mayo_2022*$comision;
 
                         }
 
@@ -345,13 +352,10 @@ class CalculoComisionesDistController extends Controller
        if($esquema=="9"){$comision=$this->comisionEmpresarial_E9($tipo_venta,$plazo,$renta);}
        if($esquema=="10"){$comision=$this->comisionEmpresarial_E10($tipo_venta,$plazo,$renta);}
 
-       //if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
-       //{
-    //        if($esquema!="7")
-     //       {
-      //          $comision=$comision*0.732;
-    //        }
-      // }
+       if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación" || $tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
+       {
+                //$comision=$comision*0.7845;
+       }
        return($comision);
    }
    public function comisionConsiguelo_E1($bracket,$tipo_venta)
@@ -1017,61 +1021,61 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=573;}
-        if(strpos($plan,'3')!== false) {$comision=906;}
-        if(strpos($plan,'5')!== false) {$comision=1631;}
-        if(strpos($plan,'8')!== false) {$comision=1872;}
-        if(strpos($plan,'9')!== false) {$comision=1872;}
-        if(strpos($plan,'10')!== false) {$comision=2187;}
-        if(strpos($plan,'11')!== false) {$comision=2187;}
-        if(strpos($plan,'12')!== false) {$comision=2190;}
-        if(strpos($plan,'14')!== false) {$comision=2420;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=906;} //AZUL 1
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1631;} //AZUL 2
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1872;} //AZUL 3
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1872;} //AZUL 3
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2187;} //PLATA
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2187;} //PLATA
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2190;} //ORO
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2420;} //BLACK o TITANIO
         if(strpos($plan,'17')!== false) {$comision=2705;}
         if(strpos($plan,'20')!== false) {$comision=3050;}
-        if(strpos($plan,'26')!== false) {$comision=3387;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3387;} //DIAMANTE
         if(strpos($plan,'40')!== false) {$comision=4624;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=268;}
-        if(strpos($plan,'3')!== false) {$comision=751;}
-        if(strpos($plan,'5')!== false) {$comision=1349;}
-        if(strpos($plan,'8')!== false) {$comision=1613;}
-        if(strpos($plan,'9')!== false) {$comision=1613;}
-        if(strpos($plan,'10')!== false) {$comision=1959;}
-        if(strpos($plan,'11')!== false) {$comision=1959;}
-        if(strpos($plan,'12')!== false) {$comision=1962;}
-        if(strpos($plan,'14')!== false) {$comision=2125;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=751;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1349;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1613;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1613;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1959;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1959;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1962;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2125;}
         if(strpos($plan,'17')!== false) {$comision=2418;}
         if(strpos($plan,'20')!== false) {$comision=2760;}
-        if(strpos($plan,'26')!== false) {$comision=3100;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3100;}
         if(strpos($plan,'40')!== false) {$comision=4400;}
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=274;}
-        if(strpos($plan,'3')!== false) {$comision=734;}
-        if(strpos($plan,'5')!== false) {$comision=1421;}
-        if(strpos($plan,'8')!== false) {$comision=1699;}
-        if(strpos($plan,'9')!== false) {$comision=1875;}
-        if(strpos($plan,'10')!== false) {$comision=1875;}
-        if(strpos($plan,'11')!== false) {$comision=2084;}
-        if(strpos($plan,'12')!== false) {$comision=2084;}
-        if(strpos($plan,'14')!== false) {$comision=2264;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=734;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1421;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1699;}
+        if(strpos($plan,'9 GB')!== false) {$comision=1875;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1875;}
+        if(strpos($plan,'11 GB')!== false) {$comision=2084;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2084;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2264;}
         if(strpos($plan,'17')!== false) {$comision=2581;}
         if(strpos($plan,'20')!== false) {$comision=2932;}
-        if(strpos($plan,'26')!== false) {$comision=3346;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3346;}
         if(strpos($plan,'40')!== false) {$comision=4693;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=337;}
-        if(strpos($plan,'5')!== false) {$comision=671;}
-        if(strpos($plan,'9')!== false) {$comision=874;}
-        if(strpos($plan,'11')!== false) {$comision=898;}
-        if(strpos($plan,'14')!== false) {$comision=1073;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=337;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=671;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=874;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=898;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1073;}
         if(strpos($plan,'17')!== false) {$comision=1232;}
         if(strpos($plan,'20')!== false) {$comision=1407;}
-        if(strpos($plan,'26')!== false) {$comision=1673;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1673;}
         if(strpos($plan,'40')!== false) {$comision=2347;}
         $comision=0;
        }
@@ -1083,61 +1087,61 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=597;}
-        if(strpos($plan,'3')!== false) {$comision=965;}
-        if(strpos($plan,'5')!== false) {$comision=1716;}
-        if(strpos($plan,'8')!== false) {$comision=1973;}
-        if(strpos($plan,'9')!== false) {$comision=1973;}
-        if(strpos($plan,'10')!== false) {$comision=2310;}
-        if(strpos($plan,'11')!== false) {$comision=2310;}
-        if(strpos($plan,'12')!== false) {$comision=2312;}
-        if(strpos($plan,'14')!== false) {$comision=2580;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=965;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1716;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1973;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1973;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2310;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2310;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2312;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2580;}
         if(strpos($plan,'17')!== false) {$comision=2881;}
         if(strpos($plan,'20')!== false) {$comision=3270;}
-        if(strpos($plan,'26')!== false) {$comision=3626;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3626;}
         if(strpos($plan,'40')!== false) {$comision=4959;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=269;}
-        if(strpos($plan,'3')!== false) {$comision=751;}
-        if(strpos($plan,'5')!== false) {$comision=1349;}
-        if(strpos($plan,'8')!== false) {$comision=1613;}
-        if(strpos($plan,'9')!== false) {$comision=1613;}
-        if(strpos($plan,'10')!== false) {$comision=1959;}
-        if(strpos($plan,'11')!== false) {$comision=1959;}
-        if(strpos($plan,'12')!== false) {$comision=1962;}
-        if(strpos($plan,'14')!== false) {$comision=2120;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=751;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1349;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1613;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1613;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1959;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1959;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1962;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2120;}
         if(strpos($plan,'17')!== false) {$comision=2418;}
         if(strpos($plan,'20')!== false) {$comision=2760;}
-        if(strpos($plan,'26')!== false) {$comision=3100;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3100;}
         if(strpos($plan,'40')!== false) {$comision=4400;}
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=275;}
-        if(strpos($plan,'3')!== false) {$comision=734;}
-        if(strpos($plan,'5')!== false) {$comision=1421;}
-        if(strpos($plan,'8')!== false) {$comision=1699;}
-        if(strpos($plan,'9')!== false) {$comision=1874;}
-        if(strpos($plan,'10')!== false) {$comision=1874;}
-        if(strpos($plan,'11')!== false) {$comision=2084;}
-        if(strpos($plan,'12')!== false) {$comision=2084;}
-        if(strpos($plan,'14')!== false) {$comision=2264;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=734;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1421;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1699;}
+        if(strpos($plan,'9 GB')!== false) {$comision=1874;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1874;}
+        if(strpos($plan,'11 GB')!== false) {$comision=2084;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2084;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2264;}
         if(strpos($plan,'17')!== false) {$comision=2581;}
         if(strpos($plan,'20')!== false) {$comision=2932;}
-        if(strpos($plan,'26')!== false) {$comision=3346;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3346;}
         if(strpos($plan,'40')!== false) {$comision=4693;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=337;}
-        if(strpos($plan,'5')!== false) {$comision=671;}
-        if(strpos($plan,'9')!== false) {$comision=874;}
-        if(strpos($plan,'11')!== false) {$comision=898;}
-        if(strpos($plan,'14')!== false) {$comision=1073;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=337;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=671;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=874;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=898;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1073;}
         if(strpos($plan,'17')!== false) {$comision=1232;}
         if(strpos($plan,'20')!== false) {$comision=1407;}
-        if(strpos($plan,'26')!== false) {$comision=1673;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1673;}
         if(strpos($plan,'40')!== false) {$comision=2347;}
         $comision=0;
        }
@@ -1148,50 +1152,50 @@ class CalculoComisionesDistController extends Controller
        $comision=0;
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
-        if(strpos($plan,'3')!== false) {$comision=840;}
-        if(strpos($plan,'5')!== false) {$comision=1538;}
-        if(strpos($plan,'9')!== false) {$comision=1898;}
-        if(strpos($plan,'11')!== false) {$comision=1929;}
-        if(strpos($plan,'14')!== false) {$comision=2245;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=840;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1538;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1898;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1929;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2245;}
         if(strpos($plan,'17')!== false) {$comision=2532;}
         if(strpos($plan,'20')!== false) {$comision=2847;}
-        if(strpos($plan,'26')!== false) {$comision=3310;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3310;}
         if(strpos($plan,'40')!== false) {$comision=4510;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=389;}
-        if(strpos($plan,'5')!== false) {$comision=554;}
-        if(strpos($plan,'9')!== false) {$comision=749;}
-        if(strpos($plan,'11')!== false) {$comision=824;}
-        if(strpos($plan,'14')!== false) {$comision=974;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=389;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=554;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=749;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=824;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=974;}
         if(strpos($plan,'17')!== false) {$comision=1124;}
         if(strpos($plan,'20')!== false) {$comision=1274;}
-        if(strpos($plan,'26')!== false) {$comision=1499;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1499;}
         if(strpos($plan,'40')!== false) {$comision=2099;}
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-        if(strpos($plan,'3')!== false) {$comision=625;}
-        if(strpos($plan,'5')!== false) {$comision=1251;}
-        if(strpos($plan,'9')!== false) {$comision=1622;}
-        if(strpos($plan,'11')!== false) {$comision=1667;}
-        if(strpos($plan,'14')!== false) {$comision=1993;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=625;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1251;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1622;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1667;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1993;}
         if(strpos($plan,'17')!== false) {$comision=2287;}
         if(strpos($plan,'20')!== false) {$comision=2612;}
-        if(strpos($plan,'26')!== false) {$comision=3107;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3107;}
         if(strpos($plan,'40')!== false) {$comision=4358;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=312;}
-        if(strpos($plan,'5')!== false) {$comision=626;}
-        if(strpos($plan,'9')!== false) {$comision=811;}
-        if(strpos($plan,'11')!== false) {$comision=833;}
-        if(strpos($plan,'14')!== false) {$comision=996;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=312;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=626;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=811;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=833;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=996;}
         if(strpos($plan,'17')!== false) {$comision=1142;}
         if(strpos($plan,'20')!== false) {$comision=1306;}
-        if(strpos($plan,'26')!== false) {$comision=1554;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1554;}
         if(strpos($plan,'40')!== false) {$comision=2179;}
         $comision=0;
        }
@@ -1203,61 +1207,61 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=583;}
-        if(strpos($plan,'3')!== false) {$comision=930;}
-        if(strpos($plan,'5')!== false) {$comision=1668;}
-        if(strpos($plan,'8')!== false) {$comision=1916;}
-        if(strpos($plan,'9')!== false) {$comision=2916;}
-        if(strpos($plan,'10')!== false) {$comision=2241;}
-        if(strpos($plan,'11')!== false) {$comision=2241;}
-        if(strpos($plan,'12')!== false) {$comision=2243;}
-        if(strpos($plan,'14')!== false) {$comision=2450;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=930;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1668;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1916;}
+        if(strpos($plan,'9 GB')!== false) {$comision=2916;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2241;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2241;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2243;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2450;}
         if(strpos($plan,'17')!== false) {$comision=2730;}
         if(strpos($plan,'20')!== false) {$comision=3080;}
-        if(strpos($plan,'26')!== false) {$comision=3417;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3417;}
         if(strpos($plan,'40')!== false) {$comision=4658;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=152;}
-        if(strpos($plan,'3')!== false) {$comision=450;}
-        if(strpos($plan,'5')!== false) {$comision=633;}
-        if(strpos($plan,'8')!== false) {$comision=925;}
-        if(strpos($plan,'9')!== false) {$comision=925;}
-        if(strpos($plan,'10')!== false) {$comision=653;}
-        if(strpos($plan,'11')!== false) {$comision=653;}
-        if(strpos($plan,'12')!== false) {$comision=656;}
-        if(strpos($plan,'14')!== false) {$comision=1090;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=450;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=633;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=925;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=925;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=653;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=653;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=656;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1090;}
         if(strpos($plan,'17')!== false) {$comision=1242;}
         if(strpos($plan,'20')!== false) {$comision=1330;}
-        if(strpos($plan,'26')!== false) {$comision=1499;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1499;}
         if(strpos($plan,'40')!== false) {$comision=2099;}
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=256;}
-        if(strpos($plan,'3')!== false) {$comision=679;}
-        if(strpos($plan,'5')!== false) {$comision=1229;}
-        if(strpos($plan,'8')!== false) {$comision=1459;}
-        if(strpos($plan,'9')!== false) {$comision=1656;}
-        if(strpos($plan,'10')!== false) {$comision=1656;}
-        if(strpos($plan,'11')!== false) {$comision=1809;}
-        if(strpos($plan,'12')!== false) {$comision=1809;}
-        if(strpos($plan,'14')!== false) {$comision=2083;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=679;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1229;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1459;}
+        if(strpos($plan,'9 GB')!== false) {$comision=1656;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1656;}
+        if(strpos($plan,'11 GB')!== false) {$comision=1809;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1809;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2083;}
         if(strpos($plan,'17')!== false) {$comision=2229;}
         if(strpos($plan,'20')!== false) {$comision=2530;}
-        if(strpos($plan,'26')!== false) {$comision=2868;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=2868;}
         if(strpos($plan,'40')!== false) {$comision=4022;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=309;}
-        if(strpos($plan,'5')!== false) {$comision=575;}
-        if(strpos($plan,'9')!== false) {$comision=749;}
-        if(strpos($plan,'11')!== false) {$comision=770;}
-        if(strpos($plan,'14')!== false) {$comision=920;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=309;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=575;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=749;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=770;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=920;}
         if(strpos($plan,'17')!== false) {$comision=1056;}
         if(strpos($plan,'20')!== false) {$comision=1206;}
-        if(strpos($plan,'26')!== false) {$comision=1434;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1434;}
         if(strpos($plan,'40')!== false) {$comision=2011;}
         $comision=0;
        }
@@ -1269,61 +1273,61 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=610;}
-        if(strpos($plan,'3')!== false) {$comision=1001;}
-        if(strpos($plan,'5')!== false) {$comision=1794;}
-        if(strpos($plan,'8')!== false) {$comision=2067;}
-        if(strpos($plan,'9')!== false) {$comision=2067;}
-        if(strpos($plan,'10')!== false) {$comision=2424;}
-        if(strpos($plan,'11')!== false) {$comision=2424;}
-        if(strpos($plan,'12')!== false) {$comision=2427;}
-        if(strpos($plan,'14')!== false) {$comision=2620;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=1001;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1794;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2067;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2067;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2424;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2424;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2427;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2620;}
         if(strpos($plan,'17')!== false) {$comision=2931;}
         if(strpos($plan,'20')!== false) {$comision=3320;}
-        if(strpos($plan,'26')!== false) {$comision=3686;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3686;}
         if(strpos($plan,'40')!== false) {$comision=5026;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=243;}
-        if(strpos($plan,'3')!== false) {$comision=686;}
-        if(strpos($plan,'5')!== false) {$comision=1368;}
-        if(strpos($plan,'8')!== false) {$comision=1635;}
-        if(strpos($plan,'9')!== false) {$comision=1635;}
-        if(strpos($plan,'10')!== false) {$comision=1986;}
-        if(strpos($plan,'11')!== false) {$comision=1986;}
-        if(strpos($plan,'12')!== false) {$comision=1989;}
-        if(strpos($plan,'14')!== false) {$comision=2220;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=686;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1368;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1635;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1635;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1986;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1986;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1989;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2220;}
         if(strpos($plan,'17')!== false) {$comision=2531;}
         if(strpos($plan,'20')!== false) {$comision=2920;}
-        if(strpos($plan,'26')!== false) {$comision=3286;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3286;}
         if(strpos($plan,'40')!== false) {$comision=4626;}
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=229;}
-        if(strpos($plan,'3')!== false) {$comision=830;}
-        if(strpos($plan,'5')!== false) {$comision=1621;}
-        if(strpos($plan,'8')!== false) {$comision=1938;}
-        if(strpos($plan,'9')!== false) {$comision=2123;}
-        if(strpos($plan,'10')!== false) {$comision=2123;}
-        if(strpos($plan,'11')!== false) {$comision=2169;}
-        if(strpos($plan,'12')!== false) {$comision=2169;}
-        if(strpos($plan,'14')!== false) {$comision=2571;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=830;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1621;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1938;}
+        if(strpos($plan,'9 GB')!== false) {$comision=2123;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2123;}
+        if(strpos($plan,'11 GB')!== false) {$comision=2169;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2169;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2571;}
         if(strpos($plan,'17')!== false) {$comision=2933;}
         if(strpos($plan,'20')!== false) {$comision=3334;}
-        if(strpos($plan,'26')!== false) {$comision=3824;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3824;}
         if(strpos($plan,'40')!== false) {$comision=5363;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=385;}
-        if(strpos($plan,'5')!== false) {$comision=771;}
-        if(strpos($plan,'9')!== false) {$comision=998;}
-        if(strpos($plan,'11')!== false) {$comision=1026;}
-        if(strpos($plan,'14')!== false) {$comision=1226;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=385;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=771;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=998;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1026;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1226;}
         if(strpos($plan,'17')!== false) {$comision=1408;}
         if(strpos($plan,'20')!== false) {$comision=1608;}
-        if(strpos($plan,'26')!== false) {$comision=1912;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1912;}
         if(strpos($plan,'40')!== false) {$comision=2682;}
         $comision=0;
        }
@@ -1335,61 +1339,61 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=610;}
-        if(strpos($plan,'3')!== false) {$comision=1001;}
-        if(strpos($plan,'5')!== false) {$comision=1794;}
-        if(strpos($plan,'8')!== false) {$comision=2067;}
-        if(strpos($plan,'9')!== false) {$comision=2067;}
-        if(strpos($plan,'10')!== false) {$comision=2424;}
-        if(strpos($plan,'11')!== false) {$comision=2424;}
-        if(strpos($plan,'12')!== false) {$comision=2427;}
-        if(strpos($plan,'14')!== false) {$comision=2620;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=1001;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1794;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2067;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2067;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2424;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2424;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2427;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2620;}
         if(strpos($plan,'17')!== false) {$comision=2931;}
         if(strpos($plan,'20')!== false) {$comision=3320;}
-        if(strpos($plan,'26')!== false) {$comision=3686;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3686;}
         if(strpos($plan,'40')!== false) {$comision=5026;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=152;}
-        if(strpos($plan,'3')!== false) {$comision=450;}
-        if(strpos($plan,'5')!== false) {$comision=633;}
-        if(strpos($plan,'8')!== false) {$comision=757;}
-        if(strpos($plan,'9')!== false) {$comision=757;}
-        if(strpos($plan,'10')!== false) {$comision=917;}
-        if(strpos($plan,'11')!== false) {$comision=917;}
-        if(strpos($plan,'12')!== false) {$comision=920;}
-        if(strpos($plan,'14')!== false) {$comision=1090;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=450;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=633;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=757;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=757;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=917;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=917;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=920;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1090;}
         if(strpos($plan,'17')!== false) {$comision=1242;}
         if(strpos($plan,'20')!== false) {$comision=1330;}
-        if(strpos($plan,'26')!== false) {$comision=1499;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1499;}
         if(strpos($plan,'40')!== false) {$comision=2099;}
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=229;}
-        if(strpos($plan,'3')!== false) {$comision=830;}
-        if(strpos($plan,'5')!== false) {$comision=1621;}
-        if(strpos($plan,'8')!== false) {$comision=1938;}
-        if(strpos($plan,'9')!== false) {$comision=2123;}
-        if(strpos($plan,'10')!== false) {$comision=2123;}
-        if(strpos($plan,'11')!== false) {$comision=2169;}
-        if(strpos($plan,'12')!== false) {$comision=2169;}
-        if(strpos($plan,'14')!== false) {$comision=2571;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=830;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1621;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1938;}
+        if(strpos($plan,'9 GB')!== false) {$comision=2123;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2123;}
+        if(strpos($plan,'11 GB')!== false) {$comision=2169;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2169;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2571;}
         if(strpos($plan,'17')!== false) {$comision=2933;}
         if(strpos($plan,'20')!== false) {$comision=3334;}
-        if(strpos($plan,'26')!== false) {$comision=3824;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3824;}
         if(strpos($plan,'40')!== false) {$comision=5363;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=385;}
-        if(strpos($plan,'5')!== false) {$comision=771;}
-        if(strpos($plan,'9')!== false) {$comision=998;}
-        if(strpos($plan,'11')!== false) {$comision=1026;}
-        if(strpos($plan,'14')!== false) {$comision=1226;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=385;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=771;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=998;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1026;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1226;}
         if(strpos($plan,'17')!== false) {$comision=1408;}
         if(strpos($plan,'20')!== false) {$comision=1608;}
-        if(strpos($plan,'26')!== false) {$comision=1912;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1912;}
         if(strpos($plan,'40')!== false) {$comision=2682;}
         $comision=0;
        }
@@ -1401,61 +1405,61 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=555;}
-        if(strpos($plan,'3')!== false) {$comision=857;}
-        if(strpos($plan,'5')!== false) {$comision=1560;}
-        if(strpos($plan,'8')!== false) {$comision=1765;}
-        if(strpos($plan,'9')!== false) {$comision=1765;}
-        if(strpos($plan,'10')!== false) {$comision=2058;}
-        if(strpos($plan,'11')!== false) {$comision=2058;}
-        if(strpos($plan,'12')!== false) {$comision=2061;}
-        if(strpos($plan,'14')!== false) {$comision=2270;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=857;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1560;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1765;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1765;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2058;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2058;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2061;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2270;}
         if(strpos($plan,'17')!== false) {$comision=2529;}
         if(strpos($plan,'20')!== false) {$comision=2840;}
-        if(strpos($plan,'26')!== false) {$comision=3149;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3149;}
         if(strpos($plan,'40')!== false) {$comision=4288;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=152;}
-        if(strpos($plan,'3')!== false) {$comision=450;} //ORIG 270
-        if(strpos($plan,'5')!== false) {$comision=633;} //ORIG 505
-        if(strpos($plan,'8')!== false) {$comision=757;}
-        if(strpos($plan,'9')!== false) {$comision=757;}
-        if(strpos($plan,'10')!== false) {$comision=919;}
-        if(strpos($plan,'11')!== false) {$comision=919;} //ORIG 718
-        if(strpos($plan,'12')!== false) {$comision=921;}
-        if(strpos($plan,'14')!== false) {$comision=1090;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=450;} //ORIG 270
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=633;} //ORIG 505
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=757;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=757;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=919;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=919;} //ORIG 718
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=921;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1090;}
         if(strpos($plan,'17')!== false) {$comision=1242;} //ORIG 985
         if(strpos($plan,'20')!== false) {$comision=1330;}
-        if(strpos($plan,'26')!== false) {$comision=1499;} //ORIG 1338
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1499;} //ORIG 1338
         if(strpos($plan,'40')!== false) {$comision=2099;} //ORIG 1877
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=229;}
-        if(strpos($plan,'3')!== false) {$comision=686;}
-        if(strpos($plan,'5')!== false) {$comision=1390;}
-        if(strpos($plan,'8')!== false) {$comision=1590;}
-        if(strpos($plan,'9')!== false) {$comision=1750;}
-        if(strpos($plan,'10')!== false) {$comision=1750;}
-        if(strpos($plan,'11')!== false) {$comision=1784;}
-        if(strpos($plan,'12')!== false) {$comision=1784;}
-        if(strpos($plan,'14')!== false) {$comision=2111;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=686;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1390;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1590;}
+        if(strpos($plan,'9 GB')!== false) {$comision=1750;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1750;}
+        if(strpos($plan,'11 GB')!== false) {$comision=1784;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1784;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2111;}
         if(strpos($plan,'17')!== false) {$comision=2405;}
         if(strpos($plan,'20')!== false) {$comision=2731;}
-        if(strpos($plan,'26')!== false) {$comision=3107;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3107;}
         if(strpos($plan,'40')!== false) {$comision=4358;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=313;}
-        if(strpos($plan,'5')!== false) {$comision=626;}
-        if(strpos($plan,'9')!== false) {$comision=811;}
-        if(strpos($plan,'11')!== false) {$comision=834;}
-        if(strpos($plan,'14')!== false) {$comision=996;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=313;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=626;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=811;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=834;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=996;}
         if(strpos($plan,'17')!== false) {$comision=1144;}
         if(strpos($plan,'20')!== false) {$comision=1306;}
-        if(strpos($plan,'26')!== false) {$comision=1554;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1554;}
         if(strpos($plan,'40')!== false) {$comision=2179;}
         $comision=0;
        }
@@ -1467,61 +1471,61 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=526;}
-        if(strpos($plan,'3')!== false) {$comision=786;}
-        if(strpos($plan,'5')!== false) {$comision=1416;}
-        if(strpos($plan,'8')!== false) {$comision=1615;}
-        if(strpos($plan,'9')!== false) {$comision=1615;}
-        if(strpos($plan,'10')!== false) {$comision=1875;}
-        if(strpos($plan,'11')!== false) {$comision=1875;}
-        if(strpos($plan,'12')!== false) {$comision=1878;}
-        if(strpos($plan,'14')!== false) {$comision=2090;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=786;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1416;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1615;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1615;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1875;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1875;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1878;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2090;}
         if(strpos($plan,'17')!== false) {$comision=2328;}
         if(strpos($plan,'20')!== false) {$comision=2608;}
-        if(strpos($plan,'26')!== false) {$comision=2880;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=2880;}
         if(strpos($plan,'40')!== false) {$comision=3920;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=151;}
-        if(strpos($plan,'3')!== false) {$comision=450;} //ORIG=231
-        if(strpos($plan,'5')!== false) {$comision=633;} //ORIG=434
-        if(strpos($plan,'8')!== false) {$comision=757;}
-        if(strpos($plan,'9')!== false) {$comision=757;}
-        if(strpos($plan,'10')!== false) {$comision=919;} 
-        if(strpos($plan,'11')!== false) {$comision=919;} //ORIG 616
-        if(strpos($plan,'12')!== false) {$comision=921;}
-        if(strpos($plan,'14')!== false) {$comision=1090;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=450;} //ORIG=231
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=633;} //ORIG=434
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=757;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=757;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=919;} 
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=919;} //ORIG 616
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=921;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1090;}
         if(strpos($plan,'17')!== false) {$comision=1242;}
         if(strpos($plan,'20')!== false) {$comision=1330;}
-        if(strpos($plan,'26')!== false) {$comision=1499;} //ORIG 1147
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1499;} //ORIG 1147
         if(strpos($plan,'40')!== false) {$comision=2099;}
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=229;}
-        if(strpos($plan,'3')!== false) {$comision=638;}
-        if(strpos($plan,'5')!== false) {$comision=1235;}
-        if(strpos($plan,'8')!== false) {$comision=1416;}
-        if(strpos($plan,'9')!== false) {$comision=1625;}
-        if(strpos($plan,'10')!== false) {$comision=1625;}
-        if(strpos($plan,'11')!== false) {$comision=1656;}
-        if(strpos($plan,'12')!== false) {$comision=1656;}
-        if(strpos($plan,'14')!== false) {$comision=1918;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=638;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1235;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1416;}
+        if(strpos($plan,'9 GB')!== false) {$comision=1625;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1625;}
+        if(strpos($plan,'11 GB')!== false) {$comision=1656;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1656;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1918;}
         if(strpos($plan,'17')!== false) {$comision=2229;}
         if(strpos($plan,'20')!== false) {$comision=2530;}
-        if(strpos($plan,'26')!== false) {$comision=2868;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=2868;}
         if(strpos($plan,'40')!== false) {$comision=4022;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=289;}
-        if(strpos($plan,'5')!== false) {$comision=578;}
-        if(strpos($plan,'9')!== false) {$comision=749;}
-        if(strpos($plan,'11')!== false) {$comision=770;}
-        if(strpos($plan,'14')!== false) {$comision=920;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=289;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=578;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=749;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=770;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=920;}
         if(strpos($plan,'17')!== false) {$comision=1056;}
         if(strpos($plan,'20')!== false) {$comision=1206;}
-        if(strpos($plan,'26')!== false) {$comision=1434;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1434;}
         if(strpos($plan,'40')!== false) {$comision=2011;}
         $comision=0;
        }
@@ -1533,49 +1537,49 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=573;}
-        if(strpos($plan,'3')!== false) {$comision=1261;}//OK
-        if(strpos($plan,'5')!== false) {$comision=1802;}//OK
-        if(strpos($plan,'8')!== false) {$comision=2172;}
-        if(strpos($plan,'9')!== false) {$comision=2172;}//OK
-        if(strpos($plan,'10')!== false) {$comision=2432;}
-        if(strpos($plan,'11')!== false) {$comision=2616;}//OK
-        if(strpos($plan,'12')!== false) {$comision=2616;}
-        if(strpos($plan,'14')!== false) {$comision=2986;}//OK
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=1345;}//OK
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1916;}//OK
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2316;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2316;}//OK
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2597;}
+        if(strpos($plan,'11 GB')!== false) {$comision=2616;}//OK
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2796;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=3196;}//OK
         if(strpos($plan,'17')!== false) {$comision=2355;}//OK
         if(strpos($plan,'20')!== false) {$comision=3726;}//OK
-        if(strpos($plan,'26')!== false) {$comision=4096;}//OK
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=4396;}//OK
         if(strpos($plan,'40')!== false) {$comision=5576;}//OK
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=321;}
-        if(strpos($plan,'3')!== false) {$comision=861;}//OK
-        if(strpos($plan,'5')!== false) {$comision=1402;}//OK
-        if(strpos($plan,'8')!== false) {$comision=1772;}
-        if(strpos($plan,'9')!== false) {$comision=1772;}//OK
-        if(strpos($plan,'10')!== false) {$comision=2031;}
-        if(strpos($plan,'11')!== false) {$comision=2031;}//OK
-        if(strpos($plan,'12')!== false) {$comision=2216;}
-        if(strpos($plan,'14')!== false) {$comision=2586;}//OK
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=945;}//OK
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1516;}//OK
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1916;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1916;}//OK
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2196;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2196;}//OK
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2396;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2796;}//OK
         if(strpos($plan,'17')!== false) {$comision=2956;}//OK
         if(strpos($plan,'20')!== false) {$comision=3326;}//OK
-        if(strpos($plan,'26')!== false) {$comision=3696;}//OK
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3996;}//OK
         if(strpos($plan,'40')!== false) {$comision=5176;}//OK
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=321;}
-        if(strpos($plan,'3')!== false) {$comision=861;}
-        if(strpos($plan,'5')!== false) {$comision=1402;}
-        if(strpos($plan,'8')!== false) {$comision=1772;}
-        if(strpos($plan,'9')!== false) {$comision=1772;} 
-        if(strpos($plan,'10')!== false) {$comision=2031;}
-        if(strpos($plan,'11')!== false) {$comision=2216;}
-        if(strpos($plan,'12')!== false) {$comision=2216;}
-        if(strpos($plan,'14')!== false) {$comision=2586;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=945;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1516;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1916;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1916;} 
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2196;}
+        if(strpos($plan,'11 GB')!== false) {$comision=2216;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2396;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2796;}
         if(strpos($plan,'17')!== false) {$comision=2956;}
         if(strpos($plan,'20')!== false) {$comision=3326;}
-        if(strpos($plan,'26')!== false) {$comision=3696;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3996;}
         if(strpos($plan,'40')!== false) {$comision=5176;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
@@ -1590,61 +1594,61 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=555;}
-        if(strpos($plan,'3')!== false) {$comision=857;}
-        if(strpos($plan,'5')!== false) {$comision=1450;}
-        if(strpos($plan,'8')!== false) {$comision=1765;}
-        if(strpos($plan,'9')!== false) {$comision=1765;}
-        if(strpos($plan,'10')!== false) {$comision=2058;}
-        if(strpos($plan,'11')!== false) {$comision=2058;}
-        if(strpos($plan,'12')!== false) {$comision=2061;}
-        if(strpos($plan,'14')!== false) {$comision=2270;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=857;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1450;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1765;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1765;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2058;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2058;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2061;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2270;}
         if(strpos($plan,'17')!== false) {$comision=2529;}
         if(strpos($plan,'20')!== false) {$comision=2840;}
-        if(strpos($plan,'26')!== false) {$comision=3149;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3149;}
         if(strpos($plan,'40')!== false) {$comision=4288;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=152;}
-        if(strpos($plan,'3')!== false) {$comision=450;} //ORIG 270
-        if(strpos($plan,'5')!== false) {$comision=633;} //ORIG 505
-        if(strpos($plan,'8')!== false) {$comision=757;}
-        if(strpos($plan,'9')!== false) {$comision=757;}
-        if(strpos($plan,'10')!== false) {$comision=919;}
-        if(strpos($plan,'11')!== false) {$comision=919;}
-        if(strpos($plan,'12')!== false) {$comision=921;} 
-        if(strpos($plan,'14')!== false) {$comision=1090;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=751;} //ORIG 270
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1349;} //ORIG 505
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1546;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1546;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1879;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1879;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1881;} 
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2120;}
         if(strpos($plan,'17')!== false) {$comision=1252;} //ORIG 985
         if(strpos($plan,'20')!== false) {$comision=1330;}
-        if(strpos($plan,'26')!== false) {$comision=1499;} //ORIG 1338
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3100;} //ORIG 1338
         if(strpos($plan,'40')!== false) {$comision=2099;} //ORIG 1877
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=229;}
-        if(strpos($plan,'3')!== false) {$comision=686;}
-        if(strpos($plan,'5')!== false) {$comision=1050;}
-        if(strpos($plan,'8')!== false) {$comision=1590;}
-        if(strpos($plan,'9')!== false) {$comision=1750;}
-        if(strpos($plan,'10')!== false) {$comision=1750;}
-        if(strpos($plan,'11')!== false) {$comision=1784;}
-        if(strpos($plan,'12')!== false) {$comision=1784;}
-        if(strpos($plan,'14')!== false) {$comision=2111;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=686;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1050;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1590;}
+        if(strpos($plan,'9 GB')!== false) {$comision=1750;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1750;}
+        if(strpos($plan,'11 GB')!== false) {$comision=1784;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1784;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2111;}
         if(strpos($plan,'17')!== false) {$comision=2405;}
         if(strpos($plan,'20')!== false) {$comision=2731;}
-        if(strpos($plan,'26')!== false) {$comision=3107;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3107;}
         if(strpos($plan,'40')!== false) {$comision=4358;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=313;}
-        if(strpos($plan,'5')!== false) {$comision=626;}
-        if(strpos($plan,'9')!== false) {$comision=811;}
-        if(strpos($plan,'11')!== false) {$comision=834;}
-        if(strpos($plan,'14')!== false) {$comision=996;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=313;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=626;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=811;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=834;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=996;}
         if(strpos($plan,'17')!== false) {$comision=1144;}
         if(strpos($plan,'20')!== false) {$comision=1306;}
-        if(strpos($plan,'26')!== false) {$comision=1554;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1554;}
         if(strpos($plan,'40')!== false) {$comision=2179;}
         $comision=0;
        }
@@ -1656,51 +1660,51 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=526;}
-        if(strpos($plan,'3')!== false) {$comision=786;}
-        if(strpos($plan,'5')!== false) {$comision=1416;}
-        if(strpos($plan,'9')!== false) {$comision=1780;}
-        if(strpos($plan,'11')!== false) {$comision=1800;}
-        if(strpos($plan,'14')!== false) {$comision=2090;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=786;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1416;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1780;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1800;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2090;}
         if(strpos($plan,'17')!== false) {$comision=2328;}
         if(strpos($plan,'20')!== false) {$comision=2600;}
-        if(strpos($plan,'26')!== false) {$comision=2880;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=2880;}
         if(strpos($plan,'40')!== false) {$comision=3920;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=268;}
-        if(strpos($plan,'3')!== false) {$comision=751;} //ORIG=231
-        if(strpos($plan,'5')!== false) {$comision=1349;} //ORIG=434
-        if(strpos($plan,'9')!== false) {$comision=1780;} 
-        if(strpos($plan,'11')!== false) {$comision=1797;} //ORIG 616
-        if(strpos($plan,'14')!== false) {$comision=2120;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=751;} //ORIG=231
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1349;} //ORIG=434
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1780;} 
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1797;} //ORIG 616
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2120;}
         if(strpos($plan,'17')!== false) {$comision=2418;}
         if(strpos($plan,'20')!== false) {$comision=2760;}
-        if(strpos($plan,'26')!== false) {$comision=3100;} //ORIG 1147
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3100;} //ORIG 1147
         if(strpos($plan,'40')!== false) {$comision=4400;}
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
-        if(strpos($plan,'3')!== false) {$comision=638;}
-        if(strpos($plan,'5')!== false) {$comision=1235;}
-        if(strpos($plan,'9')!== false) {$comision=1625;}
-        if(strpos($plan,'11')!== false) {$comision=1656;}
-        if(strpos($plan,'14')!== false) {$comision=1918;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=638;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1235;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1625;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1656;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=1918;}
         if(strpos($plan,'17')!== false) {$comision=2229;}
         if(strpos($plan,'20')!== false) {$comision=2530;}
-        if(strpos($plan,'26')!== false) {$comision=2868;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=2868;}
         if(strpos($plan,'40')!== false) {$comision=4022;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=289;}
-        if(strpos($plan,'5')!== false) {$comision=578;}
-        if(strpos($plan,'9')!== false) {$comision=749;}
-        if(strpos($plan,'11')!== false) {$comision=770;}
-        if(strpos($plan,'14')!== false) {$comision=920;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=289;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=578;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=749;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=770;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=920;}
         if(strpos($plan,'17')!== false) {$comision=1056;}
         if(strpos($plan,'20')!== false) {$comision=1206;}
-        if(strpos($plan,'26')!== false) {$comision=1434;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1434;}
         if(strpos($plan,'40')!== false) {$comision=2011;}
         $comision=0;
        }
@@ -1712,49 +1716,49 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=573;}
-        if(strpos($plan,'3')!== false) {$comision=1377;}//OK
-        if(strpos($plan,'5')!== false) {$comision=2106;}//OK
-        if(strpos($plan,'8')!== false) {$comision=2556;}
-        if(strpos($plan,'9')!== false) {$comision=2556;}//OK
-        if(strpos($plan,'10')!== false) {$comision=2871;}
-        if(strpos($plan,'11')!== false) {$comision=2871;}//OK
-        if(strpos($plan,'12')!== false) {$comision=3096;}
-        if(strpos($plan,'14')!== false) {$comision=3546;}//OK
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=1461;}//OK
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=2220;}//OK
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2700;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2700;}//OK
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=3036;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=3036;}//OK
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=3276;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=3756;}//OK
         if(strpos($plan,'17')!== false) {$comision=3996;}//OK
         if(strpos($plan,'20')!== false) {$comision=4446;}//OK
-        if(strpos($plan,'26')!== false) {$comision=4896;}//OK
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=5196;}//OK
         if(strpos($plan,'40')!== false) {$comision=6696;}//OK
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=173;}
-        if(strpos($plan,'3')!== false) {$comision=977;}//OK
-        if(strpos($plan,'5')!== false) {$comision=1706;}//OK
-        if(strpos($plan,'8')!== false) {$comision=2156;}
-        if(strpos($plan,'9')!== false) {$comision=2156;}
-        if(strpos($plan,'10')!== false) {$comision=2471;}//OK
-        if(strpos($plan,'11')!== false) {$comision=2471;}//OK
-        if(strpos($plan,'12')!== false) {$comision=2696;}
-        if(strpos($plan,'14')!== false) {$comision=3146;}//OK
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=1061;}//OK
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1820;}//OK
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2300;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2300;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2636;}//OK
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2636;}//OK
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2876;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=3356;}//OK
         if(strpos($plan,'17')!== false) {$comision=3596;}//OK
         if(strpos($plan,'20')!== false) {$comision=4046;}//OK
-        if(strpos($plan,'26')!== false) {$comision=4496;}//OK
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=4796;}//OK
         if(strpos($plan,'40')!== false) {$comision=6296;}//OK
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=321;}
-        if(strpos($plan,'3')!== false) {$comision=861;}
-        if(strpos($plan,'5')!== false) {$comision=1554;}
-        if(strpos($plan,'8')!== false) {$comision=1964;}
-        if(strpos($plan,'9')!== false) {$comision=2251;}
-        if(strpos($plan,'10')!== false) {$comision=2251;} 
-        if(strpos($plan,'11')!== false) {$comision=2456;}
-        if(strpos($plan,'12')!== false) {$comision=2456;}
-        if(strpos($plan,'14')!== false) {$comision=2866;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=945;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1668;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=2108;}
+        if(strpos($plan,'9 GB')!== false) {$comision=2251;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2416;} 
+        if(strpos($plan,'11 GB')!== false) {$comision=2456;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2636;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=3076;}
         if(strpos($plan,'17')!== false) {$comision=3276;}
         if(strpos($plan,'20')!== false) {$comision=3686;}
-        if(strpos($plan,'26')!== false) {$comision=4096;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=4396;}
         if(strpos($plan,'40')!== false) {$comision=5736;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
@@ -1769,61 +1773,61 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Activacion" || $tipo_venta=="Activación")
        {
         if(strpos($plan,'2 ')!== false) {$comision=555;}
-        if(strpos($plan,'3')!== false) {$comision=857;}
-        if(strpos($plan,'5')!== false) {$comision=1542;}
-        if(strpos($plan,'8')!== false) {$comision=1765;}
-        if(strpos($plan,'9')!== false) {$comision=1765;}
-        if(strpos($plan,'10')!== false) {$comision=2058;}
-        if(strpos($plan,'11')!== false) {$comision=2058;}
-        if(strpos($plan,'12')!== false) {$comision=2060;}
-        if(strpos($plan,'14')!== false) {$comision=2270;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=857;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1542;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1765;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1765;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2058;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=2058;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=2060;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2270;}
         if(strpos($plan,'17')!== false) {$comision=2529;}
         if(strpos($plan,'20')!== false) {$comision=2840;}
-        if(strpos($plan,'26')!== false) {$comision=3149;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3149;}
         if(strpos($plan,'40')!== false) {$comision=4288;}
        }
        if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
        {
         if(strpos($plan,'2 ')!== false) {$comision=265;}
-        if(strpos($plan,'3')!== false) {$comision=751;} //ORIG 270
-        if(strpos($plan,'5')!== false) {$comision=1349;} //ORIG 505
-        if(strpos($plan,'8')!== false) {$comision=1546;}
-        if(strpos($plan,'9')!== false) {$comision=1546;}
-        if(strpos($plan,'10')!== false) {$comision=1879;}
-        if(strpos($plan,'11')!== false) {$comision=1879;} //ORIG 718
-        if(strpos($plan,'12')!== false) {$comision=1881;}
-        if(strpos($plan,'14')!== false) {$comision=2120;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=751;} //ORIG 270
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1349;} //ORIG 505
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1546;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1546;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1879;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1879;} //ORIG 718
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1881;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2120;}
         if(strpos($plan,'17')!== false) {$comision=2418;} //ORIG 985
         if(strpos($plan,'20')!== false) {$comision=2723;}
-        if(strpos($plan,'26')!== false) {$comision=3100;} //ORIG 1338
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3100;} //ORIG 1338
         if(strpos($plan,'40')!== false) {$comision=4400;} //ORIG 1877
        }
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
         if(strpos($plan,'2')!== false) {$comision=243;}
-        if(strpos($plan,'3')!== false) {$comision=686;}
-        if(strpos($plan,'5')!== false) {$comision=1330;}
-        if(strpos($plan,'8')!== false) {$comision=1590;}
-        if(strpos($plan,'9')!== false) {$comision=1750;}
-        if(strpos($plan,'10')!== false) {$comision=1750;}
-        if(strpos($plan,'11')!== false) {$comision=1784;}
-        if(strpos($plan,'12')!== false) {$comision=1784;}
-        if(strpos($plan,'14')!== false) {$comision=2111;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=686;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=1330;}
+        if(strpos($plan,'8 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=1590;}
+        if(strpos($plan,'9 GB')!== false) {$comision=1750;}
+        if(strpos($plan,'10 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=1750;}
+        if(strpos($plan,'11 GB')!== false) {$comision=1784;}
+        if(strpos($plan,'12 GB')!== false || strpos($plan,'ORO')!== false) {$comision=1784;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=2111;}
         if(strpos($plan,'17')!== false) {$comision=2405;}
         if(strpos($plan,'20')!== false) {$comision=2731;}
-        if(strpos($plan,'26')!== false) {$comision=3107;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=3107;}
         if(strpos($plan,'40')!== false) {$comision=4358;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
-        if(strpos($plan,'3')!== false) {$comision=313;}
-        if(strpos($plan,'5')!== false) {$comision=626;}
-        if(strpos($plan,'9')!== false) {$comision=811;}
-        if(strpos($plan,'11')!== false) {$comision=834;}
-        if(strpos($plan,'14')!== false) {$comision=996;}
+        if(strpos($plan,'3 GB')!== false || strpos($plan,'AZUL 1')!== false) {$comision=313;}
+        if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {$comision=626;}
+        if(strpos($plan,'9 GB')!== false || strpos($plan,'AZUL 3')!== false) {$comision=811;}
+        if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {$comision=834;}
+        if(strpos($plan,'14 GB')!== false || strpos($plan,'BLACK')!== false || strpos($plan,'TITANIO')!== false) {$comision=996;}
         if(strpos($plan,'17')!== false) {$comision=1144;}
         if(strpos($plan,'20')!== false) {$comision=1306;}
-        if(strpos($plan,'26')!== false) {$comision=1554;}
+        if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {$comision=1554;}
         if(strpos($plan,'40')!== false) {$comision=2179;}
         $comision=0;
        }
@@ -1986,14 +1990,14 @@ class CalculoComisionesDistController extends Controller
        if($tipo_venta=="Renovacion" || $tipo_venta=="Renovación")
        {
             if($plazo=="12"){$factor=2.07;}
-            if($plazo=="18"){$factor=2.6;}
-            if($plazo>=24){$factor=3.35;}
+            if($plazo=="18"){$factor=2.9;}
+            if($plazo>=24){$factor=3.6;}
        }
        if($tipo_venta=="Renovación Equipo Propio" || $tipo_venta=="Renovacion Equipo Propio")
        {
             if($plazo=="12"){$factor=1.04;}
-            if($plazo=="18"){$factor=1.3;}
-            if($plazo>=24){$factor=1.68;}
+            if($plazo=="18"){$factor=1.45;}
+            if($plazo>=24){$factor=1.8;}
        }
        $comision=$renta/1.16/1.03*$factor;
        return($comision);
@@ -2089,10 +2093,10 @@ class CalculoComisionesDistController extends Controller
             if($tipo_venta=="Activación Equipo Propio" || $tipo_venta=="Activacion Equipo Propio")
             {
                 if(strpos($plan,'3')!== false) {return(690);} 
-                if(strpos($plan,'5')!== false) {return(1270);}
-                if(strpos($plan,'11')!== false) {return(1680);}
+                if(strpos($plan,'5 GB')!== false || strpos($plan,'AZUL 2')!== false) {return(1270);}
+                if(strpos($plan,'11 GB')!== false || strpos($plan,'PLATA')!== false) {return(1680);}
                 if(strpos($plan,'17')!== false) {return(2300);}
-                if(strpos($plan,'26')!== false) {return(3100);}
+                if(strpos($plan,'26 GB')!== false || strpos($plan,'DIAMANTE')!== false) {return(3100);}
                 if(strpos($plan,'40')!== false) {return(4400);}
             }
         }
@@ -2122,6 +2126,37 @@ class CalculoComisionesDistController extends Controller
         if($numero_distribuidor=='100047') { $comision=990;}
         if($numero_distribuidor=='100048') { $comision=750;}
         if($numero_distribuidor=='100049') { $comision=790;}
+        return($comision);
+   }
+   public function comisionSimple($distribuidor,$esquema,$renta,$plazo)
+   {
+        $factor=0;
+        $comision=0;
+        if($distribuidor=='100049'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($distribuidor=='100009'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($distribuidor=='100008'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($distribuidor=='100047'){if($plazo<12){$factor=55;} if($plazo>=12 && $plazo<18){$factor=1.3;} if($plazo>=18 && $plazo<24){$factor=2.15;} if($plazo>=24){$factor=2.6;}}
+        if($distribuidor=='100046'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($distribuidor=='100033'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($distribuidor=='100027'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($distribuidor=='100032'){if($plazo<12){$factor=55;} if($plazo>=12 && $plazo<18){$factor=1.15;} if($plazo>=18 && $plazo<24){$factor=1.9;} if($plazo>=24){$factor=2.25;}}
+        if($distribuidor=='100005'){if($plazo<12){$factor=55;} if($plazo>=12 && $plazo<18){$factor=1.15;} if($plazo>=18 && $plazo<24){$factor=1.9;} if($plazo>=24){$factor=2.25;}}
+        if($distribuidor=='100011'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($distribuidor=='100014'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($distribuidor=='100035'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($distribuidor=='100035'){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($esquema==6){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.2;} if($plazo>=18 && $plazo<24){$factor=2;} if($plazo>=24){$factor=2.4;}}
+        if($esquema==7){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1.05;} if($plazo>=18 && $plazo<24){$factor=1.75;} if($plazo>=24){$factor=2.1;}}
+        if($esquema==8){if($plazo<12){$factor=38;} if($plazo>=12 && $plazo<18){$factor=1;} if($plazo>=18 && $plazo<24){$factor=1.65;} if($plazo>=24){$factor=2;}}
+
+        if($factor>3)
+        {
+            $comision=$factor;
+        }
+        else
+        {
+            $comision=($renta/1.16/1.03)*$factor;
+        }
         return($comision);
    }
 }
